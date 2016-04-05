@@ -8,6 +8,7 @@ import EachBreedingSourceReport from './breeding_source_report_list/each_breedin
 import BreedingSourceReportList from './breeding_source_report_list/breeding_source_report_list.ios.js';
 import BreedingSourceReport from './breeding_source_report.component/breeding_source_report.ios.js';
 import ShowImage from './breeding_source_report.component/show_image.ios.js';
+import HotZoneInfo from './hot_zone_info/hot_zone_info.js';
 import Menu from './menu.ios.js';
 export default class Nav extends Component {
     constructor(props) {
@@ -41,18 +42,18 @@ export default class Nav extends Component {
         _navigator = navigator;
         switch (route.id) {
             case 'menu':
-            return (<Menu  _enter={this._enter} _back={this._back} identity={this.props.identity} page="menu" />);
+            return (<Menu  _enter={this._enter} _back={this._back} identity={this.props.identity}  />);
             case 'breedingSourceReport':
-            return (<BreedingSourceReport _enter={this._enter} _back={this._back}  page="breedingSourceReport" />);
+            return (<BreedingSourceReport _enter={this._enter} _back={this._back}  />);
             case 'showImage':
             return(<ShowImage _toTop={this._toTop} _enter={this._enter} _back={this._back} uri={route.data}></ShowImage>)
             case 'breedingSourceReportList':
-            return (<BreedingSourceReportList _enter={this._enter} _back={this._back} page="breedingSourceReportList" />);
+            return (<BreedingSourceReportList _enter={this._enter} _back={this._back}  />);
             case 'eachBreedingSourceReport':
-            return (<EachBreedingSourceReport _back={this._back} sourceId={route.data} page="eachBreedingSourceReport" />);
-            /*case 'hotZoneInfo':
-            return (<HotZoneInfo navigator={navigator} title="hotZoneInfo" />);
-            case 'hospitalInfo':
+            return (<EachBreedingSourceReport _back={this._back} sourceId={route.data}  />);
+            case 'hotZoneInfo':
+            return (<HotZoneInfo _back={this._back} />);
+            /*case 'hospitalInfo':
             return (<HospitalInfo navigator={navigator} title="hospitalInfo" />);
             case 'breedingSourceReportList':
             return (<BreedingSourceReportList navigator={navigator} title="breedingSourceReportList" />);*/
