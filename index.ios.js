@@ -89,14 +89,14 @@ class proj1 extends Component {
     }
     _login(){
         var state = this.state;
-        fetch('http://localhost:1337/account/login/', {
+        fetch('http://localhost:1337/users/signup', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                account: state.account,
+                username: state.account,
                 password: state.password,
             })
         })
@@ -117,15 +117,16 @@ class proj1 extends Component {
         var account = this.guid(),
         password = this.guid(),
         state = this.state;
-        fetch('http://localhost:1337/account/login/', {
+        fetch('http://localhost:1337/users/signup', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                account: state.account,
+                username: state.account,
                 password: state.password,
+                "is_random": true,
             })
         })
         .then((response) => response.text())
