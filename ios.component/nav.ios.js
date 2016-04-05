@@ -3,13 +3,15 @@ import React, {
     StyleSheet,
     Text,
     View,
-    Navigator } from 'react-native';
+    Navigator
+} from 'react-native';
 import EachBreedingSourceReport from './breeding_source_report_list/each_breeding_source_report.ios.js';
 import BreedingSourceReportList from './breeding_source_report_list/breeding_source_report_list.ios.js';
 import BreedingSourceReport from './breeding_source_report.component/breeding_source_report.ios.js';
 import ShowImage from './breeding_source_report.component/show_image.ios.js';
 import HotZoneInfo from './hot_zone_info/hot_zone_info.js';
 import HospitalInfo from './hospital_info/hospital_info.js';
+import EachHospitalInfo from './hospital_info/each_hospital_info.js';
 import Menu from './menu.ios.js';
 export default class Nav extends Component {
     constructor(props) {
@@ -56,6 +58,9 @@ export default class Nav extends Component {
             return (<HotZoneInfo _back={this._back} />);
             case 'hospitalInfo':
             return (<HospitalInfo _enter={this._enter} _back={this._back} />);
+            case 'eachHospitalInfo':
+            return (<EachHospitalInfo _enter={this._enter} _back={this._back} />);
+
 
         }
     }
