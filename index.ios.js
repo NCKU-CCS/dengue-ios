@@ -92,7 +92,7 @@ class proj1 extends Component {
         fetch('http://140.116.247.113:11401/users/signin', {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
+                'Accept': 'text/html',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
@@ -100,9 +100,15 @@ class proj1 extends Component {
                 password: state.password,
             })
         })
-        .then((response) => response.text())
+        .then((response) => {
+            console.log(response.status);
+            if(response.status !== '200'){
+                throw "status:" + response.status;
+            }
+            return response.text();
+        })
         .then((responseText) => {
-            console.log("ok");
+            console.log("responseText");
             console.log(responseText);
             var identity = '1'; //temp
             this.setState({
