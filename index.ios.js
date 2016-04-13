@@ -89,7 +89,7 @@ class proj1 extends Component {
     }
     _login(){
         var state = this.state;
-        fetch('http://localhost:1337/users/signup', {
+        fetch('http://140.116.247.113:11401/users/signin', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -102,7 +102,9 @@ class proj1 extends Component {
         })
         .then((response) => response.text())
         .then((responseText) => {
-            var identity = JSON.parse(responseText).identity;
+            console.log("ok");
+            console.log(responseText);
+            var identity = '1'; //temp
             this.setState({
                 logined: true,
                 identity: identity,
@@ -117,7 +119,7 @@ class proj1 extends Component {
         var account = this.guid(),
         password = this.guid(),
         state = this.state;
-        fetch('http://localhost:1337/users/signup', {
+        fetch('http://140.116.247.113:11401/users/signup', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -131,7 +133,7 @@ class proj1 extends Component {
         })
         .then((response) => response.text())
         .then((responseText) => {
-            var identity = JSON.parse(responseText).identity;
+            var identity = '0'; //temp
             this.setState({
                 logined: true,
                 identity: identity,

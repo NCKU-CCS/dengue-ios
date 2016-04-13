@@ -24,7 +24,7 @@ export default class StatusBar extends Component {
 
                     <TouchableHighlight onPress={this.props._back}>
                         <Text style={styles.back}>
-                            {"<上一頁"}
+                            {"<"}
                         </Text>
                     </TouchableHighlight>
                     <View style={styles.title}>

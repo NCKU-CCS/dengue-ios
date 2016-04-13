@@ -8,6 +8,7 @@ import React, {
 import EachBreedingSourceReport from './breeding_source_report_list/each_breeding_source_report.ios.js';
 import BreedingSourceReportList from './breeding_source_report_list/breeding_source_report_list.ios.js';
 import BreedingSourceReport from './breeding_source_report.component/breeding_source_report.ios.js';
+import MosquitoBiteReport from './mosquito_bite_report/mosquito_bite_report.ios.js';
 import ShowImage from './breeding_source_report.component/show_image.ios.js';
 import HotZoneInfo from './hot_zone_info/hot_zone_info.js';
 import HospitalInfo from './hospital_info/hospital_info.js';
@@ -60,7 +61,8 @@ export default class Nav extends Component {
             return (<HospitalInfo _enter={this._enter} _back={this._back} />);
             case 'eachHospitalInfo':
             return (<EachHospitalInfo _enter={this._enter} _back={this._back} />);
-
+            case 'mosquitoBiteReport':
+            return (<MosquitoBiteReport _enter={this._enter} _back={this._back}  />);
 
         }
     }

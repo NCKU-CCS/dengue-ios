@@ -17,7 +17,7 @@ export default class EnterImage extends Component {
         super(props);
         this.state={};
         switch (props.page) {
-            case 'mosquitoReport':
+            case 'mosquitoBiteReport':
                 this.state.title='蚊子叮咬舉報';
                 this.state.uri='http://www.opcpest.com/res/images/pest-detail-images/og_mosquito-icon_1.png';
                 break;

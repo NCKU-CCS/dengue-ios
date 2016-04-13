@@ -39,7 +39,7 @@ export default class Menu extends Component {
                     </View>
                     <View style={styles.center}>
                         <View style={styles.eachRow}>
-                            <EnterImage _enter={this.props._enter} _back={this.props._back} page="mosquitoReport"></EnterImage>
+                            <EnterImage _enter={this.props._enter} _back={this.props._back} page="mosquitoBiteReport"></EnterImage>
                             <EnterImage _enter={this.props._enter} _back={this.props._back} page="breedingSourceReport"></EnterImage>
 
                         </View>
@@ -66,7 +66,7 @@ export default class Menu extends Component {
                     <View style={styles.center}>
                         <View style={styles.eachRow}>
                             <EnterImage _enter={this.props._enter} _back={this.props._back} page="breedingSourceReportList"></EnterImage>
-                            <EnterImage _enter={this.props._enter} _back={this.props._back} page="mosquitoReport"></EnterImage>
+                            <EnterImage _enter={this.props._enter} _back={this.props._back} page="mosquitoBiteReport"></EnterImage>
 
                         </View>
                         <View style={styles.eachRow}>
@@ -77,7 +77,7 @@ export default class Menu extends Component {
                         <View style={styles.eachRow}>
                             <EnterImage _enter={this.props._enter} _back={this.props._back} page="hospitalInfo"></EnterImage>
                         </View>
-                        
+
                     </View>
 
 
