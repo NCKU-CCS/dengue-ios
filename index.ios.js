@@ -19,7 +19,7 @@ import Nav from './ios.component/nav.ios.js';
 import CONSTANTS from './ios.component/constants.ios.js';
 import StatusBar from './ios.component/status_bar.ios.js';
 
-class proj1 extends Component {
+class DengueFever extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -208,4 +208,4 @@ var styles = StyleSheet.create({
 
 });
 
-AppRegistry.registerComponent('proj1', () => proj1);
+AppRegistry.registerComponent('DengueFever', () => DengueFever);
