@@ -1,12 +1,9 @@
 import React, {
-    View,
-    Text,
     Component,
     StyleSheet,
     WebView
 } from 'react-native';
-import CONSTANTS from '../constants.ios.js';
-import StatusBar from '../status_bar.ios.js';
+import CONSTANTS from '../Global.js';
 var DEFAULT_URL = 'http://real.taiwanstat.com/kaohsiung-2015-dengue/';
 export default class BreedingSourceReportList extends Component {
     constructor(props) {
@@ -14,17 +11,16 @@ export default class BreedingSourceReportList extends Component {
         this.state = {
 
         };
-        this._onNavigationStateChange = this._onNavigationStateChange.bind(this);
-        this._onShouldStartLoadWithRequest = this._onShouldStartLoadWithRequest.bind(this);
+        this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
+        this.onShouldStartLoadWithRequest = this.onShouldStartLoadWithRequest.bind(this);
     }
-    _onNavigationStateChange(){}
-    _onShouldStartLoadWithRequest(event){
+    onNavigationStateChange(){}
+    onShouldStartLoadWithRequest(event){
         return true;
     }
     render() {
+        console.log(321);
         return(
-            <View style={styles.container}>
-                <StatusBar title="熱區資訊" _back={this.props._back}></StatusBar>
                 <WebView
                     ref="web"
                     automaticallyAdjustContentInsets={false}
@@ -33,28 +29,22 @@ export default class BreedingSourceReportList extends Component {
                     javaScriptEnabled={true}
                     domStorageEnabled={true}
                     decelerationRate="normal"
-                    onNavigationStateChange={this._onNavigationStateChange}
-                    onShouldStartLoadWithRequest={this._onShouldStartLoadWithRequest}
+                    onNavigationStateChange={this.onNavigationStateChange}
+                    onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
                     startInLoadingState={true}
                     scalesPageToFit={true}
                     />
-            </View>
-        )
+            );
 
 
     }
 
 }
 var styles = StyleSheet.create({
-    container: {
-        backgroundColor: CONSTANTS.backgroundColor,
-        flexDirection: 'column',
-        flex:1,
-    },
+
     webView: {
         flex: 1,
-
     }
 
 
-})
+});

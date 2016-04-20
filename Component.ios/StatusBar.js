@@ -5,7 +5,7 @@ import React,{
     Text,
     TouchableHighlight
 } from 'react-native';
-import CONSTANTS from './constants.ios.js';
+import CONSTANTS from './Global.js';
 
 export default class StatusBar extends Component {
     render(){
@@ -16,13 +16,13 @@ export default class StatusBar extends Component {
                         {this.props.title}
                     </Text>
                 </View>
-            )
+            );
         }
         else{
             return(
                 <View style={styles.statusBar}>
 
-                    <TouchableHighlight onPress={this.props._back}>
+                    <TouchableHighlight onPress={this.props.back}>
                         <Text style={styles.back}>
                             {"<"}
                         </Text>
@@ -35,7 +35,7 @@ export default class StatusBar extends Component {
                     <View style={styles.space}>
                     </View>
                 </View>
-            )
+            );
         }
 
     }
@@ -61,4 +61,4 @@ var styles = StyleSheet.create({
     space: {
         flex:0.1
     },
-})
+});

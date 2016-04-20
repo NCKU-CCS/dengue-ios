@@ -9,8 +9,8 @@ import React, {
 } from 'react-native';
 
 
-import StatusBar from '../status_bar.ios.js';
-import CONSTANTS from '../constants.ios.js';
+import StatusBar from '../StatusBar.js';
+import CONSTANTS from '../Global.js';
 var BUTTONS = ['積水', '空屋'];
 var DESTRUCTIVE_INDEX = 3;
 var CANCEL_INDEX = 4;
@@ -19,13 +19,12 @@ export default class BreedingSourceReportList extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this._showActionSheet = this._showActionSheet.bind(this);
-        this._not = this._not.bind(this);
+        this.showActionSheet = this.showActionSheet.bind(this);
+        this.not = this.not.bind(this);
     }
     render() {
         return(
             <View style={styles.container}>
-                <StatusBar title="檢查孳生源點" _back={this.props._back}></StatusBar>
 
                 <Image ref={'img'} style={styles.image} source={{uri: this.props.uri}}>
 
@@ -47,20 +46,18 @@ export default class BreedingSourceReportList extends Component {
                     </View>
                 </View>
                 <View style={styles.buttons}>
-                    <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this._showActionSheet}>
+                    <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this.showActionSheet}>
                             <Text style={styles.buttonText}>是孳生源</Text>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this._not}>
+                    <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this.not}>
                             <Text style={styles.buttonText}>不是孳生源</Text>
                     </TouchableHighlight>
                 </View>
             </View>
         )
     }
-    _send(){
 
-    }
-    _not(){
+    not(){
         var props = this.props;
         fetch('http://localhost:1337/breeding_source_report/update/', {
             method: 'POST',
@@ -75,14 +72,14 @@ export default class BreedingSourceReportList extends Component {
         })
         .then((response) => response.text())
         .then((responseText) => {
-            
+
             props._back();
         })
         .catch((error) => {
             console.warn(error);
         });
     }
-    _showActionSheet() {
+    showActionSheet() {
         var props = this.props;
         ActionSheetIOS.showActionSheetWithOptions({
             options: BUTTONS,

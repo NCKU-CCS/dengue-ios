@@ -15,9 +15,9 @@ import React, {
     Dimensions,
 } from 'react-native';
 
-import Nav from './ios.component/nav.ios.js';
-import CONSTANTS from './ios.component/constants.ios.js';
-import StatusBar from './ios.component/status_bar.ios.js';
+import Nav from './Component.ios/Nav.js';
+import CONSTANTS from './Component.ios/Global.js';
+import StatusBar from './Component.ios/StatusBar.js';
 
 class DengueFever extends Component {
     constructor(props) {
@@ -26,13 +26,13 @@ class DengueFever extends Component {
             account:"",
             password:"",
             logined:false,
+            identity:'1',
         };
-        this._login = this._login.bind(this);
-        this._loginquickly = this._loginquickly.bind(this);
+        //this._login = this._login.bind(this);
+        //this._loginquickly = this._loginquickly.bind(this);
     }
 
     componentDidMount() {
-
         this.fetchData();
     }
 
@@ -41,11 +41,12 @@ class DengueFever extends Component {
     }
 
     render() {
-        if(this.state.logined){
+        //if(this.state.logined){
             return(
+                
                 <Nav identity={this.state.identity}></Nav>
             )
-        }
+        /*}
         else{
             return(
                 <View style={styles.container}>
@@ -84,10 +85,10 @@ class DengueFever extends Component {
                     </View>
                 </View>
             )
-        }
+        }*/
 
     }
-    _login(){
+    /*_login(){
         var state = this.state;
         fetch('http://140.116.247.113:11401/users/signin', {
             method: 'POST',
@@ -157,7 +158,7 @@ class DengueFever extends Component {
         }
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
         s4() + '-' + s4() + s4() + s4();
-    }
+    }*/
 }
 
 

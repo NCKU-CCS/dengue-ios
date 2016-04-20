@@ -6,9 +6,9 @@ import React, {
     StyleSheet,
     ListView,
 } from 'react-native';
-import CONSTANTS from '../constants.ios.js';
-import StatusBar from '../status_bar.ios.js';
-var REQUEST_URL = 'http://localhost:1337/hospital_info/';
+import CONSTANTS from '../Global.js';
+import StatusBar from '../StatusBar.js';
+var REQUEST_URL = 'http://localhost:1337/breeding_source_list/';
 export default class BreedingSourceReportList extends Component {
     constructor(props) {
         super(props);
@@ -17,12 +17,13 @@ export default class BreedingSourceReportList extends Component {
                 rowHasChanged: (row1, row2) => row1 !== row2,
             }),
             loaded: false,
+            sourceNumber:0,
         };
     }
     componentDidMount(){
-        this._fetchData();
+        this.fetchData();
     }
-    _fetchData() {
+    fetchData() {
         fetch(REQUEST_URL)
         .then((response) => response.json())
         .then((responseData) => {
@@ -30,6 +31,7 @@ export default class BreedingSourceReportList extends Component {
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(responseData.sources),
                 loaded: true,
+                sourceNumber: sourceNumber,
             });
         })
         .catch((error) => {
@@ -48,7 +50,6 @@ export default class BreedingSourceReportList extends Component {
     _renderLoadingView() {
         return (
             <View style={styles.container}>
-                <StatusBar title="附近醫院資訊" _back={this.props._back}></StatusBar>
                 <Text>
                     Loading sources...
                 </Text>
@@ -58,7 +59,11 @@ export default class BreedingSourceReportList extends Component {
     _renderListView() {
         return(
             <View style={styles.container}>
-                <StatusBar title="附近醫院資訊" _back={this.props._back}></StatusBar>
+                <View style={styles.status}>
+                    <Text>
+                        有{this.state.sourceNumber}點待查
+                    </Text>
+                </View>
                 <ListView
                     dataSource={this.state.dataSource}
                     renderRow={this._renderEachSource.bind(this)}
@@ -72,13 +77,9 @@ export default class BreedingSourceReportList extends Component {
         return(
             <TouchableHighlight  onPress={this._enterCheckPage.bind(this,source.id)}>
                 <View style={styles.eachList}>
-                    <View style={styles.hospitalName}>
-                        <Text>{source.hospitalName}</Text>
+                    <View style={styles.address}>
+                        <Text>{source.address}</Text>
                     </View>
-                    {//<View style=styles.hospitalAddress}>
-                        //<Text>source.hospitalAddress}</Text>
-                    //</View>
-                    }
                     <View style={styles.go}>
                         <Text style={styles.goText}>前往查看</Text>
                     </View>
@@ -87,7 +88,7 @@ export default class BreedingSourceReportList extends Component {
         );
     }
     _enterCheckPage(sourceId){
-        this.props._enter("eachHospitalInfo",sourceId);
+        this.props._enter("eachBreedingSourceReport",sourceId);
     }
 }
 var styles = StyleSheet.create({
@@ -103,15 +104,17 @@ var styles = StyleSheet.create({
     goText: {
         color: CONSTANTS.mainColor,
     },
-    hospitalAddress: {
-        flex:2,
-        justifyContent:'center',
-        paddingLeft: 10,
-    },
-    hospitalName: {
+    address: {
         flex:1,
         justifyContent:'center',
         paddingLeft: 10,
+    },
+    status:{
+        marginVertical: 30,
+        alignItems:'center',
+    },
+    listView: {
+
     },
     eachList: {
         backgroundColor: CONSTANTS.backgroundColor,

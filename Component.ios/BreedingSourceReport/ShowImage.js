@@ -11,8 +11,8 @@ import React, {
     AlertIOS,
     ActionSheetIOS,
 } from 'react-native';
-import CONSTANTS from '../constants.ios.js';
-import StatusBar from '../status_bar.ios.js';
+import CONSTANTS from '../Global.js';
+import StatusBar from '../StatusBar.js';
 
 
 var BUTTONS = ['積水', '空屋'];
@@ -27,7 +27,7 @@ export default class ShowImage extends Component {
             lat:'',
             lon:'',
         };
-        this._showActionSheet = this._showActionSheet.bind(this);
+        this.showActionSheet = this.showActionSheet.bind(this);
     };
     componentDidMount() {
 
@@ -45,13 +45,12 @@ export default class ShowImage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <StatusBar title="孳生源舉報" _back={this.props._back}></StatusBar>
                 <Image ref={'img'}style={styles.image} source={{uri: this.props.uri}}>
 
                 </Image>
                 <View style={styles.inputs}>
                     <View>
-                        <TouchableHighlight  underlayColor="#eee" onPress={this._showActionSheet}>
+                        <TouchableHighlight  underlayColor="#eee" onPress={this.showActionSheet}>
                             <View style={styles.textInput}>
                                 <Text
 
@@ -126,7 +125,7 @@ export default class ShowImage extends Component {
         }
 
     }
-    _showActionSheet() {
+    showActionSheet() {
         ActionSheetIOS.showActionSheetWithOptions({
             options: BUTTONS,
             cancelButtonIndex: CANCEL_INDEX,

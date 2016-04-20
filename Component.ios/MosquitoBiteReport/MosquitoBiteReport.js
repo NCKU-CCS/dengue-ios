@@ -8,15 +8,15 @@ import React, {
     Dimensions,
     AlertIOS,
 } from 'react-native';
-import StatusBar from '../status_bar.ios.js';
-import CONSTANTS from '../constants.ios.js';
+import StatusBar from '../StatusBar.js';
+import CONSTANTS from '../Global.js';
 var IMGURI = 'http://www.opcpest.com/res/images/pest-detail-images/og_mosquito-icon_1.png';
 export default class Second extends Component {
 
     constructor(props) {
         super(props);
         this.state={};
-        this._send = this._send.bind(this);
+        this.send = this.send.bind(this);
     }
     omponentDidMount() {
 
@@ -35,7 +35,6 @@ export default class Second extends Component {
 
         return (
             <View style={styles.container}>
-                <StatusBar title="蚊子叮咬舉報" _back={this.props._back}></StatusBar>
                     <Image style={styles.image} source = {{uri:IMGURI}}>
                     </Image>
                 <View style={styles.text}>
@@ -43,7 +42,7 @@ export default class Second extends Component {
                         如果接下來幾天，您出現發燒、想睡等症狀，請至鄰近快篩點診察。
                     </Text>
                 </View>
-                <TouchableHighlight  underlayColor="#eee" onPress={this._send.bind(this)}>
+                <TouchableHighlight  underlayColor="#eee" onPress={this.send.bind(this)}>
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>送出</Text>
                     </View>
@@ -53,7 +52,7 @@ export default class Second extends Component {
 
 
     }
-    _send() {
+    send() {
 
         var state = this.state,
             props = this.props;

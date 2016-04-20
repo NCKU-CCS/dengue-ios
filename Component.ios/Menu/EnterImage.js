@@ -9,7 +9,7 @@ import React, {
     Dimensions,
     TouchableHighlight,
 } from 'react-native';
-import CONSTANTS from '../constants.ios.js';
+import CONSTANTS from '../Global.js';
 
 export default class EnterImage extends Component {
 
@@ -44,11 +44,11 @@ export default class EnterImage extends Component {
             default:
 
         }
-        this._press = this._press.bind(this);
+        this.press = this.press.bind(this);
     }
     render() {
         return(
-            <TouchableHighlight underlayColor="#aaa" style={styles.touch} onPress={this._press}>
+            <TouchableHighlight underlayColor="#aaa" style={styles.touch} onPress={this.press}>
                 <View style={styles.view}>
                     <Image  style={styles.icon} source={{uri:this.state.uri}}>
                     </Image>
@@ -60,7 +60,7 @@ export default class EnterImage extends Component {
         )
 
     };
-    _press(){
+    press(){
         this.props._enter(this.props.page);
     }
 

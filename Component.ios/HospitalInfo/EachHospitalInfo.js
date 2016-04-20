@@ -7,8 +7,8 @@ import React, {
 } from 'react-native';
 
 
-import StatusBar from '../status_bar.ios.js';
-import CONSTANTS from '../constants.ios.js';
+import StatusBar from '../StatusBar.js';
+import CONSTANTS from '../Global.js';
 var CANCEL_INDEX = 4;
 export default class BreedingSourceReportList extends Component {
 
@@ -19,7 +19,6 @@ export default class BreedingSourceReportList extends Component {
     render() {
         return(
             <View style={styles.container}>
-                <StatusBar title="醫院資訊" _back={this.props._back}></StatusBar>
 
                 <View style={styles.info}>
                     <View style={styles.textView}>

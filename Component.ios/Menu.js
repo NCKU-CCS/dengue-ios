@@ -9,28 +9,24 @@ import React, {
     Dimensions,
     TouchableHighlight,
 } from 'react-native';
-import CONSTANTS from './constants.ios.js';
-import EnterImage from './menu.component/enter_image.ios.js';
-import StatusBar from './status_bar.ios.js';
+import CONSTANTS from './Global.js';
+import EnterImage from './Menu/EnterImage.js';
+import StatusBar from './StatusBar.js';
 export default class Menu extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this._generalRender = this._generalRender.bind(this);
-        this._specialRender = this._specialRender.bind(this);
+        this.generalRender = this.generalRender.bind(this);
+        this.specialRender = this.specialRender.bind(this);
     }
-    _reportListOrNot(){
-        if(this.props.identity === '1'){
-            return <EnterImage _enter={this.props._enter} _back={this.props._back} page="breedingSourceReportList"></EnterImage>
-        }
-    }
+
     render(){
         if(this.props.identity === '1'){
-            return this._specialRender()
+            return this.specialRender()
         }
-        return this._generalRender()
+        return this.generalRender()
     }
-    _generalRender() {
+    generalRender() {
         return(
             <View style={styles.container}>
                 <StatusBar page="menu" title="登革熱防疫平台"></StatusBar>
@@ -56,7 +52,7 @@ export default class Menu extends Component {
             </View>
         );
     }
-    _specialRender(){
+    specialRender(){
         return(
             <View style={styles.container}>
                 <StatusBar page="menu" title="登革熱防疫平台"></StatusBar>
@@ -88,9 +84,6 @@ export default class Menu extends Component {
         );
     }
 
-    _press(){
-
-    }
 }
 
 var styles = StyleSheet.create({

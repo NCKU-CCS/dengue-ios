@@ -7,47 +7,40 @@ import React, {
     TextInput,
     Dimensions,
 } from 'react-native';
-import StatusBar from '../status_bar.ios.js';
+import StatusBar from '../StatusBar.js';
 import Camera from 'react-native-camera';
-import ShowImage from './show_image.ios.js';
-import CONSTANTS from '../constants.ios.js';
+import ShowImage from './ShowImage.js';
+import CONSTANTS from '../Global.js';
 export default class Second extends Component {
 
     constructor(props) {
         super(props);
         this.state={};
-
+        this.takePicture = this.takePicture.bind(this);
     }
     render() {
 
             return (
-                <View style={styles.container}>
-                    <StatusBar title="孳生源舉報" _back={this.props._back}></StatusBar>
-                    <Camera
+                <Camera
                         ref="cam"
                         style={styles.preview}
                         aspect={Camera.constants.Aspect.fill}
                         captureTarget={Camera.constants.CaptureTarget.disk}
                         >
-                        <Text style={styles.capture} onPress={this._takePicture.bind(this)}>[CAPTURE]</Text>
-                    </Camera>
-                </View>
+                        <Text style={styles.capture} onPress={this.takePicture}>[CAPTURE]</Text>
+                </Camera>
             )
 
 
     }
-    _takePicture() {
+    takePicture() {
         this.refs.cam.capture([])
-        .then((data) => this.props._enter("showImage", data) )
+        .then((data) => this.props.enter("showImage", data))
         .catch(err => console.error(err));
     }
 }
 
 var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems:'center'
-    },
     preview: {
         flex: 1,
         justifyContent: 'flex-end',
