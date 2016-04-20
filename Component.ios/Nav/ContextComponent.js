@@ -30,7 +30,7 @@ export default class ContextComponent extends Component {
             case 'hospitalInfo':
             return (<HospitalInfo enter={props.enter} back={props.back} />);
             case 'eachHospitalInfo':
-            return (<EachHospitalInfo enter={props.enter} back={props.back} />);
+            return (<EachHospitalInfo enter={props.enter} back={props.back} source={props.data}/>);
             case 'mosquitoBiteReport':
             return (<MosquitoBiteReport enter={props.enter} back={props.back}  />);
         }

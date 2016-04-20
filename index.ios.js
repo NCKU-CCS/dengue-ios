@@ -37,13 +37,26 @@ class DengueFever extends Component {
     }
 
     fetchData() {
+        fetch("http://140.116.247.113:11401/users/signup/fast/")
+        .then((response) => response.json())
+        .then((responseData) => {
+            console.log(responseData);
+            var user_uuid = responseData.user_uuid;
+            this.setState({
 
+                identity: '1',
+            });
+        })
+        .catch((error) => {
+            console.warn(error);
+        })
+        .done();
     }
 
     render() {
         //if(this.state.logined){
             return(
-                
+
                 <Nav identity={this.state.identity}></Nav>
             )
         /*}

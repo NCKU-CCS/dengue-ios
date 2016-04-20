@@ -8,7 +8,7 @@ import React, {
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import StatusBar from '../StatusBar.js';
-var REQUEST_URL = 'http://localhost:1337/hospital_info/';
+var REQUEST_URL = 'http://140.116.247.113:11401/hospital/nearby/?database=tainan&lng=120.218206&lat=22.993109';
 export default class BreedingSourceReportList extends Component {
     constructor(props) {
         super(props);
@@ -18,17 +18,18 @@ export default class BreedingSourceReportList extends Component {
             }),
             loaded: false,
         };
+        this.renderEachSource = this.renderEachSource.bind(this)
     }
     componentDidMount(){
         this.fetchData();
     }
     fetchData() {
         fetch(REQUEST_URL)
-        .then((response) => response.json())
+        .then((response) => { console.log(response); return response.json();})
         .then((responseData) => {
-            var sourceNumber = responseData.sources.length;
+            var sourceNumber = responseData.length;
             this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(responseData.sources),
+                dataSource: this.state.dataSource.cloneWithRows(responseData),
                 loaded: true,
             });
         })
@@ -39,13 +40,13 @@ export default class BreedingSourceReportList extends Component {
     }
     render() {
         if (!this.state.loaded) {
-            return this._renderLoadingView();
+            return this.renderLoadingView();
         }
-        return this._renderListView();
+        return this.renderListView();
 
     }
 
-    _renderLoadingView() {
+    renderLoadingView() {
         return (
             <View style={styles.container}>
                 <Text>
@@ -54,26 +55,27 @@ export default class BreedingSourceReportList extends Component {
             </View>
         );
     }
-    _renderListView() {
+    renderListView() {
         return(
             <View style={styles.container}>
                 <ListView
                     dataSource={this.state.dataSource}
-                    renderRow={this._renderEachSource.bind(this)}
+                    renderRow={this.renderEachSource}
                     style={styles.listView}
                     />
             </View>
         )
 
     }
-    _renderEachSource(source) {
+    renderEachSource(source) {
         return(
-            <TouchableHighlight  onPress={this._enterCheckPage.bind(this,source.id)}>
+            <TouchableHighlight  onPress={() => this.enterCheckPage(source)}>
                 <View style={styles.eachList}>
                     <View style={styles.hospitalName}>
-                        <Text>{source.hospitalName}</Text>
+                        <Text>{source.name}</Text>
                     </View>
-                    {//<View style=styles.hospitalAddress}>
+                    {
+                    //<View style=styles.hospitalAddress}>
                         //<Text>source.hospitalAddress}</Text>
                     //</View>
                     }
@@ -84,8 +86,8 @@ export default class BreedingSourceReportList extends Component {
             </TouchableHighlight>
         );
     }
-    _enterCheckPage(sourceId){
-        this.props._enter("eachHospitalInfo",sourceId);
+    enterCheckPage(source){
+        this.props.enter("eachHospitalInfo",source);
     }
 }
 var styles = StyleSheet.create({

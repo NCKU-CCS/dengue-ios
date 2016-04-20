@@ -4,6 +4,7 @@ import React, {
     Component,
     Image,
     StyleSheet,
+    MapView,
 } from 'react-native';
 
 
@@ -14,30 +15,32 @@ export default class BreedingSourceReportList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        let lng = parseFloat(props.source.lng),
+            lat = parseFloat(props.source.lat);
+        this.state = {
+            mapRegion: {
+                longitude: lng,
+                latitude: lat,
+                latitudeDelta:0.01,
+                longitudeDelta:0.01,
+            },
+            annotations :[{
+                longitude: lng,
+                latitude: lat,
+                title: props.source.name
+            }]
+        };
     }
     render() {
         return(
-            <View style={styles.container}>
 
-                <View style={styles.info}>
-                    <View style={styles.textView}>
-                        <Text
-                            style={styles.text}
-                            >
-                            資料
-                        </Text>
-                    </View>
-                    <View style={styles.textView}>
-                        <Text
-                            style={styles.text}
-                            >
-                            資料
-                        </Text>
-                    </View>
-                </View>
+                <MapView
+                    style={styles.map}
+                    onRegionChangeComplete={this.onRegionChangeComplete}
+                    region={this.state.mapRegion}
+                    annotations={this.state.annotations}
+                />
 
-            </View>
         )
     }
 
@@ -45,21 +48,9 @@ export default class BreedingSourceReportList extends Component {
 BreedingSourceReportList.defaultProps = {
 }
 var styles = StyleSheet.create({
-    container: {
+    map: {
         flex:1,
-        alignItems:'center',
-    },
-
-    info: {
-        width: CONSTANTS.screenWidth * 0.9,
-        flexDirection:'column',
-    },
-    textView: {
-        flex:1,
-        height: 40,
-        marginTop: 40,
-        justifyContent:'center',
-        alignItems:'center',
+        width:CONSTANTS.screenWidth,
     },
 
 })

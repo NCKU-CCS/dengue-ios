@@ -70,6 +70,9 @@ export default class Nav extends Component {
             case 'hospitalInfo':
                 title='就醫資訊';
                 break;
+            case 'eachHospitalInfo':
+                title='就醫資訊';
+                break;
             default:
                 break;
         }
