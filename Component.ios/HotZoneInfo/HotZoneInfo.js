@@ -19,7 +19,6 @@ export default class BreedingSourceReportList extends Component {
         return true;
     }
     render() {
-        console.log(321);
         return(
                 <WebView
                     ref="web"

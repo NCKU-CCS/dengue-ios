@@ -8,25 +8,46 @@ import React,{
 import CONSTANTS from './Global.js';
 
 export default class StatusBar extends Component {
-    render(){
-        if(this.props.page === 'menu' || this.props.page === 'index'){
-            return (
-                <View style={styles.statusBar}>
-                    <Text>
-                        {this.props.title}
-                    </Text>
-                </View>
-            );
+    constructor(props) {
+        super(props);
+        this.state = {
+            statusBarDisplay: true,
+            backDisplay: false,
+        };
+    }
+    componentWillReceiveProps(nextProps) {
+        const falseStatusBarDisplay = ['breedingSourceReport'],
+            trueBackDisplay = ['showImage', 'eachHospitalInfo'];
+        let statusBarDisplay = true,
+            backDisplay = false;
+        if(falseStatusBarDisplay.indexOf(nextProps.id) !== -1){
+            statusBarDisplay = false;
         }
-        else{
-            return(
-                <View style={styles.statusBar}>
-
+        if(trueBackDisplay.indexOf(nextProps.id) !== -1){
+            backDisplay = true;
+        }
+        console.log(nextProps.id);
+        this.setState({
+            statusBarDisplay: statusBarDisplay,
+            backDisplay: backDisplay
+        });
+    }
+    render(){
+        if(this.state.statusBarDisplay){
+            let Back = null;
+            if(this.state.backDisplay){
+                Back = (
                     <TouchableHighlight onPress={this.props.back}>
                         <Text style={styles.back}>
                             {"<"}
                         </Text>
                     </TouchableHighlight>
+                );
+            }
+            return(
+                <View style={styles.statusBar}>
+                    {Back}
+
                     <View style={styles.title}>
                         <Text>
                             {this.props.title}
@@ -37,7 +58,9 @@ export default class StatusBar extends Component {
                 </View>
             );
         }
-
+        else{
+            return null;
+        }
     }
 }
 var styles = StyleSheet.create({

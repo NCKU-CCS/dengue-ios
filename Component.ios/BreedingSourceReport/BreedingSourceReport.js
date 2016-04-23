@@ -35,7 +35,7 @@ export default class Second extends Component {
     }
     takePicture() {
         this.refs.cam.capture([])
-        .then((data) => this.props.enter("showImage", data))
+        .then((data) => this.props.enter("showImage", '孳生源舉報', data))
         .catch(err => console.error(err));
     }
 }

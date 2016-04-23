@@ -9,14 +9,14 @@ export default class TabBar extends Component {
         super(props);
     }
     render(){
-        let menu = [
+        const menu = [
             "hotZoneInfo",
             "hospitalInfo",
             "breedingSourceReport",
             "mosquitoBiteReport",
             "breedingSourceReportList",
-        ];
-        let title = [
+        ],
+        title = [
             '熱區資訊',
             '就醫資訊',
             '孳生源舉報',
@@ -38,7 +38,7 @@ export default class TabBar extends Component {
                             icon={{}}
                             selected={this.props.title === title[i]}
                             onPress={
-                                () => {this.props.enter(id);}
+                                () => {this.props.enter(id, title[i]);}
                             }
                             >
                             <ContextComponent
@@ -46,8 +46,8 @@ export default class TabBar extends Component {
                                 data = {this.props.data}
                                 back = {this.props.back}
                                 enter = {this.props.enter}
-                                toTpp = {this.props.toTop}
-                            />
+                                toTop = {this.props.toTop}
+                                />
                         </TabBarIOS.Item>
                     )
                 }

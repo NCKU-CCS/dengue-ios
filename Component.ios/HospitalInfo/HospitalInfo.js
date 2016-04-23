@@ -25,7 +25,7 @@ export default class BreedingSourceReportList extends Component {
     }
     fetchData() {
         fetch(REQUEST_URL)
-        .then((response) => { console.log(response); return response.json();})
+        .then((response) => { return response.json();})
         .then((responseData) => {
             var sourceNumber = responseData.length;
             this.setState({
@@ -87,7 +87,7 @@ export default class BreedingSourceReportList extends Component {
         );
     }
     enterCheckPage(source){
-        this.props.enter("eachHospitalInfo",source);
+        this.props.enter("eachHospitalInfo",'就醫資訊',source);
     }
 }
 var styles = StyleSheet.create({
