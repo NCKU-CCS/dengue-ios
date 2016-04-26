@@ -3,6 +3,7 @@ import React, {
     StyleSheet,
     TabBarIOS,
 } from 'react-native';
+import CONSTANTS from '../Global.js';
 import ContextComponent from './ContextComponent.js';
 export default class TabBar extends Component {
     constructor(props){
@@ -27,7 +28,7 @@ export default class TabBar extends Component {
         return(
             <TabBarIOS
                 tintColor="white"
-                barTintColor="darkslateblue"
+                barTintColor={CONSTANTS.mainColor}
                 >
                 {
                     menu.map(

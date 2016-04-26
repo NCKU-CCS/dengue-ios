@@ -38,9 +38,15 @@ class DengueFever extends Component {
 
     fetchData() {
         fetch("http://140.116.247.113:11401/users/signup/fast/")
-        .then((response) => response.json())
+        .then((response) => {
+            if(!response.ok){
+                throw Error(response.statusText);
+            }
+
+            return response.json();
+        })
         .then((responseData) => {
-            console.log(responseData);
+            console.log(responseData)
             var user_uuid = responseData.user_uuid;
             this.setState({
 

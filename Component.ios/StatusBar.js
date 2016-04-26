@@ -34,7 +34,7 @@ export default class StatusBar extends Component {
     }
     render(){
         if(this.state.statusBarDisplay){
-            let Back = null;
+            let Back = <View style={styles.space} />;
             if(this.state.backDisplay){
                 Back = (
                     <TouchableHighlight onPress={this.props.back}>
@@ -53,8 +53,7 @@ export default class StatusBar extends Component {
                             {this.props.title}
                         </Text>
                     </View>
-                    <View style={styles.space}>
-                    </View>
+                    <View style={styles.space} />
                 </View>
             );
         }
