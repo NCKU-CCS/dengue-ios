@@ -31,11 +31,30 @@ export default class BreedingSourceReportList extends Component {
             }]
         };
     }
+    componentWillReceiveProps(nextProps) {
+        let annotations = [{
+            longitude: nextProps.source.lng,
+            latitude: nextProps.source.lat,
+            title: nextProps.source.name
+        }],
+        mapRegion = {
+            longitude: nextProps.source.lng,
+            latitude: nextProps.source.lat,
+            latitudeDelta:0.01,
+            longitudeDelta:0.01,
+        };
+        this.setState({
+            annotations: annotations,
+            mapRegion: mapRegion,
+        });
+    }
     render() {
+        console.log(this.state.annotations);
         return(
 
                 <MapView
                     style={styles.map}
+                    onAnnotationPress={()=>{}}
                     onRegionChangeComplete={this.onRegionChangeComplete}
                     region={this.state.mapRegion}
                     annotations={this.state.annotations}

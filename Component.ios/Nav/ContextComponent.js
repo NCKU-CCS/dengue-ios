@@ -15,24 +15,24 @@ export default class ContextComponent extends Component {
         super(props);
     }
     render() {
-        let props = this.props;
-        switch (props.id) {
+        let {enter, back, toTop, data, id} = this.props;
+        switch (id) {
             case 'breedingSourceReport':
-            return (<BreedingSourceReport enter={props.enter} back={props.back}  />);
+            return (<BreedingSourceReport enter={enter} back={back}  />);
             case 'showImage':
-            return (<ShowImage toTop={props.toTop} enter={props.enter} back={props.back} uri={props.data}></ShowImage>);
+            return (<ShowImage toTop={toTop} enter={enter} back={back} uri={data}></ShowImage>);
             case 'breedingSourceReportList':
-            return (<BreedingSourceReportList enter={props.enter} back={props.back}  />);
+            return (<BreedingSourceReportList enter={enter} back={back}  />);
             case 'eachBreedingSourceReport':
-            return (<EachBreedingSourceReport back={props.back} sourceId={props.data}  />);
+            return (<EachBreedingSourceReport back={back} sourceId={data}  />);
             case 'hotZoneInfo':
-            return (<HotZoneInfo back={props.back} />);
+            return (<HotZoneInfo back={back} />);
             case 'hospitalInfo':
-            return (<HospitalInfo enter={props.enter} back={props.back} />);
+            return (<HospitalInfo enter={enter} back={back} />);
             case 'eachHospitalInfo':
-            return (<EachHospitalInfo enter={props.enter} back={props.back} source={props.data}/>);
+            return (<EachHospitalInfo enter={enter} back={back} source={data}/>);
             case 'mosquitoBiteReport':
-            return (<MosquitoBiteReport enter={props.enter} back={props.back}  />);
+            return (<MosquitoBiteReport enter={enter} back={back} toTop={toTop} />);
         }
     }
 }

@@ -18,7 +18,6 @@ import React, {
 import Nav from './Component.ios/Nav.js';
 import CONSTANTS from './Component.ios/Global.js';
 import StatusBar from './Component.ios/StatusBar.js';
-
 class DengueFever extends Component {
     constructor(props) {
         super(props);
@@ -33,9 +32,28 @@ class DengueFever extends Component {
     }
 
     componentDidMount() {
-        this.fetchData();
+        this.getLoginState();
     }
+    getLoginState() {
+        CONSTANTS.storage.load({
+            key: 'loginState',
 
+            //autoSync(默认为true)意味着在没有找到数据或数据过期时自动调用相应的同步方法
+            autoSync: true,
+
+            //syncInBackground(默认为true)意味着如果数据过期，
+            //在调用同步方法的同时先返回已经过期的数据。
+            //设置为false的话，则始终强制返回同步方法提供的最新数据(当然会需要更多等待时间)。
+            syncInBackground: true
+        }).then( ret => {
+            //如果找到数据，则在then方法中返回
+            this.setState({identity})
+        }).catch( err => {
+            this.fetchData();
+            //如果没有找到数据且没有同步方法，
+            //或者有其他异常，则在catch中返回
+        })
+    }
     fetchData() {
         fetch("http://140.116.247.113:11401/users/signup/fast/")
         .then((response) => {
@@ -46,11 +64,21 @@ class DengueFever extends Component {
             return response.json();
         })
         .then((responseData) => {
-            console.log(responseData)
-            var user_uuid = responseData.user_uuid;
+            let user_uuid = responseData.user_uuid;
             this.setState({
 
-                identity: '1',
+                identity: '一般使用者',
+            });
+            CONSTANTS.storage.save({
+                key: 'loginState',  //注意:请不要在key中使用_下划线符号!
+                rawData: {
+                    user_uuid: user_uuid,
+                    identity: '一般使用者'
+                },
+
+                //如果不指定过期时间，则会使用defaultExpires参数
+                //如果设为null，则永不过期
+                expires:  null
             });
         })
         .catch((error) => {
@@ -61,122 +89,122 @@ class DengueFever extends Component {
 
     render() {
         //if(this.state.logined){
-            return(
+        return(
 
-                <Nav identity={this.state.identity}></Nav>
-            )
+            <Nav identity={this.state.identity}></Nav>
+        )
         /*}
         else{
-            return(
-                <View style={styles.container}>
-                    <StatusBar title="登革熱防疫平台" page='index'></StatusBar>
-                    <Image style={styles.logo} source={{uri:""}}>
+        return(
+        <View style={styles.container}>
+        <StatusBar title="登革熱防疫平台" page='index'></StatusBar>
+        <Image style={styles.logo} source={{uri:""}}>
 
-                    </Image>
-                    <View style={styles.inputs}>
-                        <TextInput
-                            style={styles.textInput}
-                            onChangeText={(text) => this.setState({account:text})}
-                            placeholder="   account"
-                            >
+        </Image>
+        <View style={styles.inputs}>
+        <TextInput
+        style={styles.textInput}
+        onChangeText={(text) => this.setState({account:text})}
+        placeholder="   account"
+        >
 
-                        </TextInput>
-                        <TextInput
-                            style={styles.textInput}
-                            onChangeText={(text) => this.setState({password:text})}
-                            placeholder="   password"
-                            secureTextEntry={true}
-                            >
-                        </TextInput>
-                    </View>
-                    <View style={styles.buttons}>
-                        <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this._login}>
-                            <View >
-                                <Text style={styles.buttonText}>登入</Text>
-                            </View>
-                        </TouchableHighlight>
-                        <View style={styles.blank}></View>
-                        <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this._loginquickly}>
-                            <View >
-                                <Text style={styles.buttonText}>快速登入</Text>
-                            </View>
-                        </TouchableHighlight>
-                    </View>
-                </View>
-            )
+        </TextInput>
+        <TextInput
+        style={styles.textInput}
+        onChangeText={(text) => this.setState({password:text})}
+        placeholder="   password"
+        secureTextEntry={true}
+        >
+        </TextInput>
+        </View>
+        <View style={styles.buttons}>
+        <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this._login}>
+        <View >
+        <Text style={styles.buttonText}>登入</Text>
+        </View>
+        </TouchableHighlight>
+        <View style={styles.blank}></View>
+        <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this._loginquickly}>
+        <View >
+        <Text style={styles.buttonText}>快速登入</Text>
+        </View>
+        </TouchableHighlight>
+        </View>
+        </View>
+        )
         }*/
 
     }
     /*_login(){
-        var state = this.state;
-        fetch('http://140.116.247.113:11401/users/signin', {
-            method: 'POST',
-            headers: {
-                'Accept': 'text/html',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: state.account,
-                password: state.password,
-            })
-        })
-        .then((response) => {
-            console.log(response.status);
-            if(response.status !== '200'){
-                throw "status:" + response.status;
-            }
-            return response.text();
-        })
-        .then((responseText) => {
-            console.log("responseText");
-            console.log(responseText);
-            var identity = '1'; //temp
-            this.setState({
-                logined: true,
-                identity: identity,
-            })
-        })
-        .catch((error) => {
-            console.warn(error);
-        });
+    var state = this.state;
+    fetch('http://140.116.247.113:11401/users/signin', {
+    method: 'POST',
+    headers: {
+    'Accept': 'text/html',
+    'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+    username: state.account,
+    password: state.password,
+    })
+    })
+    .then((response) => {
+    console.log(response.status);
+    if(response.status !== '200'){
+    throw "status:" + response.status;
+    }
+    return response.text();
+    })
+    .then((responseText) => {
+    console.log("responseText");
+    console.log(responseText);
+    var identity = '1'; //temp
+    this.setState({
+    logined: true,
+    identity: identity,
+    })
+    })
+    .catch((error) => {
+    console.warn(error);
+    });
 
     }
     _loginquickly(){
-        var account = this.guid(),
-        password = this.guid(),
-        state = this.state;
-        fetch('http://140.116.247.113:11401/users/signup', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: state.account,
-                password: state.password,
-                "is_random": true,
-            })
-        })
-        .then((response) => response.text())
-        .then((responseText) => {
-            var identity = '0'; //temp
-            this.setState({
-                logined: true,
-                identity: identity,
-            })
-        })
-        .catch((error) => {
-            console.warn(error);
-        });
+    var account = this.guid(),
+    password = this.guid(),
+    state = this.state;
+    fetch('http://140.116.247.113:11401/users/signup', {
+    method: 'POST',
+    headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+    username: state.account,
+    password: state.password,
+    "is_random": true,
+    })
+    })
+    .then((response) => response.text())
+    .then((responseText) => {
+    var identity = '0'; //temp
+    this.setState({
+    logined: true,
+    identity: identity,
+    })
+    })
+    .catch((error) => {
+    console.warn(error);
+    });
     }
     guid() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
-        }
-        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-        s4() + '-' + s4() + s4() + s4();
+    function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+    .toString(16)
+    .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+    s4() + '-' + s4() + s4() + s4();
     }*/
 }
 

@@ -20,21 +20,38 @@ export default class TabBar extends Component {
         }
     }
     render(){
-        const menu = [
+        let menu = [
             "hotZoneInfo",
             "hospitalInfo",
             "breedingSourceReport",
             "mosquitoBiteReport",
-            "breedingSourceReportList",
+            "userInfo",
         ],
         title = [
             '熱區資訊',
             '就醫資訊',
             '孳生源舉報',
             '蚊子叮咬舉報',
-            '孳生源列表'
+            '個人資訊'
 
         ];
+        if(this.props.identity === '里長') {
+            menu = [
+                "hotZoneInfo",
+                "hospitalInfo",
+                "breedingSourceReport",
+                "mosquitoBiteReport",
+                "breedingSourceReportList",
+            ],
+            title = [
+                '熱區資訊',
+                '就醫資訊',
+                '孳生源舉報',
+                '蚊子叮咬舉報',
+                '孳生源列表'
+
+            ];
+        }
         return(
             <TabBarIOS
                 tintColor = "white"
@@ -58,7 +75,7 @@ export default class TabBar extends Component {
                                 back = {this.props.back}
                                 enter = {this.props.enter}
                                 toTop = {this.props.toTop}
-                            />
+                                />
                         </TabBarIOS.Item>
                     )
                 }

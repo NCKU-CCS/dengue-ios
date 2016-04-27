@@ -8,7 +8,7 @@ import React, {
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import StatusBar from '../StatusBar.js';
-var REQUEST_URL = 'http://localhost:1337/breeding_source_list/';
+var REQUEST_URL = 'http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=未處理';
 export default class BreedingSourceReportList extends Component {
     constructor(props) {
         super(props);

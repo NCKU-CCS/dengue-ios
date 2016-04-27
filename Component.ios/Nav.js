@@ -36,6 +36,7 @@ export default class Nav extends Component {
                     initialRoute={{id: 'hotZoneInfo', title: '熱區資訊'}}
                     renderScene={(route) =>
                             <TabBar
+                                identity = {this.props.identity}
                                 id = {route.id}
                                 data = {route.data}
                                 title = {this.state.title}

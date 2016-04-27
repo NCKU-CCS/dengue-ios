@@ -111,13 +111,14 @@ export default class ShowImage extends Component {
     };
     send() {
 
-        let state = this.state,
-        fileName = this.props.uri.split('/').slice(-1)[0];
+        let {type, description, lat, lon} = this.state,
+            fileName = this.props.uri.split('/').slice(-1)[0];
         let obj = {
             uri:this.props.uri, // either an 'assets-library' url (for files from photo library) or an image dataURL
             uploadUrl:"http://140.116.247.113:11401/breeding_source/insert/",
+            //uploadUrl:"http://localhost:1337/breeding_source_report/",
             fileName:fileName,
-            //fileKey, // (default="file") the name of the field in the POST form data under which to store the file
+            fileKey:'photo', // (default="file") the name of the field in the POST form data under which to store the file
             mimeType:"text/plain",
             headers:{
                 Accept: "text/plain",
@@ -125,23 +126,24 @@ export default class ShowImage extends Component {
             },
             data: {
                 database:'tainan',
-                lat:state.lat,
-                lng: state.lon,
-                source_type: state.type,
-                description: state.description,
+                lat:lat,
+                lng:lon,
+                source_type: type,
+                description: description,
+                status: "未處理"
                 // whatever properties you wish to send in the request
                 // along with the uploaded file
             }
         };
-        if(state.lat === '' || state.lat === ''){
+        if(lat === '' || lat === ''){
             AlertIOS.alert("未開啟定位服務");
         }
-        else if (state.type === '點擊選擇' || state.description === '') {
+        else if (description === '') {
             AlertIOS.alert('請填寫資料');
         }
         else{
             NativeModules.FileTransfer.upload(obj, (err, res) => {
-                if(obj.status=200){
+                if(res.status === 200){
                     AlertIOS.alert(
                         '舉報成功'
                     );

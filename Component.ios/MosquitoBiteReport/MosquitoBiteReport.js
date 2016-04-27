@@ -7,6 +7,8 @@ import React, {
     TouchableHighlight,
     Dimensions,
     AlertIOS,
+    NativeModules,
+
 } from 'react-native';
 import StatusBar from '../StatusBar.js';
 import CONSTANTS from '../Global.js';
@@ -18,7 +20,7 @@ export default class Second extends Component {
         this.state={};
         this.send = this.send.bind(this);
     }
-    omponentDidMount() {
+    componentDidMount() {
 
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -55,45 +57,42 @@ export default class Second extends Component {
     }
     send() {
 
-        var state = this.state,
-        props = this.props;
-
-        if(state.lat === '' || state.lat === ''){
+        let {lat,lon} = this.state,
+            {back, toTop} = this.props;
+        if(lat === '' || lat === ''){
             AlertIOS.alert("未開啟定位服務");
         }
         else{
-            fetch('http://140.116.247.113:11401/bite/insert', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
+            let obj = {
+                uri:'/', // either an 'assets-library' url (for files from photo library) or an image dataURL
+                uploadUrl:"http://140.116.247.113:11401/bite/insert/",
+                //uploadUrl:"http://localhost:1337/breeding_source_report/",
+                //fileName:fileName,
+                fileKey:'photo', // (default="file") the name of the field in the POST form data under which to store the file
+                mimeType:"text/plain",
+                headers:{
+                    Accept: "text/plain",
+                    "Content-Type":"text/plain",
                 },
-                body: JSON.stringify({
-                    'database': 'tainan',
-                    lat:state.lat,
-                    lng: state.lon,
-                })
-            })
-            .then((response) => {
-                if(!response.ok) {
-                    throw Error(response.status);
+                data: {
+                    database:'tainan',
+                    lat:lat,
+                    lng:lon,
                 }
-                return response.text()
-            })
-            .then((responseText) => {
-
-                AlertIOS.alert(
-                    '舉報成功'
-                );
-                props.back();
-            })
-            .catch((error) => {
-                console.warn(error);
-                AlertIOS.alert(
-                    '舉報失敗'
-                );
+            };
+            NativeModules.FileTransfer.upload(obj, (err, res) => {
+                if(res.status === 200){
+                    AlertIOS.alert(
+                        '舉報成功'
+                    );
+                    this.props.toTop();
+                }
+                else{
+                    AlertIOS.alert(
+                        '舉報失敗'
+                    );
+                }
             });
-
         }
 
     }

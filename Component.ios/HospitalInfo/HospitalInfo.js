@@ -112,6 +112,7 @@ export default class BreedingSourceReportList extends Component {
         );
     }
     enterCheckPage(source){
+        console.log(source);
         this.props.enter("eachHospitalInfo",'就醫資訊',source);
     }
 }
