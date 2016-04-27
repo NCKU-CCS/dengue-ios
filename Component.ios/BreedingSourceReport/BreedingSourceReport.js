@@ -29,7 +29,7 @@ export default class Second extends Component {
                         >
                         <View style = {styles.bottomBar}>
                             <View style={styles.capture} >
-                                <Text onPress={this.takePicture}></Text>
+                                <Text onPress={this.takePicture}>test</Text>
                             </View>
                         </View>
                 </Camera>
@@ -50,7 +50,8 @@ var styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         height: CONSTANTS.screenHeight * 0.5,
-        width: CONSTANTS.screenwidth * 0.9,
+        //width: CONSTANTS.screenwidth,
+        paddingBottom:100,
     },
     bottonBar: {
         width: CONSTANTS.screenwidth,
