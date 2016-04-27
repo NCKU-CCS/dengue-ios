@@ -8,6 +8,16 @@ import ContextComponent from './ContextComponent.js';
 export default class TabBar extends Component {
     constructor(props){
         super(props);
+        this.state = {
+            opacity: 1,
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.id === 'breedingSourceReport'){
+            this.setState({
+                opacity: 0
+            })
+        }
     }
     render(){
         const menu = [
@@ -27,8 +37,8 @@ export default class TabBar extends Component {
         ];
         return(
             <TabBarIOS
-                tintColor="white"
-                barTintColor={CONSTANTS.mainColor}
+                tintColor = "white"
+                barTintColor = {CONSTANTS.mainColor}
                 >
                 {
                     menu.map(
@@ -48,7 +58,7 @@ export default class TabBar extends Component {
                                 back = {this.props.back}
                                 enter = {this.props.enter}
                                 toTop = {this.props.toTop}
-                                />
+                            />
                         </TabBarIOS.Item>
                     )
                 }
@@ -58,10 +68,6 @@ export default class TabBar extends Component {
 }
 var styles = StyleSheet.create({
 
-    tabBarItem: {
-        alignItems:'center',
-        flex:1,
-    },
 
 
 });

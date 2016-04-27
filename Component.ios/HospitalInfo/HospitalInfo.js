@@ -38,7 +38,6 @@ export default class BreedingSourceReportList extends Component {
                 })
                 .then((responseData) => {
                     let sourceNumber = responseData.length;
-                    console.log(responseData);
                     this.setState({
                         dataSource: this.state.dataSource.cloneWithRows(responseData),
                         sourceNumber: sourceNumber,
@@ -93,7 +92,11 @@ export default class BreedingSourceReportList extends Component {
     }
     renderEachSource(source) {
         return(
-            <TouchableHighlight  onPress={() => this.enterCheckPage(source)}>
+            <TouchableHighlight
+                onPress={() => this.enterCheckPage(source)}
+                underlayColor = {CONSTANTS.backgroundColor}
+                activeOpacity = {0.5}
+            >
                 <View style={styles.eachList}>
                     <View style={styles.name}>
                         <Text style={styles.nameText}>{source.name}</Text>

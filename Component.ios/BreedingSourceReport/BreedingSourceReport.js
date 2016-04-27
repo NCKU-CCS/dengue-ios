@@ -27,7 +27,11 @@ export default class Second extends Component {
                         aspect={Camera.constants.Aspect.fill}
                         captureTarget={Camera.constants.CaptureTarget.disk}
                         >
-                        <Text style={styles.capture} onPress={this.takePicture}>[CAPTURE]</Text>
+                        <View style = {styles.bottomBar}>
+                            <View style={styles.capture} >
+                                <Text onPress={this.takePicture}></Text>
+                            </View>
+                        </View>
                 </Camera>
             )
 
@@ -46,16 +50,19 @@ var styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         height: CONSTANTS.screenHeight * 0.5,
-        width: CONSTANTS.screenHeight * 0.9
+        width: CONSTANTS.screenwidth * 0.9,
     },
-
+    bottonBar: {
+        width: CONSTANTS.screenwidth,
+        height:60,
+        backgroundColor: '#aaa',
+    },
     capture: {
-        flex: 0,
         backgroundColor: '#fff',
-        borderRadius: 5,
-        color: '#000',
-        padding: 10,
-        marginBottom: 80,
+        borderRadius: 30,
+        alignItems: 'center',
+        height:60,
+        width:60,
     },
 
 

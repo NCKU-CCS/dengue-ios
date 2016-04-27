@@ -35,16 +35,17 @@ export default class Second extends Component {
 
         return (
             <View style={styles.container}>
-                    <Image style={styles.image} source = {{uri:IMGURI}}>
-                    </Image>
-                <View style={styles.text}>
-                    <Text>
-                        如果接下來幾天，您出現發燒、想睡等症狀，請至鄰近快篩點診察。
+                <View style={styles.textView}>
+                    <Text style={styles.text}>
+                        我被蚊子叮了！！
                     </Text>
                 </View>
+                <Image style={styles.image} source = {{uri:IMGURI}}>
+                </Image>
+
                 <TouchableHighlight  underlayColor="#eee" onPress={this.send.bind(this)}>
                     <View style={styles.button}>
-                        <Text style={styles.buttonText}>送出</Text>
+                        <Text style={styles.buttonText}>報告！這裡有蚊子</Text>
                     </View>
                 </TouchableHighlight>
             </View>
@@ -55,30 +56,36 @@ export default class Second extends Component {
     send() {
 
         var state = this.state,
-            props = this.props;
+        props = this.props;
 
         if(state.lat === '' || state.lat === ''){
             AlertIOS.alert("未開啟定位服務");
         }
         else{
-            fetch('http://localhost:1337/modquito_bite/', {
+            fetch('http://140.116.247.113:11401/bite/insert', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
+                    'database': 'tainan',
                     lat:state.lat,
-                    lon: state.lon,
+                    lng: state.lon,
                 })
             })
-            .then((response) => response.text())
+            .then((response) => {
+                if(!response.ok) {
+                    throw Error(response.status);
+                }
+                return response.text()
+            })
             .then((responseText) => {
 
                 AlertIOS.alert(
                     '舉報成功'
                 );
-                props._back();
+                props.back();
             })
             .catch((error) => {
                 console.warn(error);
@@ -95,21 +102,35 @@ export default class Second extends Component {
 var styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems:'center'
+        alignItems:'center',
+        marginBottom:150,
+        flexDirection:'column'
     },
     image: {
-        flex:0.7,
-        width:CONSTANTS.screenWidth - 80,
+        flex:2,
+        width:CONSTANTS.screenWidth * 0.5,
         resizeMode:"contain",
+        justifyContent: 'center',
+        marginBottom: 50,
     },
 
-    text: {
-        flex:0.3,
+    textView: {
+        flex:1,
         justifyContent: 'center',
-        paddingHorizontal:50,
+        marginTop:50,
+    },
+    text: {
+        fontSize: 18,
+
     },
     button: {
-        height: 30,
+        flex:2,
+        justifyContent: 'center',
+        backgroundColor:CONSTANTS.mainColor,
+        padding:10,
+    },
+    buttonText: {
+        color: '#fff',
     }
 
 
