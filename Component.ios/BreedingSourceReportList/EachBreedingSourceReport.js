@@ -11,9 +11,9 @@ import React, {
 
 import StatusBar from '../StatusBar.js';
 import CONSTANTS from '../Global.js';
-var BUTTONS = ['積水', '空屋'];
-var DESTRUCTIVE_INDEX = 3;
-var CANCEL_INDEX = 4;
+let BUTTONS = ['積水', '空屋'];
+let DESTRUCTIVE_INDEX = 3;
+let CANCEL_INDEX = 4;
 export default class BreedingSourceReportList extends Component {
 
     constructor(props) {
@@ -23,10 +23,11 @@ export default class BreedingSourceReportList extends Component {
         this.not = this.not.bind(this);
     }
     render() {
+        let {source} = this.props;
         return(
             <View style={styles.container}>
 
-                <Image ref={'img'} style={styles.image} source={{uri: this.props.uri}}>
+                <Image ref={'img'} style={styles.image} source={{uri: source.photo_url}}>
 
                 </Image>
                 <View style={styles.info}>
@@ -58,7 +59,7 @@ export default class BreedingSourceReportList extends Component {
     }
 
     not(){
-        var props = this.props;
+        let props = this.props;
         fetch('http://localhost:1337/breeding_source_report/update/', {
             method: 'POST',
             headers: {
@@ -80,7 +81,7 @@ export default class BreedingSourceReportList extends Component {
         });
     }
     showActionSheet() {
-        var props = this.props;
+        let props = this.props;
         ActionSheetIOS.showActionSheetWithOptions({
             options: BUTTONS,
             cancelButtonIndex: CANCEL_INDEX,
@@ -110,18 +111,16 @@ export default class BreedingSourceReportList extends Component {
         });
     }
 }
-BreedingSourceReportList.defaultProps = {
-    uri:"http://www.opcpest.com/res/images/pest-detail-images/og_mosquito-icon_1.png",
-}
-var styles = StyleSheet.create({
+
+let styles = StyleSheet.create({
     container: {
         flex:1,
         alignItems:'center',
     },
     image: {
-        marginTop: 50,
         height: CONSTANTS.screenHeight * 0.5,
         width: CONSTANTS.screenWidth * 0.9,
+        resizeMode: 'contain'
     },
     info: {
         width: CONSTANTS.screenWidth * 0.9,

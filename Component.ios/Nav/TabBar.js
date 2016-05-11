@@ -25,7 +25,7 @@ export default class TabBar extends Component {
             "hospitalInfo",
             "breedingSourceReport",
             "mosquitoBiteReport",
-            "userInfo",
+            "userSetting",
         ],
         title = [
             '熱區資訊',
@@ -35,20 +35,22 @@ export default class TabBar extends Component {
             '個人資訊'
 
         ];
-        if(this.props.identity === '里長') {
+        if(this.props.info.identity === '里長') {
             menu = [
                 "hotZoneInfo",
                 "hospitalInfo",
                 "breedingSourceReport",
                 "mosquitoBiteReport",
                 "breedingSourceReportList",
+                //"userSetting"
             ],
             title = [
                 '熱區資訊',
                 '就醫資訊',
                 '孳生源舉報',
                 '蚊子叮咬舉報',
-                '孳生源列表'
+                '孳生源列表',
+                //'個人資訊'
 
             ];
         }
@@ -71,10 +73,13 @@ export default class TabBar extends Component {
                             >
                             <ContextComponent
                                 id = {this.props.id}
+                                info = {this.props.info}
                                 data = {this.props.data}
                                 back = {this.props.back}
                                 enter = {this.props.enter}
                                 toTop = {this.props.toTop}
+                                logined = {this.props.logined}
+                                restart = {this.props.restart}
                                 />
                         </TabBarIOS.Item>
                     )

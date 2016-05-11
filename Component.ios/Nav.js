@@ -23,6 +23,7 @@ export default class Nav extends Component {
         this.toTop = this.toTop.bind(this);
     }
     render() {
+        console.log(this.props.info);
         return (
             <View style = {styles.container}>
                 <StatusBar
@@ -36,13 +37,15 @@ export default class Nav extends Component {
                     initialRoute={{id: 'hotZoneInfo', title: '熱區資訊'}}
                     renderScene={(route) =>
                             <TabBar
-                                identity = {this.props.identity}
+                                info = {this.props.info}
+                                logined = {this.props.logined}
                                 id = {route.id}
                                 data = {route.data}
                                 title = {this.state.title}
                                 enter = {this.enter}
                                 back = {this.back}
                                 toTop = {this.toTop}
+                                restart = {this.props.restart}
                             />
 
                     }

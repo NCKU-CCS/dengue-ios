@@ -26,6 +26,7 @@ export default class ShowImage extends Component {
             description:'',
             lat:'',
             lon:'',
+            unmount: false,
         };
         //this.showActionSheet = this.showActionSheet.bind(this);
     };
@@ -44,135 +45,166 @@ export default class ShowImage extends Component {
     };
     render() {
         let types = ['住家','戶外a','戶外b'],
-            typeStyle = [styles.type, styles.type, styles.type];
+        typeStyle = [styles.type, styles.type, styles.type];
         for( let a in types){
             if(types[a] === this.state.type){
                 typeStyle[a] = styles.typeSelected;
                 break;
             }
         }
-        return (
-            <View style={styles.container}>
-                <Image ref={'img'}style={styles.image} source={{uri: this.props.uri}}>
+        if(!this.state.unmount){
+            return (
+                <View style={styles.container} ref="mount">
+                    <Image ref={'img'}style={styles.image} source={{uri: this.props.uri}}>
 
-                </Image>
-                <View style={styles.inputs}>
-                    <View style={styles.question}>
-                        <View style={styles.title}>
-                            <Text>
-                                孳生源類型
-                            </Text>
+                    </Image>
+                    <View style={styles.inputs}>
+                        <View style={styles.question}>
+                            <View style={styles.title}>
+                                <Text>
+                                    孳生源類型
+                                </Text>
+                            </View>
+                            <View style={styles.types}>
+                                <TouchableHighlight  style={typeStyle[0]} underlayColor="#eee" onPress={()=>{this.setState({type:'住家'})}}>
+                                    <Text
+                                        style = {styles.typeText}
+                                        >
+                                        住家容器
+                                    </Text>
+                                </TouchableHighlight>
+                                <TouchableHighlight  style={typeStyle[1]} underlayColor="#eee" onPress={()=>{this.setState({type:'戶外a'})}}>
+                                    <Text
+                                        style = {styles.typeText}
+                                        >
+                                        戶外容器
+                                    </Text>
+                                </TouchableHighlight>
+                                <TouchableHighlight  style={typeStyle[2]} underlayColor="#eee" onPress={()=>{this.setState({type:'戶外b'})}}>
+                                    <Text
+                                        style = {styles.typeText}
+                                        >
+                                        戶外髒亂處
+                                    </Text>
+                                </TouchableHighlight>
+                            </View>
                         </View>
-                        <View style={styles.types}>
-                            <TouchableHighlight  style={typeStyle[0]} underlayColor="#eee" onPress={()=>{this.setState({type:'住家'})}}>
-                                <Text
-
-                                    >
-                                    住家
+                        <View style = {styles.question}>
+                            <View style={styles.title}>
+                                <Text>
+                                    地點簡介
                                 </Text>
-                            </TouchableHighlight>
-                            <TouchableHighlight  style={typeStyle[1]} underlayColor="#eee" onPress={()=>{this.setState({type:'戶外a'})}}>
-                                <Text
-
+                            </View>
+                            <View style={styles.answer}>
+                                <TextInput
+                                    style={styles.textInput}
+                                    onChangeText={(text) => this.setState({description:text})}
+                                    placeholder="  description(大樹旁)"
                                     >
-                                    戶外a
-                                </Text>
-                            </TouchableHighlight>
-                            <TouchableHighlight  style={typeStyle[2]} underlayColor="#eee" onPress={()=>{this.setState({type:'戶外b'})}}>
-                                <Text
-
-                                    >
-                                    戶外b
-                                </Text>
-                            </TouchableHighlight>
+                                </TextInput>
+                            </View>
                         </View>
+                        <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this.send.bind(this)}>
+                            <Text style={styles.buttonText}>送出</Text>
+                        </TouchableHighlight>
                     </View>
-                    <View style = {styles.question}>
-                        <View style={styles.title}>
-                            <Text>
-                                地點簡介
-                            </Text>
-                        </View>
-                        <View style={styles.answer}>
-                            <TextInput
-                                style={styles.textInput}
-                                onChangeText={(text) => this.setState({description:text})}
-                                placeholder="  description(大樹旁)"
-                                >
-                            </TextInput>
-                        </View>
-                    </View>
-                    <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this.send.bind(this)}>
-                        <Text style={styles.buttonText}>送出</Text>
-                    </TouchableHighlight>
                 </View>
-            </View>
-        )
+            )
+        }
+        return null;
     };
     send() {
 
         let {type, description, lat, lon} = this.state,
-            fileName = this.props.uri.split('/').slice(-1)[0];
-        let obj = {
-            uri:this.props.uri, // either an 'assets-library' url (for files from photo library) or an image dataURL
-            uploadUrl:"http://140.116.247.113:11401/breeding_source/insert/",
-            //uploadUrl:"http://localhost:1337/breeding_source_report/",
-            fileName:fileName,
-            fileKey:'photo', // (default="file") the name of the field in the POST form data under which to store the file
-            mimeType:"text/plain",
-            headers:{
-                Accept: "text/plain",
-                "Content-Type":"text/plain",
+        fileName = this.props.uri.split('/').slice(-1)[0];
+        let photo = {
+            uri: this.props.uri,
+            type: 'image/jpeg',
+            name: fileName,
+        }, formData = new FormData();
+        formData.append('photo', photo);
+        formData.append('database', 'tainan');
+        formData.append('lat', lat);
+        formData.append('lng', lon);
+        formData.append('source_type', type);
+        formData.append('description', description);
+        formData.append('status', '未處理');
+        fetch("http://140.116.247.113:11401/breeding_source/insert/", {
+            method: 'POST',
+            headers: {
+                'Accept': 'multipart/form-data',
+                'Content-Type': 'multipart/form-data',
             },
-            data: {
-                database:'tainan',
-                lat:lat,
-                lng:lon,
-                source_type: type,
-                description: description,
-                status: "未處理"
-                // whatever properties you wish to send in the request
-                // along with the uploaded file
+            body: formData
+        })
+        .then(response => {
+            if(!response.ok){
+                throw Error(response.status);
             }
+            this.props.toTop();
+        })
+        .catch(err => {
+            console.warn(err);
+        })
+        /*let obj = {
+        uri:this.props.uri, // either an 'assets-library' url (for files from photo library) or an image dataURL
+        uploadUrl:"http://140.116.247.113:11401/breeding_source/insert/",
+        //uploadUrl:"http://localhost:1337/breeding_source_report/",
+        fileName:fileName,
+        fileKey:'photo', // (default="file") the name of the field in the POST form data under which to store the file
+        mimeType:"multipart/form-data",
+        headers:{
+        Accept: "multipart/form-data",
+        "Content-Type":"multipart/form-data",
+        },
+        data: {
+        database:'tainan',
+        lat:lat,
+        lng:lon,
+        source_type: type,
+        description: description,
+        status: "未處理"
+        // whatever properties you wish to send in the request
+        // along with the uploaded file
+        }
         };
         if(lat === '' || lat === ''){
-            AlertIOS.alert("未開啟定位服務");
+        AlertIOS.alert("未開啟定位服務");
         }
         else if (description === '') {
-            AlertIOS.alert('請填寫資料');
+        AlertIOS.alert('請填寫資料');
         }
         else{
-            NativeModules.FileTransfer.upload(obj, (err, res) => {
-                if(res.status === 200){
-                    AlertIOS.alert(
-                        '舉報成功'
-                    );
-                    this.props.toTop();
-                }
-                else{
-                    AlertIOS.alert(
-                        '舉報失敗'
-                    );
-                }
-                // handle response
-                // it is an object with 'status' and 'data' properties
-                // if the file path protocol is not supported the status will be 0
-                // and the request won't be made at all
-            });
+        let subscription = NativeAppEventEmitter.addListener(
+        'transferring',
+        (response) => {
+        console.log("Transferring: percentage: ", response.progress * 100);
         }
+        );
+        NativeModules.FileTransfer.upload(obj, (err, res) => {
+        console.log(res.status);
+        if(res.status === 200){
+        AlertIOS.alert(
+        '舉報成功'
+        );
+        this.props.toTop();
+        }
+        else{
+        AlertIOS.alert(
+        '舉報失敗'
+        );
+        console.warn(err);
+        }
+        subscription.remove();
+        // handle response
+        // it is an object with 'status' and 'data' properties
+        // if the file path protocol is not supported the status will be 0
+        // and the request won't be made at all
+        });
+        }*/
 
     }
-    /*showActionSheet() {
-        ActionSheetIOS.showActionSheetWithOptions({
-            options: BUTTONS,
-            cancelButtonIndex: CANCEL_INDEX,
-            destructiveButtonIndex: DESTRUCTIVE_INDEX,
-            tintColor: 'green',
-        },
-        (buttonIndex) => {
-            this.setState({ type: BUTTONS[buttonIndex] });
-        });
-    }*/
+
 }
 var styles = StyleSheet.create({
     container: {
@@ -229,6 +261,9 @@ var styles = StyleSheet.create({
         borderColor:"#777",
         borderWidth:1,
     },
+    typeText: {
+        fontSize:10,
+    },
     typeSelected: {
         height:50,
         width:50,
@@ -245,6 +280,7 @@ var styles = StyleSheet.create({
         width:70,
         height:40,
         padding: 5,
+        marginTop:20,
         borderRadius :3,
         borderColor: CONSTANTS.mainColor,
         borderWidth:1,

@@ -19,7 +19,7 @@ let storage = new Storage({
   }
 });
 export default {
-    mainColor : '#FF3300',
+    mainColor : '#ff6633',
     backgroundColor: '#f2f2f2',
     screenHeight : Dimensions.get('window').height,
     screenWidth : Dimensions.get('window').width,

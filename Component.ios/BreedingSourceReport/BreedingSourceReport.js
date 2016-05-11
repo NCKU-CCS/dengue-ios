@@ -6,6 +6,7 @@ import React, {
     Image,
     TextInput,
     Dimensions,
+    TouchableHighlight,
 } from 'react-native';
 import StatusBar from '../StatusBar.js';
 import Camera from 'react-native-camera';
@@ -28,9 +29,9 @@ export default class Second extends Component {
                         captureTarget={Camera.constants.CaptureTarget.disk}
                         >
                         <View style = {styles.bottomBar}>
-                            <View style={styles.capture} >
-                                <Text onPress={this.takePicture}>test</Text>
-                            </View>
+                            <TouchableHighlight onPress={this.takePicture} style={styles.capture} >
+                                <View style={styles.capture}></View>
+                            </TouchableHighlight>
                         </View>
                 </Camera>
             )
