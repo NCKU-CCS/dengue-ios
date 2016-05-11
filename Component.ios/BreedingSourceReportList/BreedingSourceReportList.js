@@ -35,6 +35,7 @@ export default class BreedingSourceReportList extends Component {
         }
     }
     fetchData(status) {
+        status = status === '已處理' ? status + ',非滋生源': status; 
         fetch(`http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=${status}`)
         .then((response) => {
             if(!response.ok){
@@ -44,6 +45,14 @@ export default class BreedingSourceReportList extends Component {
         })
         .then((responseData) => {
             var sourceNumber = responseData.length;
+            CONSTANTS.storage.save({
+                key: 'breedingSourceReport',  //注意:请不要在key中使用_下划线符号!
+                rawData: responseData,
+
+                //如果不指定过期时间，则会使用defaultExpires参数
+                //如果设为null，则永不过期
+                expires:  null
+            });
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(responseData),
                 loaded: true,
@@ -266,9 +275,16 @@ var styles = StyleSheet.create({
         fontSize:30,
         fontWeight:'bold',
         marginTop:10,
+        position:'absolute'
     },
     description: {
-        marginVertical:50,
+        marginTop:70,
+
+
+    },
+    createdTime: {
+        position:'absolute',
+        marginBottom:10,
     },
     rightSide: {
         flex: 0.4,

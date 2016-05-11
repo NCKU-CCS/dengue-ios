@@ -7,7 +7,8 @@ import React, {
     Text,
     TouchableHighlight,
     AlertIOS,
-    NativeModules
+    NativeModules,
+    ScrollView,
 } from 'react-native';
 
 import CONSTANTS from '../Global.js';
@@ -154,11 +155,11 @@ export default class UserSetting extends Component {
     }
     renderSignupView() {
         return(
-            <View style = {styles.container}>
+            <ScrollView>
                 <Image
                     source = {{ uri : "http://www.opcpest.com/res/images/pest-detail-images/og_mosquito-icon_1.png" }}
                     style = {styles.image}
-                    >
+                >
                 </Image>
                 <TextInput
                     style = {styles.textInput}
@@ -186,7 +187,6 @@ export default class UserSetting extends Component {
                     selectionColor = '#f838f9'
                     >
                 </TextInput>
-                <View style = {styles.hundredWidth}>
                     <TouchableHighlight
                         onPress = {this.signup}
                         style = {styles.signup}
@@ -195,8 +195,6 @@ export default class UserSetting extends Component {
                             註冊
                         </Text>
                     </TouchableHighlight>
-                </View>
-                <View style = {styles.ps}>
                     <Text style = {styles.psText}>
                         已經註冊了？
                     </Text>
@@ -208,21 +206,17 @@ export default class UserSetting extends Component {
                             登入
                         </Text>
                     </TouchableHighlight>
-                </View>
-            </View>
+            </ScrollView>
         );
     }
 }
 let styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        marginHorizontal: CONSTANTS.screenWidth * 0.15,
-        marginVertical: CONSTANTS.screenHeight * 0.15,
-        justifyContent:'center',
-    },
+
     image: {
-        flex: 1,
+        marginTop: 30,
+        height: 150,
+        width: 200,
+        alignSelf: 'center',
         resizeMode: 'contain',
     },
     textInput: {
@@ -230,15 +224,17 @@ let styles = StyleSheet.create({
         borderColor:'#aaa',
         borderWidth:1,
         borderRadius:1,
-        height: 40,
-        marginTop: 30,
+        height: 30,
+        width:200,
+        marginTop: 20,
+        alignSelf: 'center',
     },
     hundredWidth: {
         flexDirection: 'row'
     },
     signup: {
-        flex: 1,
         height: 40,
+        width:200,
         marginTop: 30,
         padding: 5,
         backgroundColor: "#fff",
@@ -253,16 +249,13 @@ let styles = StyleSheet.create({
     signupText: {
 
     },
-    ps: {
-        //flex: 1,
-        height: 40,
-        alignItems:'center',
-        marginTop:30,
-    },
     psText: {
+        marginTop:30,
         color:"#777",
+        alignSelf: 'center',
     },
     login: {
+        alignSelf: 'center',
     },
     loginText: {
         color:"#00ace6",

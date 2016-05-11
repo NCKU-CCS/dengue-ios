@@ -8,7 +8,7 @@ import React, {
     Dimensions,
     AlertIOS,
     NativeModules,
-
+    ScrollView,
 } from 'react-native';
 import StatusBar from '../StatusBar.js';
 import CONSTANTS from '../Global.js';
@@ -36,21 +36,21 @@ export default class Second extends Component {
     render() {
 
         return (
-            <View style={styles.container}>
-                <View style={styles.textView}>
+            <ScrollView >
                     <Text style={styles.text}>
                         我被蚊子叮了！！
                     </Text>
-                </View>
                 <Image style={styles.image} source = {{uri:IMGURI}}>
                 </Image>
 
-                <TouchableHighlight  underlayColor="#eee" onPress={this.send.bind(this)}>
-                    <View style={styles.button}>
-                        <Text style={styles.buttonText}>報告！這裡有蚊子</Text>
-                    </View>
+                <TouchableHighlight
+                    style={styles.button}
+                    underlayColor="#eee"
+                    onPress={this.send.bind(this)}
+                >
+                    <Text style={styles.buttonText}>報告！這裡有蚊子</Text>
                 </TouchableHighlight>
-            </View>
+            </ScrollView>
         )
 
 
@@ -99,34 +99,30 @@ export default class Second extends Component {
 }
 
 var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems:'center',
-        marginBottom:150,
-        flexDirection:'column'
-    },
+
     image: {
-        flex:2,
+        height: 250,
         width:CONSTANTS.screenWidth * 0.5,
         resizeMode:"contain",
         justifyContent: 'center',
-        marginBottom: 50,
+        alignSelf: 'center',
+        marginTop: 50,
     },
 
-    textView: {
-        flex:1,
-        justifyContent: 'center',
-        marginTop:50,
-    },
+
     text: {
         fontSize: 18,
-
+        alignSelf: 'center',
+        marginTop: 50,
     },
     button: {
-        flex:2,
+        marginTop: 50,
         justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
         backgroundColor:CONSTANTS.mainColor,
         padding:10,
+        width: 150,
     },
     buttonText: {
         color: '#fff',

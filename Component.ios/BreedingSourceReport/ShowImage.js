@@ -10,6 +10,7 @@ import React, {
     NativeModules,
     AlertIOS,
     ActionSheetIOS,
+    ScrollView,
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import StatusBar from '../StatusBar.js';
@@ -54,7 +55,7 @@ export default class ShowImage extends Component {
         }
         if(!this.state.unmount){
             return (
-                <View style={styles.container} ref="mount">
+                <ScrollView  ref="mount">
                     <Image ref={'img'}style={styles.image} source={{uri: this.props.uri}}>
 
                     </Image>
@@ -97,9 +98,10 @@ export default class ShowImage extends Component {
                             </View>
                             <View style={styles.answer}>
                                 <TextInput
-                                    style={styles.textInput}
-                                    onChangeText={(text) => this.setState({description:text})}
-                                    placeholder="  description(大樹旁)"
+                                    multiline = {true}
+                                    style = {styles.textInput}
+                                    onChangeText = {(text) => this.setState({description:text})}
+                                    placeholder = "  description(大樹旁)"
                                     >
                                 </TextInput>
                             </View>
@@ -108,7 +110,7 @@ export default class ShowImage extends Component {
                             <Text style={styles.buttonText}>送出</Text>
                         </TouchableHighlight>
                     </View>
-                </View>
+                </ScrollView>
             )
         }
         return null;
@@ -207,16 +209,10 @@ export default class ShowImage extends Component {
 
 }
 var styles = StyleSheet.create({
-    container: {
-        flex:1,
-        flexDirection:'column',
-        paddingBottom:100,
-        backgroundColor: CONSTANTS.backgroundColor
-    },
     image: {
-        flex:1,
-        width:CONSTANTS.screenWidth,
-        resizeMode:'contain',
+        height: 250,
+        width: CONSTANTS.screenWidth,
+        resizeMode: 'contain',
     },
     inputs: {
         flex:1,
@@ -226,11 +222,14 @@ var styles = StyleSheet.create({
     },
     question: {
         flex:1,
-        flexDirection: 'column'
+        flexDirection: 'column',
+        marginTop: 20,
+
     },
     title: {
         flex:1,
         justifyContent:'center',
+        marginBottom: 20,
     },
     answer: {
         flex:1,
@@ -241,6 +240,7 @@ var styles = StyleSheet.create({
         borderWidth:1,
         borderRadius:1,
         height: 40,
+        marginRight:10,
     },
     types: {
         //flex:1,
