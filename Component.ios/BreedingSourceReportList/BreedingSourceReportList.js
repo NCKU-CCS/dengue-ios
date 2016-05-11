@@ -10,7 +10,6 @@ import React, {
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import StatusBar from '../StatusBar.js';
-var REQUEST_URL = 'http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=未處理';
 export default class BreedingSourceReportList extends Component {
     constructor(props) {
         super(props);
@@ -20,16 +19,23 @@ export default class BreedingSourceReportList extends Component {
             }),
             loaded: false,
             sourceNumber:0,
+            status: '未處理',
         };
         this.renderEachSource = this.renderEachSource.bind(this);
         this.renderLoadingView = this.renderLoadingView.bind(this);
         this.renderListView = this.renderListView.bind(this);
+        this.statusFocus = this.statusFocus.bind(this);
     }
     componentDidMount(){
-        this.fetchData();
+        this.fetchData(this.state.status);
     }
-    fetchData() {
-        fetch(REQUEST_URL)
+    componentDidUpdate(prevProps, prevState) {
+        if(prevState.status !== this.state.status){
+            this.fetchData(this.state.status);
+        }
+    }
+    fetchData(status) {
+        fetch(`http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=${status}`)
         .then((response) => {
             if(!response.ok){
                 throw Error(response.status);
@@ -37,7 +43,6 @@ export default class BreedingSourceReportList extends Component {
             return response.json()
         })
         .then((responseData) => {
-            console.log(responseData);
             var sourceNumber = responseData.length;
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(responseData),
@@ -51,7 +56,7 @@ export default class BreedingSourceReportList extends Component {
         })
         .done();
     }
-    changeStatus(source, status){
+    updateStatus(source, status){
         let formData = new FormData();
         formData.append('database','tainan');
         formData.append('source_id', source.source_id);
@@ -68,7 +73,7 @@ export default class BreedingSourceReportList extends Component {
             if(!response.ok){
                 throw Error(response.status);
             }
-            this.fetchData();
+            this.fetchData(this.state.status);
             return response.text();
         })
         .then((response) => {
@@ -78,6 +83,11 @@ export default class BreedingSourceReportList extends Component {
             alert('更新失敗！');
             console.warn(err);
         })
+    }
+    statusFocus(status) {
+        if(this.state.status === status){
+            return styles.statusFocus;
+        }
     }
     render() {
         if (!this.state.loaded) {
@@ -97,16 +107,43 @@ export default class BreedingSourceReportList extends Component {
         );
     }
     renderListView() {
+
         return(
             <View style={styles.container}>
                 <View style={styles.status}>
                     <Text style={styles.topText}>
-                        {`尚有  `}
+                        {`共有  `}
                         <Text style={styles.sourceNumber}>
                             {this.state.sourceNumber}
                         </Text>
-                        {`  點待查`}
+                        {`  點${this.state.status}`}
                     </Text>
+                    <View style = {styles.statusButtons}>
+                        <TouchableHighlight
+                            style = {[styles.statusButton, this.statusFocus('未處理')]}
+                            onPress = {() => {this.setState({loaded:false, status:'未處理'});}}
+                        >
+                            <Text style={styles.statusText}>
+                                未處理
+                            </Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight
+                            style = {[styles.statusButton, styles.center, this.statusFocus('通報處理')]}
+                            onPress = {() => {this.setState({loaded:false, status:'通報處理'});}}
+                        >
+                            <Text style={styles.statusText}>
+                                待處理
+                            </Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight
+                            style = {[styles.statusButton, this.statusFocus('已處理')]}
+                            onPress = {() => {this.setState({loaded:false, status:'已處理'});}}
+                        >
+                            <Text style={styles.statusText}>
+                                已處理
+                            </Text>
+                        </TouchableHighlight>
+                    </View>
                 </View>
                 <ListView
                     dataSource={this.state.dataSource}
@@ -129,7 +166,7 @@ export default class BreedingSourceReportList extends Component {
                             {source.description}
                         </Text>
                         <Text style={styles.createdTime}>
-                            {source.created_at}
+                            {source.created_at.match(/(.+)\./)[1]}
                         </Text>
                     </View>
                     <Image
@@ -141,7 +178,7 @@ export default class BreedingSourceReportList extends Component {
                 <View style={styles.buttons}>
                     <TouchableHighlight
                         style={styles.button}
-                        onPress={this.changeStatus.bind(this,source,'已處理')}
+                        onPress={this.updateStatus.bind(this,source,'已處理')}
                         >
                         <Text style={styles.text}>
                             已處理
@@ -149,7 +186,7 @@ export default class BreedingSourceReportList extends Component {
                     </TouchableHighlight>
                     <TouchableHighlight
                         style={styles.button}
-                        onPress={this.changeStatus.bind(this,source,'通報處理')}
+                        onPress={this.updateStatus.bind(this,source,'通報處理')}
                         >
                         <Text style={styles.text}>
                             通報處理
@@ -157,7 +194,7 @@ export default class BreedingSourceReportList extends Component {
                     </TouchableHighlight>
                     <TouchableHighlight
                         style={styles.button}
-                        onPress={this.changeStatus.bind(this,source,'非孳生源')}
+                        onPress={this.updateStatus.bind(this,source,'非孳生源')}
                         >
                         <Text style={styles.text}>
                             非孳生源
@@ -177,6 +214,27 @@ var styles = StyleSheet.create({
     status:{
         marginVertical: 30,
         alignItems:'center',
+        flexDirection: 'column',
+    },
+    statusButtons: {
+        marginTop:10,
+        flexDirection:'row',
+        borderWidth: 1,
+        borderColor:'#ccc',
+        borderRadius:3,
+
+    },
+    statusButton: {
+        flex:1,
+        padding:5,
+    },
+    center: {
+        borderLeftWidth: 1,
+        borderRightWidth:1,
+        borderColor:'#ccc',
+    },
+    statusFocus: {
+        backgroundColor: '#ccc',
     },
     topText: {
         alignSelf:'center',
