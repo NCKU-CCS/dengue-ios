@@ -27,7 +27,7 @@ export default class BreedingSourceReportList extends Component {
             annotations :[{
                 longitude: lng,
                 latitude: lat,
-                title: props.source.name
+                title: props.source.name,
             }]
         };
     }
@@ -49,20 +49,18 @@ export default class BreedingSourceReportList extends Component {
         });
     }
     render() {
-        console.log(this.state.annotations);
         return(
 
                 <MapView
                     style={styles.map}
-                    onAnnotationPress={()=>{}}
-                    onRegionChangeComplete={this.onRegionChangeComplete}
+                    showsUserLocation = {true}
                     region={this.state.mapRegion}
                     annotations={this.state.annotations}
+                    onAnnotationPress={()=>{console.log(123);}}
                 />
 
         )
     }
-
 }
 BreedingSourceReportList.defaultProps = {
 }

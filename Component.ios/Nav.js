@@ -23,7 +23,6 @@ export default class Nav extends Component {
         this.toTop = this.toTop.bind(this);
     }
     render() {
-        console.log(this.props.info);
         return (
             <View style = {styles.container}>
                 <StatusBar
@@ -57,9 +56,8 @@ export default class Nav extends Component {
     enter(id, title, data) {
 
         let routeList = this.refs.nav.getCurrentRoutes(),
-            route = this.containRoute(id, routeList)
+            route = this.containRoute(id, data, routeList)
         if(route){
-            console.log('jump');
             this.refs.nav.jumpTo(route);
         }
         else{
@@ -82,10 +80,9 @@ export default class Nav extends Component {
     toTop() {
         this.refs.nav.popToTop();
     }
-    containRoute(routeId, routeList) {
-        console.log(routeId);
+    containRoute(routeId, routeData, routeList) {
         for(let x in routeList){
-            if(routeId === routeList[x].id){
+            if(routeId === routeList[x].id && routeData === routeList[x].data){
                 return routeList[x];
             }
         }

@@ -93,11 +93,12 @@ export default class BreedingSourceReportList extends Component {
     renderEachSource(source) {
         return(
             <TouchableHighlight
+                style={styles.eachList}
                 onPress={() => this.enterCheckPage(source)}
                 underlayColor = {CONSTANTS.backgroundColor}
                 activeOpacity = {0.5}
             >
-                <View style={styles.eachList}>
+                <View >
                     <View style={styles.name}>
                         <Text style={styles.nameText}>{source.name}</Text>
                     </View>
@@ -112,7 +113,6 @@ export default class BreedingSourceReportList extends Component {
         );
     }
     enterCheckPage(source){
-        console.log(source);
         this.props.enter("eachHospitalInfo",'就醫資訊',source);
     }
 }
