@@ -24,9 +24,6 @@ export default class BreedingSourceReportList extends Component {
         this.renderEachSource = this.renderEachSource.bind(this);
         this.renderLoadingView = this.renderLoadingView.bind(this);
         this.renderListView = this.renderListView.bind(this);
-        this.done = this.done.bind(this);
-        this.called = this.called.bind(this);
-        this.not = this.not.bind(this);
     }
     componentDidMount(){
         this.fetchData();
@@ -54,38 +51,33 @@ export default class BreedingSourceReportList extends Component {
         })
         .done();
     }
-    done(source) {
+    changeStatus(source, status){
+        let formData = new FormData();
+        formData.append('database','tainan');
+        formData.append('source_id', source.source_id);
+        formData.append('status', status);
         fetch('http://140.116.247.113:11401/breeding_source/update/', {
             method: 'POST',
             headers: {
                 'Accept': 'multipart/form-data',
                 'Content-Type': 'multipart/form-data',
             },
-            body: JSON.stringify({
-                "database": "tainan",
-                "source_id": source.source_id,
-                "status": "通報處理"
-            })
+            body: formData
         })
         .then((response) => {
             if(!response.ok){
                 throw Error(response.status);
             }
+            this.fetchData();
             return response.text();
         })
         .then((response) => {
-            alert('已通報處理！');
+            alert('更新完成！');
         })
         .catch( err => {
-            alert('改變失敗！');
+            alert('更新失敗！');
             console.warn(err);
         })
-    }
-    called(source) {
-
-    }
-    not(source) {
-
     }
     render() {
         if (!this.state.loaded) {
@@ -149,7 +141,7 @@ export default class BreedingSourceReportList extends Component {
                 <View style={styles.buttons}>
                     <TouchableHighlight
                         style={styles.button}
-                        onPress={this.done.bind(this,source)}
+                        onPress={this.changeStatus.bind(this,source,'已處理')}
                         >
                         <Text style={styles.text}>
                             已處理
@@ -157,7 +149,7 @@ export default class BreedingSourceReportList extends Component {
                     </TouchableHighlight>
                     <TouchableHighlight
                         style={styles.button}
-                        onPress={this.called.bind(this,source)}
+                        onPress={this.changeStatus.bind(this,source,'通報處理')}
                         >
                         <Text style={styles.text}>
                             通報處理
@@ -165,7 +157,7 @@ export default class BreedingSourceReportList extends Component {
                     </TouchableHighlight>
                     <TouchableHighlight
                         style={styles.button}
-                        onPress={this.not.bind(this,source)}
+                        onPress={this.changeStatus.bind(this,source,'非孳生源')}
                         >
                         <Text style={styles.text}>
                             非孳生源
