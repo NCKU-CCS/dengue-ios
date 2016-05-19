@@ -12,7 +12,6 @@ import React, {
 } from 'react-native';
 import StatusBar from '../StatusBar.js';
 import CONSTANTS from '../Global.js';
-var IMGURI = 'http://www.opcpest.com/res/images/pest-detail-images/og_mosquito-icon_1.png';
 export default class Second extends Component {
 
     constructor(props) {
@@ -29,7 +28,7 @@ export default class Second extends Component {
                     lon:position.coords.longitude,
                 })
             },
-            (error) => alert(error.message),
+            (error) => AlertIOS.alert(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
     };
@@ -40,7 +39,7 @@ export default class Second extends Component {
                     <Text style={styles.text}>
                         我被蚊子叮了！！
                     </Text>
-                <Image style={styles.image} source = {{uri:IMGURI}}>
+                <Image style={styles.image} source = {require('../../img/mosquito.png')}>
                 </Image>
 
                 <TouchableHighlight
@@ -123,6 +122,10 @@ var styles = StyleSheet.create({
         backgroundColor:CONSTANTS.mainColor,
         padding:10,
         width: 150,
+        borderWidth: 1,
+        borderColor: '#fff',
+        borderRadius: 3,
+
     },
     buttonText: {
         color: '#fff',

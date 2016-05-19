@@ -4,6 +4,7 @@ import React, {
     Component,
     TouchableHighlight,
     StyleSheet,
+    Image,
     ListView,
 } from 'react-native';
 import CONSTANTS from '../Global.js';
@@ -103,9 +104,17 @@ export default class BreedingSourceReportList extends Component {
                         <Text style={styles.nameText}>{source.name}</Text>
                     </View>
                     <View style={styles.address}>
+                        <Image
+                            style = {styles.icon}
+                            source={require('../../img/location.png')}
+                        />
                         <Text>{source.address}</Text>
                     </View>
                     <View style={styles.phone}>
+                        <Image
+                            style = {styles.icon}
+                            source={require('../../img/telephone.png')}
+                        />
                         <Text>{source.phone}</Text>
                     </View>
                 </View>
@@ -125,7 +134,8 @@ var styles = StyleSheet.create({
     topText: {
         alignSelf:'center',
         marginBottom: 30,
-        fontSize: 18,
+        fontSize: 20,
+        fontWeight: 'bold',
     },
     sourceNumber: {
         color: CONSTANTS.mainColor,
@@ -141,19 +151,29 @@ var styles = StyleSheet.create({
         lineHeight:20,
     },
     address: {
+        flexDirection: 'row',
         flex:1,
-        justifyContent:'center',
+        marginTop:5,
+        alignItems: 'center',
     },
     phone: {
+        flexDirection: 'row',
         flex:1,
-        justifyContent:'center',
+        marginTop:5,
+        alignItems: 'center',
+    },
+    icon:{
+        width: 20,
+        height: 20,
+        resizeMode: 'contain',
+        marginRight:15,
     },
     eachList: {
         backgroundColor: "#fff",
         flexDirection: 'column',
         height:130,
         padding:10,
-        marginVertical:10,
+        marginVertical:5,
         marginHorizontal:40,
         borderWidth: 1,
         borderColor: '#000',

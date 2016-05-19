@@ -58,25 +58,25 @@ export default class ShowImage extends Component {
             }
         }
         return (
-            <ScrollView  ref="mount">
+            <ScrollView  style={styles.container} ref="mount">
                 <Image ref={'img'} style={styles.image} source={{uri: this.props.uri}}/>
                 <View style={styles.inputs}>
                     <View style={styles.question}>
                         <View style={styles.title}>
-                            <Text>
+                            <Text style={styles.subTitle}>
                                 孳生源類型
                             </Text>
                         </View>
                         <View style={styles.types}>
-                            <TouchableHighlight  style={styles.type} underlayColor="#fff" onPress={()=>{this.setState({type:'住家容器'});}}>
+                            <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'住家容器'});}}>
                                 <Image style={styles.typeImage} source = {imgObj0}/>
 
                             </TouchableHighlight>
-                            <TouchableHighlight  style={styles.type} underlayColor="#fff" onPress={()=>{this.setState({type:'戶外容器'});}}>
+                            <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'戶外容器'});}}>
 
                                 <Image style={styles.typeImage} source = {imgObj1}/>
                             </TouchableHighlight>
-                            <TouchableHighlight  style={styles.type} underlayColor="#fff" onPress={()=>{this.setState({type:'戶外髒亂處'});}}>
+                            <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'戶外髒亂處'});}}>
                                 <Image style={styles.typeImage} source = {imgObj2}/>
 
                             </TouchableHighlight>
@@ -84,7 +84,7 @@ export default class ShowImage extends Component {
                     </View>
                     <View style = {styles.question}>
                         <View style={styles.title}>
-                            <Text>
+                            <Text style={styles.subTitle}>
                                 地點簡介
                             </Text>
                         </View>
@@ -93,13 +93,12 @@ export default class ShowImage extends Component {
                                 multiline = {true}
                                 style = {styles.textInput}
                                 onChangeText = {(text) => this.setState({description:text})}
-                                placeholder = "  description(大樹旁)"
                                 >
                             </TextInput>
                         </View>
                     </View>
                     <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this.send.bind(this)}>
-                        <Text style={styles.buttonText}>送出</Text>
+                        <Text style={styles.buttonText}>舉報</Text>
                     </TouchableHighlight>
                 </View>
             </ScrollView>
@@ -144,6 +143,9 @@ export default class ShowImage extends Component {
 
 }
 var styles = StyleSheet.create({
+    container: {
+        backgroundColor: CONSTANTS.backgroundColor,
+    },
     image: {
         height: 250,
         width: CONSTANTS.screenWidth,
@@ -153,7 +155,7 @@ var styles = StyleSheet.create({
         flex:1,
         flexDirection: 'column',
         marginTop:20,
-        marginHorizontal:50,
+        marginHorizontal:30,
     },
     question: {
         flex:1,
@@ -166,6 +168,9 @@ var styles = StyleSheet.create({
         justifyContent:'center',
         marginBottom: 20,
     },
+    subTitle: {
+        fontSize: 16,
+    },
     answer: {
         flex:1,
     },
@@ -173,7 +178,7 @@ var styles = StyleSheet.create({
         backgroundColor:"#eee",
         borderColor:'#aaa',
         borderWidth:1,
-        borderRadius:1,
+        borderRadius:5,
         height: 40,
         marginRight:10,
     },
@@ -195,9 +200,10 @@ var styles = StyleSheet.create({
 
     button: {
         backgroundColor: "#fff",
-        width:70,
-        height:40,
-        padding: 5,
+        //width:70,
+        //height:40,
+        paddingVertical: 7,
+        paddingHorizontal: 18,
         marginTop:20,
         borderRadius :3,
         borderColor: CONSTANTS.mainColor,

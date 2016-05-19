@@ -56,8 +56,8 @@ export default class TabBar extends Component {
         }
         return(
             <TabBarIOS
-                tintColor = "white"
-                barTintColor = {CONSTANTS.mainColor}
+                tintColor = {CONSTANTS.mainColor}
+                barTintColor = '#eee'
                 >
                 {
                     menu.map(

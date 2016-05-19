@@ -26,7 +26,6 @@ export default class StatusBar extends Component {
         if(trueBackDisplay.indexOf(nextProps.id) !== -1){
             backDisplay = true;
         }
-        console.log(nextProps.id);
         this.setState({
             statusBarDisplay: statusBarDisplay,
             backDisplay: backDisplay
@@ -49,7 +48,7 @@ export default class StatusBar extends Component {
                     {Back}
 
                     <View style={styles.title}>
-                        <Text>
+                        <Text style = {styles.titleText}>
                             {this.props.title}
                         </Text>
                     </View>
@@ -75,10 +74,14 @@ var styles = StyleSheet.create({
     back: {
         color: "#fff",
         flex:0.1,
+        fontSize: 20,
     },
     title: {
         flex:0.8,
         alignItems:'center',
+    },
+    titleText: {
+        color: '#fff',
     },
     space: {
         flex:0.1

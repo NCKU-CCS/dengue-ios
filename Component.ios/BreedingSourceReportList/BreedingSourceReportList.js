@@ -35,7 +35,7 @@ export default class BreedingSourceReportList extends Component {
         }
     }
     fetchData(status) {
-        status = status === '已處理' ? status + ',非滋生源': status; 
+        status = status === '已處理' ? status + ',非滋生源': status;
         fetch(`http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=${status}`)
         .then((response) => {
             if(!response.ok){
@@ -131,7 +131,7 @@ export default class BreedingSourceReportList extends Component {
                         <TouchableHighlight
                             style = {[styles.statusButton, this.statusFocus('未處理')]}
                             onPress = {() => {this.setState({loaded:false, status:'未處理'});}}
-                        >
+                            >
                             <Text style={styles.statusText}>
                                 未處理
                             </Text>
@@ -139,7 +139,7 @@ export default class BreedingSourceReportList extends Component {
                         <TouchableHighlight
                             style = {[styles.statusButton, styles.center, this.statusFocus('通報處理')]}
                             onPress = {() => {this.setState({loaded:false, status:'通報處理'});}}
-                        >
+                            >
                             <Text style={styles.statusText}>
                                 待處理
                             </Text>
@@ -147,7 +147,7 @@ export default class BreedingSourceReportList extends Component {
                         <TouchableHighlight
                             style = {[styles.statusButton, this.statusFocus('已處理')]}
                             onPress = {() => {this.setState({loaded:false, status:'已處理'});}}
-                        >
+                            >
                             <Text style={styles.statusText}>
                                 已處理
                             </Text>
@@ -186,28 +186,41 @@ export default class BreedingSourceReportList extends Component {
                 </View>
                 <View style={styles.buttons}>
                     <TouchableHighlight
-                        style={styles.button}
+                        style = {styles.buttonTouch}
                         onPress={this.updateStatus.bind(this,source,'已處理')}
                         >
-                        <Text style={styles.text}>
-                            已處理
-                        </Text>
+                        <View
+                            style={styles.button}
+
+                            >
+                            <Image source={require('../../img/check-0.png')} />
+                            <Text style={styles.text}>
+                                已處理
+                            </Text>
+                        </View>
                     </TouchableHighlight>
                     <TouchableHighlight
-                        style={styles.button}
+
+                        style = {styles.buttonTouch}
                         onPress={this.updateStatus.bind(this,source,'通報處理')}
                         >
-                        <Text style={styles.text}>
-                            通報處理
-                        </Text>
+                        <View style={styles.button}>
+                            <Image source = {require('../../img/check-0.png')} />
+                            <Text style={styles.text}>
+                                通報處理
+                            </Text>
+                        </View>
                     </TouchableHighlight>
                     <TouchableHighlight
-                        style={styles.button}
+                        style = {styles.buttonTouch}
                         onPress={this.updateStatus.bind(this,source,'非孳生源')}
                         >
-                        <Text style={styles.text}>
-                            非孳生源
-                        </Text>
+                        <View style={styles.button}>
+                            <Image source = {require('../../img/cross-0.png')} />
+                            <Text style={styles.text}>
+                                非孳生源
+                            </Text>
+                        </View>
                     </TouchableHighlight>
                 </View>
             </View>
@@ -294,12 +307,15 @@ var styles = StyleSheet.create({
         height:40,
         flexDirection: 'row'
     },
-    button: {
+    buttonTouch: {
         flex:1,
+    },
+    button: {
         justifyContent:'center',
         alignItems: 'center',
         borderWidth:1,
         borderColor:'#ddd',
+        flexDirection: 'row',
     },
     text: {
         color: '#aaa'

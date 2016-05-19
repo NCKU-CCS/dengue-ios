@@ -62,7 +62,6 @@ class DengueFever extends Component {
         })
         .then((responseData) => {
             let logined = responseData.name === '' ? false : true;
-            console.log(logined);
             this.setState({
                 info: responseData,
                 logined: logined,
