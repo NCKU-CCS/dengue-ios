@@ -25,7 +25,7 @@ export default class UserSetting extends Component {
             bites_count,
             breeding_source_count,
         } = this.props.info;
-        const {logined} = this.props;
+        const {enter, restart, logined} = this.props;
 
         if(logined){
             return (
@@ -37,7 +37,10 @@ export default class UserSetting extends Component {
             );
         }
         return (
-            <SignupView logined={this.props.logined}/>
+            <SignupView
+                restart = {restart}
+                enter = {enter}
+            />
         );
     }
 

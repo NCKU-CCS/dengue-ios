@@ -14,22 +14,17 @@ import CONSTANTS from '../Global.js';
 export default class SignupView extends Component {
     constructor(props) {
         super(props);
-        this.state = {phone: "", password: "", name: ''};
-        this.signup = this.signup.bind(this);
+        this.state = {phone: "", password: ""};
+        this.signin = this.signin.bind(this);
     }
-    signup() {
-        const {
-            phone,
-            password,
-            name
-        } = this.state;
-        const {restart} = this.props;
+
+    signin() {
+        let {phone, password} = this.state;
+        let {restart, toTop} = this.props;
         let formData = new FormData();
-        formData.append('name', name);
         formData.append('phone', phone);
         formData.append('password', password);
-        console.log(formData);
-        fetch('http://140.116.247.113:11401/users/signup/', {
+        fetch('http://140.116.247.113:11401/users/signin/', {
             method: 'POST',
             headers: {
                 'Accept': 'multipart/form-data',
@@ -37,20 +32,20 @@ export default class SignupView extends Component {
             },
             body: formData
         })
-        .then((response) => {
+        .then(response =>{
             if(!response.ok){
                 throw Error(response.status);
             }
             return fetch('http://140.116.247.113:11401/users/info/');
         })
-        .then((response) => {
-
+        .then(response => {
             if(!response.ok){
                 throw Error(response.status);
             }
             return response.json();
         })
-        .then((responseData) => {
+        .then(responseData => {
+            toTop();
             restart(responseData);
             CONSTANTS.storage.save({
                 key: 'loginState',  //注意:请不要在key中使用_下划线符号!
@@ -62,17 +57,18 @@ export default class SignupView extends Component {
                 //如果设为null，则永不过期
                 expires: null
             });
-            alert('註冊成功！') ;
+            AlertIOS.alert(
+                '登入成功'
+            );
         })
-        .catch((error) => {
-
-            console.warn(error);
-            alert("不好意思！註冊出了問題，請等候維修：）");
+        .catch(err => {
+            AlertIOS.alert(
+                '登入失敗'
+            );
+            console.warn(err);
         });
     }
-
     render() {
-        const {enter} = this.props;
         return(
             <ScrollView style = {styles.container}>
                 <Image
@@ -80,21 +76,7 @@ export default class SignupView extends Component {
                     style = {styles.image}
                     >
                 </Image>
-                <View style = {styles.textInputView}>
-                    <Text style = {styles.label}>
-                        姓名
-                    </Text>
-                    <TextInput
-                        style = {styles.textInput}
-                        onChangeText = {(text) => this.setState({name: text})}
-                        value = {this.state.text}
-                        keyboardType = 'numeric'
-                        selectTextOnFocus = {true}
-                        selectionColor = {CONSTANTS.mainColor}
-                        autoCorrect = {false}
-                        >
-                    </TextInput>
-                </View>
+
                 <View style = {styles.textInputView}>
                     <Text style = {styles.label}>
                         電話
@@ -125,24 +107,14 @@ export default class SignupView extends Component {
                     </TextInput>
                 </View>
                 <TouchableHighlight
-                    onPress = {this.signup}
-                    style = {styles.signup}
+                    onPress = {this.signin}
+                    style = {styles.signin}
                     >
-                    <Text style = {styles.signupText}>
-                        註冊
-                    </Text>
-                </TouchableHighlight>
-                <Text style = {styles.psText}>
-                    已經註冊了？
-                </Text>
-                <TouchableHighlight
-                    style = {styles.login}
-                    onPress = {() => {enter('signinView', "個人資訊");}}
-                    >
-                    <Text style = {styles.loginText}>
+                    <Text style = {styles.signinText}>
                         登入
                     </Text>
                 </TouchableHighlight>
+
             </ScrollView>
         );
     }
@@ -182,7 +154,7 @@ const styles = StyleSheet.create({
     hundredWidth: {
         flexDirection: 'row'
     },
-    signup: {
+    signin: {
         //height: 40,
         //width:60,
         marginTop: 30,
@@ -197,20 +169,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
     },
-    signupText: {
+    signinText: {
 
     },
-    psText: {
-        marginTop:30,
-        color:"#777",
-        alignSelf: 'center',
-    },
-    login: {
-        alignSelf: 'center',
-    },
-    loginText: {
-        color:"#00ace6",
-    }
+
 
 
 });

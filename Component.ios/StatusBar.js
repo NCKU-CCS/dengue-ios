@@ -17,7 +17,7 @@ export default class StatusBar extends Component {
     }
     componentWillReceiveProps(nextProps) {
         const falseStatusBarDisplay = ['breedingSourceReport'],
-            trueBackDisplay = ['showImage', 'eachHospitalInfo'];
+            trueBackDisplay = ['showImage', 'eachHospitalInfo', 'signinView'];
         let statusBarDisplay = true,
             backDisplay = false;
         if(falseStatusBarDisplay.indexOf(nextProps.id) !== -1){

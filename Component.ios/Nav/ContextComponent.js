@@ -10,6 +10,7 @@ import HotZoneInfo from '../HotZoneInfo/HotZoneInfo.js';
 import HospitalInfo from '../HospitalInfo/HospitalInfo.js';
 import EachHospitalInfo from '../HospitalInfo/EachHospitalInfo.js';
 import UserSetting from '../UserSetting/UserSetting.js';
+import SigninView from '../UserSetting/SigninView.js';
 
 export default class ContextComponent extends Component {
     constructor(props) {
@@ -40,6 +41,8 @@ export default class ContextComponent extends Component {
                 logined = {logined}
                 info = {info}
                 />);
+            case 'signinView':
+            return (<SigninView restart = {restart} toTop = {toTop}/>);
         }
     }
 }
