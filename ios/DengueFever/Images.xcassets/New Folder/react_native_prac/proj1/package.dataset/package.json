@@ -1,0 +1,14 @@
+{
+  "name": "DengueFever",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "react-native": "^0.21.0",
+    "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
+    "react-native-file-transfer": "0.0.3",
+    "react-native-storage": "0.0.16"
+  }
+}

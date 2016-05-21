@@ -65,7 +65,7 @@ export default class TabBar extends Component {
                         <TabBarIOS.Item
                             key = {title[i]}
                             title = {title[i]}
-                            icon={this.icon(title[i])}
+                            icon={require("../../img/image!mosquito_checkin_off")}
                             selected={this.props.title === title[i]}
                             onPress={
                                 () => {this.props.enter(id, title[i]);}
@@ -87,36 +87,9 @@ export default class TabBar extends Component {
             </TabBarIOS>
         );
     }
-    icon(title) {
-        switch (title) {
-            case '熱區資訊':
-                return require('../../img/rsz_notification_off.png');
-                break;
-            case '就醫資訊':
-            return require('../../img/rsz_hospital_off.png');
-
-                break;
-            case '孳生源舉報':
-            return require('../../img/rsz_source_checkin_off.png');
-
-                break;
-            case '蚊子叮咬舉報':
-            return require('../../img/rsz_mosquito_checkin_off.png');
-
-                break;
-            case '個人資訊':
-            return require('../../img/rsz_setting_off.png');
-
-                break;
-            case '孳生源列表':
-                return require('../../img/rsz_hospital_off.png');
-                break;
-            default:
-
-        }
-    }
 }
 var styles = StyleSheet.create({
+
 
 
 });
