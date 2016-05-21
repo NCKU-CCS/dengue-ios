@@ -202,7 +202,7 @@ export default class BreedingSourceReportList extends Component {
                             style={styles.button}
 
                         >
-                            <Image source = {Done} />
+                            <Image style = {styles.icon} source = {Done} />
                             <Text style = {styles.text}>
                                 已處理
                             </Text>
@@ -214,7 +214,7 @@ export default class BreedingSourceReportList extends Component {
                         onPress={this.updateStatus.bind(this,source,'通報處理')}
                         >
                         <View style={styles.button}>
-                            <Image source = {waitDone} />
+                            <Image style = {styles.icon} source = {waitDone} />
                             <Text style={styles.text}>
                                 通報處理
                             </Text>
@@ -225,7 +225,7 @@ export default class BreedingSourceReportList extends Component {
                         onPress={this.updateStatus.bind(this,source,'非孳生源')}
                         >
                         <View style={styles.button}>
-                            <Image source = {Not} />
+                            <Image style = {styles.icon} source = {Not} />
                             <Text style={styles.text}>
                                 非孳生源
                             </Text>
@@ -312,9 +312,14 @@ var styles = StyleSheet.create({
         flex: 0.4,
         resizeMode: 'contain',
     },
+    icon: {
+        height:24,
+        resizeMode: 'contain',
+        marginVertical: 8,
+    },
     buttons: {
         height:40,
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     buttonTouch: {
         flex:1,
