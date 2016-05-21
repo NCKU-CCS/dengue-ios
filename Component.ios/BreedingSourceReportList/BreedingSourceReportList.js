@@ -35,7 +35,7 @@ export default class BreedingSourceReportList extends Component {
         }
     }
     fetchData(status) {
-        status = status === '已處理' ? status + ',非滋生源': status;
+        status = status === '已處理' ? status + ',非孳生源': status;
         fetch(`http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=${status}`)
         .then((response) => {
             if(!response.ok){
@@ -164,6 +164,15 @@ export default class BreedingSourceReportList extends Component {
 
     }
     renderEachSource(source) {
+        const waitDone = source.status === '通報處理'?
+            require('../../img/check-1.png') :
+            require('../../img/check-0.png');
+        const Done = source.status === '已處理'?
+            require('../../img/check-1.png') :
+            require('../../img/check-0.png');
+        const Not = source.status === '非孳生源'?
+            require('../../img/cross-1.png') :
+            require('../../img/cross-0.png');
         return(
             <View style={styles.eachList}>
                 <View style={styles.source}>
@@ -192,9 +201,9 @@ export default class BreedingSourceReportList extends Component {
                         <View
                             style={styles.button}
 
-                            >
-                            <Image source={require('../../img/check-0.png')} />
-                            <Text style={styles.text}>
+                        >
+                            <Image source = {Done} />
+                            <Text style = {styles.text}>
                                 已處理
                             </Text>
                         </View>
@@ -205,7 +214,7 @@ export default class BreedingSourceReportList extends Component {
                         onPress={this.updateStatus.bind(this,source,'通報處理')}
                         >
                         <View style={styles.button}>
-                            <Image source = {require('../../img/check-0.png')} />
+                            <Image source = {waitDone} />
                             <Text style={styles.text}>
                                 通報處理
                             </Text>
@@ -216,7 +225,7 @@ export default class BreedingSourceReportList extends Component {
                         onPress={this.updateStatus.bind(this,source,'非孳生源')}
                         >
                         <View style={styles.button}>
-                            <Image source = {require('../../img/cross-0.png')} />
+                            <Image source = {Not} />
                             <Text style={styles.text}>
                                 非孳生源
                             </Text>
