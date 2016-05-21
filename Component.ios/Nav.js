@@ -78,7 +78,12 @@ export default class Nav extends Component {
         })
     }
     toTop() {
+        let firstRoute = this.refs.nav.getCurrentRoutes()[0];
         this.refs.nav.popToTop();
+        this.setState({
+            title: firstRoute.title,
+            id: firstRoute.id,
+        })
     }
     containRoute(routeId, routeData, routeList) {
         for(let x in routeList){

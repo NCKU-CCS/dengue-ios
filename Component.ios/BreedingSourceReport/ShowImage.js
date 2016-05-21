@@ -132,12 +132,13 @@ export default class ShowImage extends Component {
             if(!response.ok){
                 throw Error(response.status);
             }
-            this.props.toTop();
         })
         .catch(err => {
             console.warn(err);
+            alert('舉報失敗了！')
         })
-
+        alert('感謝你的舉報！')
+        this.props.toTop();
 
     }
 
