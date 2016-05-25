@@ -17,9 +17,9 @@ export default class StatusBar extends Component {
     }
     componentWillReceiveProps(nextProps) {
         const falseStatusBarDisplay = ['breedingSourceReport'],
-            trueBackDisplay = ['showImage', 'eachHospitalInfo', 'signinView'];
+        trueBackDisplay = ['showImage', 'eachHospitalInfo', 'signinView'];
         let statusBarDisplay = true,
-            backDisplay = false;
+        backDisplay = false;
         if(falseStatusBarDisplay.indexOf(nextProps.id) !== -1){
             statusBarDisplay = false;
         }
@@ -36,10 +36,15 @@ export default class StatusBar extends Component {
             let Back = <View style={styles.space} />;
             if(this.state.backDisplay){
                 Back = (
-                    <TouchableHighlight onPress={this.props.back}>
-                        <Text style={styles.back}>
-                            {"<"}
-                        </Text>
+                    <TouchableHighlight
+                        underlayColor = {CONSTANTS.mainColor}
+                        onPress={this.props.back}
+                    >
+                        <View style = {styles.backView}>
+                            <Text style={styles.back}>
+                                {"〈"}
+                            </Text>
+                        </View>
                     </TouchableHighlight>
                 );
             }
@@ -67,14 +72,21 @@ var styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent: 'center',
         paddingTop:20,
+        paddingBottom:10,
         width: CONSTANTS.screenWidth,
         height:CONSTANTS.statusBarHeight,
         backgroundColor:CONSTANTS.mainColor,
     },
     back: {
         color: "#fff",
-        flex:0.1,
         fontSize: 20,
+        marginTop:20,
+        marginBottom:10,
+        marginRight:20,
+    },
+    backView: {
+        //backgroundColor: 'red',
+        flex:0.1,
     },
     title: {
         flex:0.8,
@@ -82,8 +94,9 @@ var styles = StyleSheet.create({
     },
     titleText: {
         color: '#fff',
+        fontSize: 22,
     },
     space: {
-        flex:0.1
-    },
+        flex:0.1,
+    }
 });

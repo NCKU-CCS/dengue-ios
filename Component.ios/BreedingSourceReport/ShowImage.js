@@ -23,6 +23,7 @@ export default class ShowImage extends Component {
             description:'',
             lat:'',
             lon:'',
+            address: '',
         };
         //this.showActionSheet = this.showActionSheet.bind(this);
     };
@@ -30,9 +31,25 @@ export default class ShowImage extends Component {
 
         navigator.geolocation.getCurrentPosition(
             (position) => {
+                let {latitude, longitude} = position.coords;
+
                 this.setState({
-                    lat:position.coords.latitude,
-                    lon:position.coords.longitude,
+                    lat:latitude,
+                    lon:longitude,
+                });
+                fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&result_type=street_address&language=zh-TW&key=AIzaSyBKewv2_WjbQe8kW46Ld525jQ299gwKnIA`)
+                .then(response => {
+                    if(!response.ok){
+                        throw Error('turn address failed');
+                    }
+                    return response.json();
+                })
+                .then(responseData => {
+                    console.log(responseData);
+                    this.setState({address: responseData.results[0].formatted_address});
+                })
+                .catch(err => {
+                    console.warn(err);
                 })
             },
             (error) => alert(error.message),
@@ -105,9 +122,9 @@ export default class ShowImage extends Component {
         )
     };
     send() {
-
-        let {type, description, lat, lon} = this.state,
+        let {type, description, lat, lon, address} = this.state,
         fileName = this.props.uri.split('/').slice(-1)[0];
+        console.log(address);
         let photo = {
             uri: this.props.uri,
             type: 'image/jpeg',
@@ -117,6 +134,7 @@ export default class ShowImage extends Component {
         formData.append('database', 'tainan');
         formData.append('lat', lat);
         formData.append('lng', lon);
+        formData.append('address', address);
         formData.append('source_type', type);
         formData.append('description', description);
         formData.append('status', '未處理');

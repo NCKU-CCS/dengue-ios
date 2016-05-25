@@ -1,149 +1,176 @@
 import React, {
     View,
-    Text,
-    Component,
     TouchableHighlight,
-    Image,
-    ActionSheetIOS,
+    Component,
     StyleSheet,
+    Text,
+    Image
 } from 'react-native';
 
-
-import StatusBar from '../StatusBar.js';
-import CONSTANTS from '../Global.js';
-let BUTTONS = ['積水', '空屋'];
-let DESTRUCTIVE_INDEX = 3;
-let CANCEL_INDEX = 4;
-export default class BreedingSourceReportList extends Component {
-
+export default class EachBreedingSourceReport extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
-        this.showActionSheet = this.showActionSheet.bind(this);
-        this.not = this.not.bind(this);
+
+    }
+    updateStatus(source, changeStatus){
+        let formData = new FormData();
+        let {
+            fetchData,
+            status
+        } = this.props;
+        formData.append('database','tainan');
+        formData.append('source_id', source.source_id);
+        formData.append('status', changeStatus);
+        fetch('http://140.116.247.113:11401/breeding_source/update/', {
+            method: 'POST',
+            headers: {
+                'Accept': 'multipart/form-data',
+                'Content-Type': 'multipart/form-data',
+            },
+            body: formData
+        })
+        .then((response) => {
+            if(!response.ok){
+                throw Error(response.status);
+            }
+            fetchData(status);
+            return response.text();
+        })
+        .then( response => {
+            alert('更新完成！');
+        })
+        .catch( err => {
+            alert('更新失敗！');
+            console.warn(err);
+        });
     }
     render() {
-        let {source} = this.props;
+        let {
+            source,
+            Done,
+            Not,
+            WaitDone,
+        } = this.props;
         return(
-            <View style={styles.container}>
-
-                <Image ref={'img'} style={styles.image} source={{uri: source.photo_url}}>
-
-                </Image>
-                <View style={styles.info}>
-                    <View style={styles.textView}>
-                        <Text
-                            style={styles.text}
-                            >
-                            資料
+            <View style={styles.eachList}>
+                <View style={styles.source}>
+                    <View style={styles.leftSide}>
+                        <Text style={styles.title}>
+                            {source.address}
+                        </Text>
+                        <Text style={styles.description}>
+                            {source.description}
+                        </Text>
+                        <Text style={styles.createdTime}>
+                            {source.created_at.match(/(.+)\./)[1]}
                         </Text>
                     </View>
-                    <View style={styles.textView}>
-                        <Text
-                            style={styles.text}
-                            >
-                            資料
-                        </Text>
-                    </View>
+                    <Image
+                        style = {styles.rightSide}
+                        source = {{uri: source.photo_url}}
+                        >
+                    </Image>
                 </View>
                 <View style={styles.buttons}>
-                    <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this.showActionSheet}>
-                            <Text style={styles.buttonText}>是孳生源</Text>
+                    <TouchableHighlight
+                        underlayColor = '#fff'
+                        style = {styles.buttonTouch}
+                        onPress={()=>{this.updateStatus(source,'已處理');}}
+                        >
+                        <View
+                            style={styles.button}
+
+                        >
+                            <Image style = {styles.icon} source = {Done} />
+                            <Text style = {styles.text}>
+                                已處理
+                            </Text>
+                        </View>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this.not}>
-                            <Text style={styles.buttonText}>不是孳生源</Text>
+                    <TouchableHighlight
+                        underlayColor = '#fff'
+                        style = {styles.buttonTouch}
+                        onPress={()=>{this.updateStatus(source,'通報處理');}}
+                        >
+                        <View style={styles.button}>
+                            <Image style = {styles.icon} source = {WaitDone} />
+                            <Text style={styles.text}>
+                                通報處理
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        underlayColor = '#fff'
+                        style = {styles.buttonTouch}
+                        onPress={()=>{this.updateStatus(source,'非孳生源');}}
+                        >
+                        <View style={styles.button}>
+                            <Image style = {styles.icon} source = {Not} />
+                            <Text style={styles.text}>
+                                非孳生源
+                            </Text>
+                        </View>
                     </TouchableHighlight>
                 </View>
             </View>
-        )
-    }
-
-    not(){
-        let props = this.props;
-        fetch('http://localhost:1337/breeding_source_report/update/', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                done: 'no',
-                source_id: props.sourceId,
-            })
-        })
-        .then((response) => response.text())
-        .then((responseText) => {
-
-            props._back();
-        })
-        .catch((error) => {
-            console.warn(error);
-        });
-    }
-    showActionSheet() {
-        let props = this.props;
-        ActionSheetIOS.showActionSheetWithOptions({
-            options: BUTTONS,
-            cancelButtonIndex: CANCEL_INDEX,
-            destructiveButtonIndex: DESTRUCTIVE_INDEX,
-            tintColor: 'green',
-        },
-        (buttonIndex) => {
-            fetch('http://localhost:1337/api/update', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    sourceId: props.sourceId,
-                    data: BUTTONS[buttonIndex],
-                })
-            })
-            .then((response) => response.text())
-            .then((responseText) => {
-
-                props._back();
-            })
-            .catch((error) => {
-                console.warn(error);
-            });
-        });
+        );
     }
 }
+const styles = StyleSheet.create({
+    eachList: {
+        backgroundColor: '#fff',
+        flexDirection: 'column',
+        height:240,
+        marginVertical:2,
+        borderWidth:1,
+        borderColor:'#ddd',
+    },
+    source: {
+        flex:1,
+        flexDirection: 'row',
+    },
+    leftSide: {
+        flex: 0.6,
+        paddingLeft: 10,
+    },
+    title: {
+        fontSize:30,
+        fontWeight:'bold',
+        marginTop:10,
+    },
+    description: {
+        marginTop:20,
 
-let styles = StyleSheet.create({
-    container: {
-        flex:1,
-        alignItems:'center',
     },
-    image: {
-        height: CONSTANTS.screenHeight * 0.5,
-        width: CONSTANTS.screenWidth * 0.9,
-        resizeMode: 'contain'
+    createdTime: {
+        position:'absolute',
+        bottom:10,
     },
-    info: {
-        width: CONSTANTS.screenWidth * 0.9,
-        flexDirection:'column',
+    rightSide: {
+        flex: 0.4,
+        resizeMode: 'contain',
     },
-    textView: {
-        flex:1,
-        height: 40,
-        marginTop: 40,
-        justifyContent:'center',
-        alignItems:'center',
+    icon: {
+        height:24,
+        resizeMode: 'contain',
+        marginVertical: 8,
     },
     buttons: {
-        position:"absolute",
-        bottom:0,
-        width:CONSTANTS.screenWidth,
-        flexDirection:'row',
+        height:40,
+        flexDirection: 'row',
+    },
+    buttonTouch: {
+        flex:1,
     },
     button: {
-        flex:1,
-        backgroundColor:"#e54",
-        height:40,
-        alignItems:'center',
         justifyContent:'center',
+        alignItems: 'center',
+        borderWidth:1,
+        borderColor:'#ddd',
+        flexDirection: 'row',
     },
-})
+    text: {
+        color: '#aaa'
+    },
+
+});
