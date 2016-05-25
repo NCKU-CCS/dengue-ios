@@ -1,4 +1,0 @@
-
-          module.exports = require("/Users/siou/Code/react_native_prac/proj1/node_modules/react-native/packager/react-packager/src/JSTransformer/worker.js");
-          require("/Users/siou/Code/react_native_prac/proj1/node_modules/react-native/packager/transformer.js");
-          
