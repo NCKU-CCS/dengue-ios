@@ -16,7 +16,7 @@ export default class StatusBar extends Component {
         };
     }
     componentWillReceiveProps(nextProps) {
-        const falseStatusBarDisplay = ['breedingSourceReport'],
+        const falseStatusBarDisplay = [],
         trueBackDisplay = ['showImage', 'eachHospitalInfo', 'signinView'];
         let statusBarDisplay = true,
         backDisplay = false;
@@ -32,7 +32,7 @@ export default class StatusBar extends Component {
         });
     }
     render(){
-        
+
         if(this.state.statusBarDisplay){
             let Back = <View style={styles.space} />;
             if(this.state.backDisplay){

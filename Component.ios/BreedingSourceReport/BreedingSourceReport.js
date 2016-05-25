@@ -47,6 +47,7 @@ export default class Second extends Component {
 
 var styles = StyleSheet.create({
     preview: {
+        paddingTop: 50,
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
