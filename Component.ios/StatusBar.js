@@ -32,6 +32,7 @@ export default class StatusBar extends Component {
         });
     }
     render(){
+        
         if(this.state.statusBarDisplay){
             let Back = <View style={styles.space} />;
             if(this.state.backDisplay){

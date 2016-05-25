@@ -51,6 +51,7 @@ export default class EachBreedingSourceReport extends Component {
             Not,
             WaitDone,
         } = this.props;
+        console.log(source.photo_base64);
         return(
             <View style={styles.eachList}>
                 <View style={styles.source}>
@@ -67,7 +68,7 @@ export default class EachBreedingSourceReport extends Component {
                     </View>
                     <Image
                         style = {styles.rightSide}
-                        source = {{uri: source.photo_url}}
+                        source = {{uri: `data:image/png;base64,${source.photo_base64}`}}
                         >
                     </Image>
                 </View>
@@ -148,6 +149,7 @@ const styles = StyleSheet.create({
     },
     rightSide: {
         flex: 0.4,
+        alignItems: 'flex-end',
         resizeMode: 'contain',
     },
     icon: {

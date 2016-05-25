@@ -50,9 +50,9 @@ var styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
-        height: CONSTANTS.screenHeight * 0.5,
+        //height: CONSTANTS.screenHeight * 0.5,
         //width: CONSTANTS.screenwidth,
-        paddingBottom:100,
+        //paddingBottom:100,
     },
     bottonBar: {
         width: CONSTANTS.screenwidth,
@@ -65,6 +65,7 @@ var styles = StyleSheet.create({
         alignItems: 'center',
         height:60,
         width:60,
+        marginBottom: 50,
     },
 
 

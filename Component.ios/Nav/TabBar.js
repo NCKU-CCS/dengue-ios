@@ -70,6 +70,7 @@ export default class TabBar extends Component {
                             onPress={
                                 () => {this.props.enter(id, title[i]);}
                             }
+                            style = {styles.tabbarItem}
                             >
                             <ContextComponent
                                 id = {this.props.id}
@@ -117,6 +118,9 @@ export default class TabBar extends Component {
     }
 }
 var styles = StyleSheet.create({
-
+    tabbarItem: {
+        height: CONSTANTS.screenHeight - 50,
+        flexDirection: 'column',
+    }
 
 });

@@ -34,7 +34,7 @@ export default class Second extends Component {
     render() {
 
         return (
-            <ScrollView >
+            <ScrollView style = {styles.container}>
                     <Text style={styles.text}>
                         我被蚊子叮了！！
                     </Text>
@@ -91,7 +91,9 @@ export default class Second extends Component {
 }
 
 var styles = StyleSheet.create({
-
+    container: {
+        backgroundColor: CONSTANTS.backgroundColor,
+    },
     image: {
         height: 250,
         width:CONSTANTS.screenWidth * 0.5,
