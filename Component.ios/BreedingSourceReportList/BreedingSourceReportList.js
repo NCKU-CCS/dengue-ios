@@ -35,7 +35,6 @@ export default class BreedingSourceReportList extends Component {
         }
     }
     fetchData(status) {
-        console.log(123);
         status = status === '已處理' ? status + ',非孳生源': status;
         fetch(`http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=${status}`)
         .then((response) => {
@@ -92,7 +91,6 @@ export default class BreedingSourceReportList extends Component {
             status,
             sourceNumber
         } = this.state;
-        //return null;
         return(
             <BreedingListView
                 dataSource = {dataSource}
