@@ -7,7 +7,6 @@ import React, {
     TouchableHighlight,
     Dimensions,
     AlertIOS,
-    NativeModules,
     ScrollView,
 } from 'react-native';
 import StatusBar from '../StatusBar.js';
@@ -62,36 +61,30 @@ export default class Second extends Component {
             AlertIOS.alert("未開啟定位服務");
         }
         else{
-            let obj = {
-                uri:'/', // either an 'assets-library' url (for files from photo library) or an image dataURL
-                uploadUrl:"http://140.116.247.113:11401/bite/insert/",
-                //uploadUrl:"http://localhost:1337/breeding_source_report/",
-                //fileName:fileName,
-                fileKey:'photo', // (default="file") the name of the field in the POST form data under which to store the file
-                mimeType:"text/plain",
-                headers:{
-                    Accept: "text/plain",
-                    "Content-Type":"text/plain",
+            let formData = new FormData();
+            formData.append('database', 'tainan');
+            formData.append('lat', lat);
+            formData.append('lng', lon);
+            fetch('http://140.116.247.113:11401/bite/insert/', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'multipart/form-data',
+                    'Content-Type': 'multipart/form-data',
                 },
-                data: {
-                    database:'tainan',
-                    lat:lat,
-                    lng:lon,
+                body: formData
+            })
+            .then(response => {
+                if(!response.ok){
+                    throw Error(response.status);
                 }
-            };
-            NativeModules.FileTransfer.upload(obj, (err, res) => {
-                if(res.status === 200){
-                    AlertIOS.alert(
-                        '舉報成功'
-                    );
-                    this.props.toTop();
-                }
-                else{
-                    AlertIOS.alert(
-                        '舉報失敗'
-                    );
-                }
+                alert('舉報成功!');
+                this.props.toTop();
+            })
+            .catch(err => {
+                console.warn(err);
+                alert('舉報失敗了！')
             });
+
         }
 
     }
