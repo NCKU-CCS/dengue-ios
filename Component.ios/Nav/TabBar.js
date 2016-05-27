@@ -5,12 +5,15 @@ import React, {
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import ContextComponent from './ContextComponent.js';
+//import Icon from 'react-native-vector-icons/Ionicons';
+
 export default class TabBar extends Component {
     constructor(props){
         super(props);
         this.state = {
             opacity: 1,
         }
+        this.renderContext = this.renderContext.bind(this);
     }
     componentWillReceiveProps(nextProps) {
         if(nextProps.id === 'breedingSourceReport'){
@@ -54,6 +57,7 @@ export default class TabBar extends Component {
 
             ];
         }
+
         return(
             <TabBarIOS
                 tintColor = {CONSTANTS.mainColor}
@@ -65,28 +69,34 @@ export default class TabBar extends Component {
                         <TabBarIOS.Item
                             key = {title[i]}
                             title = {title[i]}
-                            icon={this.icon(title[i])}
+                            icon = {this.icon(title[i])}
                             selected={this.props.title === title[i]}
                             onPress={
                                 () => {this.props.enter(id, title[i]);}
                             }
                             style = {[styles.tabbarItem, ]}
                             >
-                            <ContextComponent
-                                id = {this.props.id}
-                                info = {this.props.info}
-                                data = {this.props.data}
-                                back = {this.props.back}
-                                enter = {this.props.enter}
-                                toTop = {this.props.toTop}
-                                logined = {this.props.logined}
-                                restart = {this.props.restart}
-                                />
+                            {this.renderContext()}
+
                         </TabBarIOS.Item>
                     )
                 }
             </TabBarIOS>
         );
+    }
+    renderContext() {
+        return (
+            <ContextComponent
+                id = {this.props.id}
+                info = {this.props.info}
+                data = {this.props.data}
+                back = {this.props.back}
+                enter = {this.props.enter}
+                toTop = {this.props.toTop}
+                logined = {this.props.logined}
+                restart = {this.props.restart}
+            />
+        )
     }
     icon(title) {
         switch (title) {
@@ -94,7 +104,7 @@ export default class TabBar extends Component {
                 return require('../../img/rsz_notification_off.png');
                 break;
             case '就醫資訊':
-            return require('../../img/rsz_hospital_off.png');
+            return require('../../img/check_list-31.png');
 
                 break;
             case '孳生源舉報':
@@ -110,7 +120,7 @@ export default class TabBar extends Component {
 
                 break;
             case '孳生源列表':
-                return require('../../img/rsz_hospital_off.png');
+                return require('../../img/check_list-31.png');
                 break;
             default:
 

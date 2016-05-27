@@ -9,18 +9,24 @@ import React, {
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import StatusBar from '../StatusBar.js';
+import EachSource from './EachSource.js';
+import Buttons from './Buttons.js';
 const REQUEST_URL = 'http://140.116.247.113:11401/hospital/nearby/?database=tainan&lng=120.218206&lat=22.993109';
 export default class BreedingSourceReportList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataSource: new ListView.DataSource({
-                    rowHasChanged: (row1, row2) => row1 !== row2,
-                }),
+            dataSource: null,
+            displaySource: new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2,
+            }),
+            type: '全部',
             loaded: false,
             sourceNumber: 0
         };
-        this.renderEachSource = this.renderEachSource.bind(this)
+        this.changeType = this.changeType.bind(this);
+        this.renderEachSource = this.renderEachSource.bind(this);
+        this.enterCheckPage = this.enterCheckPage.bind(this);
     }
     componentDidMount(){
         this.fetchData();
@@ -40,7 +46,8 @@ export default class BreedingSourceReportList extends Component {
                 .then((responseData) => {
                     let sourceNumber = responseData.length;
                     this.setState({
-                        dataSource: this.state.dataSource.cloneWithRows(responseData),
+                        dataSource: responseData,
+                        displaySource: this.state.displaySource.cloneWithRows(responseData),
                         sourceNumber: sourceNumber,
                         loaded: true,
                     });
@@ -54,6 +61,24 @@ export default class BreedingSourceReportList extends Component {
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
 
+    }
+    changeType(newType) {
+        let displaySource = [];
+        if(newType === '全部'){
+            displaySource = [...this.state.dataSource];
+        }
+        else{
+            displaySource = this.state.dataSource.filter((d) => {
+                if(d.name.indexOf(newType) !== -1){
+                    return d;
+                }
+            });
+        }
+        this.setState({
+            displaySource: this.state.displaySource.cloneWithRows(displaySource),
+            type: newType,
+            sourceNumber: displaySource.length,
+        })
     }
     render() {
         if (!this.state.loaded) {
@@ -81,9 +106,15 @@ export default class BreedingSourceReportList extends Component {
                         {this.state.sourceNumber}
                     </Text>
                     {`  間醫療診所`}
+
                 </Text>
+                <Buttons
+                    changeType = {this.changeType}
+                    type = {this.state.type}
+
+                    />
                 <ListView
-                    dataSource={this.state.dataSource}
+                    dataSource={this.state.displaySource}
                     renderRow={this.renderEachSource}
                     style={styles.listView}
                     />
@@ -93,32 +124,10 @@ export default class BreedingSourceReportList extends Component {
     }
     renderEachSource(source) {
         return(
-            <TouchableHighlight
-                style={styles.eachList}
-                onPress={() => this.enterCheckPage(source)}
-                underlayColor = {CONSTANTS.backgroundColor}
-                activeOpacity = {0.5}
-            >
-                <View >
-                    <View style={styles.name}>
-                        <Text style={styles.nameText}>{source.name}</Text>
-                    </View>
-                    <View style={styles.address}>
-                        <Image
-                            style = {styles.icon}
-                            source={require('../../img/location.png')}
-                        />
-                        <Text>{source.address}</Text>
-                    </View>
-                    <View style={styles.phone}>
-                        <Image
-                            style = {styles.icon}
-                            source={require('../../img/telephone.png')}
-                        />
-                        <Text>{source.phone}</Text>
-                    </View>
-                </View>
-            </TouchableHighlight>
+            <EachSource
+                source = {source}
+                enterCheckPage = {this.enterCheckPage}
+                />
         );
     }
     enterCheckPage(source){
@@ -133,50 +142,11 @@ var styles = StyleSheet.create({
     },
     topText: {
         alignSelf:'center',
-        marginBottom: 30,
         fontSize: 20,
         fontWeight: 'bold',
     },
     sourceNumber: {
         color: CONSTANTS.mainColor,
     },
-    name: {
-        flex:2,
-        justifyContent:'center',
-        marginBottom: 10,
-    },
-    nameText: {
-        fontWeight:'bold',
-        fontSize: 18,
-        lineHeight:20,
-    },
-    address: {
-        flexDirection: 'row',
-        flex:1,
-        marginTop:5,
-        alignItems: 'center',
-    },
-    phone: {
-        flexDirection: 'row',
-        flex:1,
-        marginTop:5,
-        alignItems: 'center',
-    },
-    icon:{
-        width: 20,
-        height: 20,
-        resizeMode: 'contain',
-        marginRight:15,
-    },
-    eachList: {
-        backgroundColor: "#fff",
-        flexDirection: 'column',
-        height:130,
-        padding:10,
-        marginVertical:5,
-        marginHorizontal:40,
-        borderWidth: 1,
-        borderColor: '#000',
-        borderRadius: 10,
-    },
+
 })

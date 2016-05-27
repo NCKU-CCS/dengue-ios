@@ -63,7 +63,7 @@ export default class BreedingListView extends Component {
                     style = {styles.listView}
                     />
             </View>
-        )
+        );
     }
     renderEachSource(source) {
         const WaitDone = source.status === '通報處理'?
@@ -100,6 +100,7 @@ var styles = StyleSheet.create({
         flexDirection: 'column',
     },
     statusButtons: {
+        width: CONSTANTS.screenWidth * 0.8,
         marginTop:10,
         flexDirection:'row',
         borderWidth: 1,
@@ -108,6 +109,7 @@ var styles = StyleSheet.create({
 
     },
     statusButton: {
+        alignItems: 'center',
         flex:1,
         padding:10,
     },
