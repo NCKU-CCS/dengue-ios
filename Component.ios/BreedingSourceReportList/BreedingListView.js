@@ -12,6 +12,7 @@ export default class BreedingListView extends Component {
     constructor(props) {
         super(props);
         this.renderEachSource = this.renderEachSource.bind(this);
+        
     }
     statusFocus(status) {
         if(this.props.status === status){
@@ -32,24 +33,27 @@ export default class BreedingListView extends Component {
                     </Text>
                     <View style = {styles.statusButtons}>
                         <TouchableHighlight
+                            underlayColor = "#ccc"
                             style = {[styles.statusButton, this.statusFocus('未處理')]}
-                            onPress = {() => {changeSource({loaded:false, status:'未處理'});}}
+                            onPress = {() => {changeSource('未處理');}}
                             >
                             <Text style={styles.statusText}>
                                 未處理
                             </Text>
                         </TouchableHighlight>
                         <TouchableHighlight
+                            underlayColor = "#ccc"
                             style = {[styles.statusButton, styles.center, this.statusFocus('通報處理')]}
-                            onPress = {() => {changeSource({loaded:false, status:'通報處理'});}}
+                            onPress = {() => {changeSource('通報處理');}}
                             >
                             <Text style={styles.statusText}>
                                 待處理
                             </Text>
                         </TouchableHighlight>
                         <TouchableHighlight
+                            underlayColor = "#ccc"
                             style = {[styles.statusButton, this.statusFocus('已處理')]}
-                            onPress = {() => {changeSource({loaded:false, status:'已處理'});}}
+                            onPress = {() => {changeSource('已處理');}}
                             >
                             <Text style={styles.statusText}>
                                 已處理
@@ -62,6 +66,7 @@ export default class BreedingListView extends Component {
                     renderRow = {this.renderEachSource}
                     style = {styles.listView}
                     />
+
             </View>
         );
     }

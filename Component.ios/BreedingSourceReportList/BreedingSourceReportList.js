@@ -23,49 +23,61 @@ export default class BreedingSourceReportList extends Component {
             status: '未處理',
         };
         this.renderListView = this.renderListView.bind(this);
-        this.fetchData = this.fetchData.bind(this);
         this.changeSource = this.changeSource.bind(this);
     }
     componentDidMount(){
-        this.fetchData(this.state.status);
+        this.loadData(this.state.status);
+        //this.fetchData(this.state.status);
     }
     componentDidUpdate(prevProps, prevState) {
         if(prevState.status !== this.state.status){
-            this.fetchData(this.state.status);
+            console.log(321);
+            this.loadData(this.state.status);
+            //this.fetchData(this.state.status);
         }
     }
-    fetchData(status) {
+    loadData(status) {
         status = status === '已處理' ? status + ',非孳生源': status;
-        fetch(`http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=${status}`)
-        .then((response) => {
-            if(!response.ok){
-                throw Error(response.status);
-            }
-            return response.json()
-        })
-        .then((responseData) => {
+        CONSTANTS.storage.load({
+            key: 'breedingSourceReport',
+            id: status,
+            // autoSync(默认为true)意味着在没有找到数据或数据过期时自动调用相应的同步方法
+            autoSync: true,
+
+            // syncInBackground(默认为true)意味着如果数据过期，
+            // 在调用同步方法的同时先返回已经过期的数据。
+            // 设置为false的话，则始终强制返回同步方法提供的最新数据(当然会需要更多等待时间)。
+            syncInBackground: true
+        }).then(responseData => {
+            //如果找到数据，则在then方法中返回
             let sourceNumber = responseData.length;
             CONSTANTS.storage.save({
                 key: 'breedingSourceReport',  //注意:请不要在key中使用_下划线符号!
+                id: status,
                 rawData: responseData,
 
                 //如果不指定过期时间，则会使用defaultExpires参数
                 //如果设为null，则永不过期
-                expires:  null
+                expires:  1000 * 3600 * 24
             });
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(responseData),
                 loaded: true,
                 sourceNumber: sourceNumber,
             });
+        }).catch(err => {
+            //如果没有找到数据且没有同步方法，
+            //或者有其他异常，则在catch中返回
+            console.warn(err);
         })
-        .catch((error) => {
-            alert('出了點問題！');
-        })
-        .done();
     }
-    changeSource(obj){
-        this.setState(obj);
+    changeSource(status){
+        if(status !== this.state.status){
+            this.setState({
+                loaded: false,
+                status: status,
+            });
+        }
     }
 
     render() {
@@ -98,7 +110,7 @@ export default class BreedingSourceReportList extends Component {
                 status = {status}
                 changeSource = {this.changeSource}
                 fetchData = {this.fetchData}
-            />
+                />
         );
     }
 
