@@ -51,7 +51,6 @@ export default class EachBreedingSourceReport extends Component {
             Not,
             WaitDone,
         } = this.props;
-        console.log(source.photo_base64);
         return(
             <View style={styles.eachList}>
                 <View style={styles.source}>

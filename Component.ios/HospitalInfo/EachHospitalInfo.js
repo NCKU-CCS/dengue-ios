@@ -4,10 +4,9 @@ import React, {
     Component,
     Image,
     StyleSheet,
-    MapView,
 } from 'react-native';
 
-
+import MapView from 'react-native-maps';
 import StatusBar from '../StatusBar.js';
 import CONSTANTS from '../Global.js';
 var CANCEL_INDEX = 4;
@@ -16,7 +15,7 @@ export default class BreedingSourceReportList extends Component {
     constructor(props) {
         super(props);
         let lng = parseFloat(props.source.lng),
-            lat = parseFloat(props.source.lat);
+        lat = parseFloat(props.source.lat);
         this.state = {
             mapRegion: {
                 longitude: lng,
@@ -24,19 +23,23 @@ export default class BreedingSourceReportList extends Component {
                 latitudeDelta:0.01,
                 longitudeDelta:0.01,
             },
-            annotations :[{
-                longitude: lng,
-                latitude: lat,
+            marker :{
+                coordinate:{
+                    longitude: lng,
+                    latitude: lat,
+                },
                 title: props.source.name,
-            }]
+            }
         };
     }
     componentWillReceiveProps(nextProps) {
-        let annotations = [{
-            longitude: nextProps.source.lng,
-            latitude: nextProps.source.lat,
+        let marker = {
+            coordinate: {
+                longitude: nextProps.source.lng,
+                latitude: nextProps.source.lat,
+            },
             title: nextProps.source.name
-        }],
+        },
         mapRegion = {
             longitude: nextProps.source.lng,
             latitude: nextProps.source.lat,
@@ -44,20 +47,25 @@ export default class BreedingSourceReportList extends Component {
             longitudeDelta:0.01,
         };
         this.setState({
-            annotations: annotations,
+            marker: marker,
             mapRegion: mapRegion,
         });
     }
     render() {
+        const {marker} = this.state;
         return(
 
-                <MapView
-                    style={styles.map}
-                    showsUserLocation = {true}
-                    region={this.state.mapRegion}
-                    annotations={this.state.annotations}
-                    onAnnotationPress={()=>{console.log(123);}}
-                />
+            <MapView
+                style={styles.map}
+                showsUserLocation = {true}
+                region={this.state.mapRegion}
+                >
+                <MapView.Marker
+                    coordinate={marker.coordinate}
+                    title={marker.title}
+                    description={marker.description}
+                    />
+            </MapView>
 
         )
     }
