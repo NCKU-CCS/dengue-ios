@@ -29,9 +29,10 @@ export default class BreedingSourceReportList extends Component {
                     latitude: lat,
                 },
                 title: props.source.name,
-            }
+            },
         };
     }
+
     componentWillReceiveProps(nextProps) {
         let marker = {
             coordinate: {
@@ -43,8 +44,8 @@ export default class BreedingSourceReportList extends Component {
         mapRegion = {
             longitude: nextProps.source.lng,
             latitude: nextProps.source.lat,
-            latitudeDelta:0.01,
-            longitudeDelta:0.01,
+            latitudeDelta:0.02,
+            longitudeDelta:0.02,
         };
         this.setState({
             marker: marker,
@@ -52,7 +53,7 @@ export default class BreedingSourceReportList extends Component {
         });
     }
     render() {
-        const {marker} = this.state;
+        const {marker, myPosition} = this.state;
         return(
 
             <MapView
@@ -65,6 +66,7 @@ export default class BreedingSourceReportList extends Component {
                     title={marker.title}
                     description={marker.description}
                     />
+
             </MapView>
 
         )
