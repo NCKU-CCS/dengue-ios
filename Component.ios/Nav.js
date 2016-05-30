@@ -35,21 +35,28 @@ export default class Nav extends Component {
                     ref="nav"
                     initialRoute={{id: 'hotZoneInfo', title: '熱區資訊'}}
                     renderScene={(route) =>
-                            <TabBar
-                                info = {this.props.info}
-                                logined = {this.props.logined}
-                                id = {route.id}
-                                data = {route.data}
-                                title = {this.state.title}
-                                enter = {this.enter}
-                                back = {this.back}
-                                toTop = {this.toTop}
-                                restart = {this.props.restart}
-                            />
-
+                        <ContextComponent
+                            info = {this.props.info}
+                            logined = {this.props.logined}
+                            id = {route.id}
+                            data = {route.data}
+                            title = {this.state.title}
+                            enter = {this.enter}
+                            back = {this.back}
+                            toTop = {this.toTop}
+                            restart = {this.props.restart}
+                        />
                     }
                 />
-
+                <TabBar
+                    info = {this.props.info}
+                    logined = {this.props.logined}
+                    title = {this.state.title}
+                    enter = {this.enter}
+                    back = {this.back}
+                    toTop = {this.toTop}
+                    restart = {this.props.restart}
+                />
             </View>
         );
     }
@@ -98,6 +105,12 @@ export default class Nav extends Component {
 var styles = StyleSheet.create({
     texts: {
         color: '#000',
+    },
+
+    sceneStyle: {
+        flexDirection:'column',
+        flex:1,
+        height: CONSTANTS.screenHeight - 50,
     },
     container: {
         flexDirection: 'column',
