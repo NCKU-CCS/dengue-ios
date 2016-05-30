@@ -25,10 +25,11 @@ export default class BreedingSourceReportList extends Component {
         };
         this.renderListView = this.renderListView.bind(this);
         this.changeSource = this.changeSource.bind(this);
+        this.updateData = this.updateData.bind(this);
     }
     componentDidMount(){
         this.loadData(this.state.status);
-        //this.fetchData(this.state.status);
+        //this.updateData(this.state.status);
     }
     componentDidUpdate(prevProps, prevState) {
         /*if(prevState.status !== this.state.status){
@@ -73,6 +74,9 @@ export default class BreedingSourceReportList extends Component {
             console.warn(err);
         })
     }
+    updateData(status, changeStatus) {
+        
+    }
     changeSource(status){
         if(status !== this.state.status){
             //console.log(321);
@@ -113,7 +117,7 @@ export default class BreedingSourceReportList extends Component {
                 sourceNumber = {sourceNumber}
                 status = {status}
                 changeSource = {this.changeSource}
-                fetchData = {this.fetchData}
+                updateData = {this.updateData}
                 />
         );
     }

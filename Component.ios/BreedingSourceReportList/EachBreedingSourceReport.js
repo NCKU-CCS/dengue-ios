@@ -15,7 +15,7 @@ export default class EachBreedingSourceReport extends Component {
     updateStatus(source, changeStatus){
         let formData = new FormData();
         let {
-            fetchData,
+            updateData,
             status
         } = this.props;
         formData.append('database','tainan');
@@ -33,10 +33,10 @@ export default class EachBreedingSourceReport extends Component {
             if(!response.ok){
                 throw Error(response.status);
             }
-            fetchData(status);
-            return response.text();
+
+            return updateData(status, changeStatus);
         })
-        .then( response => {
+        .then(() => {
             alert('更新完成！');
         })
         .catch( err => {

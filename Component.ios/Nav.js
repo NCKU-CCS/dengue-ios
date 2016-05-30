@@ -50,12 +50,9 @@ export default class Nav extends Component {
                 />
                 <TabBar
                     info = {this.props.info}
-                    logined = {this.props.logined}
                     title = {this.state.title}
                     enter = {this.enter}
                     back = {this.back}
-                    toTop = {this.toTop}
-                    restart = {this.props.restart}
                 />
             </View>
         );

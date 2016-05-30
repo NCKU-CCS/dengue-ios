@@ -12,7 +12,7 @@ export default class BreedingListView extends Component {
     constructor(props) {
         super(props);
         this.renderEachSource = this.renderEachSource.bind(this);
-        
+
     }
     statusFocus(status) {
         if(this.props.status === status){
@@ -47,7 +47,7 @@ export default class BreedingListView extends Component {
                             onPress = {() => {changeSource('通報處理');}}
                             >
                             <Text style={styles.statusText}>
-                                待處理
+                                通報處理
                             </Text>
                         </TouchableHighlight>
                         <TouchableHighlight
@@ -88,7 +88,7 @@ export default class BreedingListView extends Component {
                 WaitDone = {WaitDone}
                 source = {source}
                 status = {this.props.status}
-                fetchData ={this.props.fetchData}
+                updateData ={this.props.updateData}
             />
         );
     }
