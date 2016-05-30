@@ -76,7 +76,8 @@ export default class TabBar extends Component {
                             }
                             style = {[styles.tabbarItem, ]}
                             >
-                            {this.renderContext()}
+                            {this.renderContext()
+                            }
 
                         </TabBarIOS.Item>
                     )

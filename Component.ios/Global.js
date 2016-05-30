@@ -10,7 +10,7 @@ let storage = new Storage({
     defaultExpires: 1000 * 3600 * 24,
 
     //读写时在内存中缓存数据。默认启用。
-    enableCache: true,
+    enableCache: false,
 
     //如果storage中没有相应数据，或数据已过期，
     //则会调用相应的sync同步方法，无缝返回最新数据。

@@ -18,6 +18,7 @@ export default class BreedingSourceReportList extends Component {
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2,
             }),
+            data: null,
             loaded: false,
             sourceNumber:0,
             status: '未處理',
@@ -30,11 +31,11 @@ export default class BreedingSourceReportList extends Component {
         //this.fetchData(this.state.status);
     }
     componentDidUpdate(prevProps, prevState) {
-        if(prevState.status !== this.state.status){
+        /*if(prevState.status !== this.state.status){
             console.log(321);
             this.loadData(this.state.status);
             //this.fetchData(this.state.status);
-        }
+        }*/
     }
     loadData(status) {
         status = status === '已處理' ? status + ',非孳生源': status;
@@ -51,6 +52,11 @@ export default class BreedingSourceReportList extends Component {
         }).then(responseData => {
             //如果找到数据，则在then方法中返回
             let sourceNumber = responseData.length;
+            this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(responseData),
+                loaded: true,
+                sourceNumber: sourceNumber,
+            });
             CONSTANTS.storage.save({
                 key: 'breedingSourceReport',  //注意:请不要在key中使用_下划线符号!
                 id: status,
@@ -60,11 +66,7 @@ export default class BreedingSourceReportList extends Component {
                 //如果设为null，则永不过期
                 expires:  1000 * 3600 * 24
             });
-            this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(responseData),
-                loaded: true,
-                sourceNumber: sourceNumber,
-            });
+
         }).catch(err => {
             //如果没有找到数据且没有同步方法，
             //或者有其他异常，则在catch中返回
@@ -73,6 +75,8 @@ export default class BreedingSourceReportList extends Component {
     }
     changeSource(status){
         if(status !== this.state.status){
+            //console.log(321);
+            this.loadData(status);
             this.setState({
                 loaded: false,
                 status: status,
