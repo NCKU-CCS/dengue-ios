@@ -17,7 +17,7 @@ export default class TabBar extends Component {
         super(props);
         this.state = {
             opacity: 1,
-        }
+        };
     }
 
     render(){
@@ -44,7 +44,7 @@ export default class TabBar extends Component {
                 "mosquitoBiteReport",
                 "breedingSourceReportList",
                 //"userSetting"
-            ],
+            ];
             title = [
                 '熱區資訊',
                 '就醫資訊',

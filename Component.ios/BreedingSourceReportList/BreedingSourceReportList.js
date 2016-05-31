@@ -26,38 +26,50 @@ export default class BreedingSourceReportList extends Component {
         this.renderListView = this.renderListView.bind(this);
         this.changeSource = this.changeSource.bind(this);
         this.updateData = this.updateData.bind(this);
+        this.updateState = this.updateState.bind(this);
     }
     componentDidMount(){
+        console.log(123);
         this.loadData(this.state.status);
         //this.updateData(this.state.status);
     }
-    componentDidUpdate(prevProps, prevState) {
-        /*if(prevState.status !== this.state.status){
-            console.log(321);
-            this.loadData(this.state.status);
-            //this.fetchData(this.state.status);
-        }*/
+    fetchData(status) {
+        status = status === '已處理' ? status + ',非孳生源': status;
+        fetch(`http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=${status}`)
+        .then(response => {
+            return response.json();
+        })
+        .then(responseData => {
+            if(responseData){
+                this.updateState(responseData);
+                storage.save({
+                    key: 'breedingSourceReport',
+                    status:id,
+                    rawData: responseData,
+                    expires:  1000 * 3600 * 24
+                });
+                // 成功则调用resolve
+            }
+        })
+    }
+    updateState(responseData) {
+        const sourceNumber = responseData.length;
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(responseData),
+            loaded: true,
+            sourceNumber: sourceNumber,
+        });
     }
     loadData(status) {
         status = status === '已處理' ? status + ',非孳生源': status;
         CONSTANTS.storage.load({
             key: 'breedingSourceReport',
             id: status,
-            // autoSync(默认为true)意味着在没有找到数据或数据过期时自动调用相应的同步方法
             autoSync: true,
-
-            // syncInBackground(默认为true)意味着如果数据过期，
-            // 在调用同步方法的同时先返回已经过期的数据。
-            // 设置为false的话，则始终强制返回同步方法提供的最新数据(当然会需要更多等待时间)。
             syncInBackground: true
         }).then(responseData => {
             //如果找到数据，则在then方法中返回
-            let sourceNumber = responseData.length;
-            this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(responseData),
-                loaded: true,
-                sourceNumber: sourceNumber,
-            });
+            this.updateState(responseData);
             CONSTANTS.storage.save({
                 key: 'breedingSourceReport',  //注意:请不要在key中使用_下划线符号!
                 id: status,
@@ -75,7 +87,9 @@ export default class BreedingSourceReportList extends Component {
         })
     }
     updateData(status, changeStatus) {
-        
+        CONSTANTS.storage.sync.breedingSourceReport({id:status, resolve:this.updateState});
+        CONSTANTS.storage.sync.breedingSourceReport({id:changeStatus});
+
     }
     changeSource(status){
         if(status !== this.state.status){
