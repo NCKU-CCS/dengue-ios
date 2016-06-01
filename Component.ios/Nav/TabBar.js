@@ -18,6 +18,7 @@ export default class TabBar extends Component {
         this.state = {
             opacity: 1,
         };
+        this.icon = this.icon.bind(this);
     }
 
     render(){
@@ -64,7 +65,7 @@ export default class TabBar extends Component {
                         (id,i) =>
                         <TouchableHighlight
                             key = {title[i]}
-                            style = {[styles.tabbarItem, this.selected(title[i])]}
+                            style = {[styles.tabbarItem, this.selectedTab(title[i])]}
                             onPress={
                                 () => {this.props.enter(id, title[i]);}
                             }
@@ -79,7 +80,7 @@ export default class TabBar extends Component {
                                     >
 
                                 </Image>
-                                <Text style = {styles.label}>
+                                <Text style = {[styles.label, this.selectedText(title[i])]}>
                                     {title[i]}
                                 </Text>
                             </View>
@@ -89,35 +90,43 @@ export default class TabBar extends Component {
             </View>
         );
     }
-    selected(title) {
+    selectedTab(title) {
         if(this.props.title === title){
-            return styles.selected;
+            return styles.selectedTab;
+        }
+    }
+    selectedText(title) {
+        if(this.props.title === title){
+            return styles.selectedText;
         }
     }
     icon(title) {
+        const propsTitle = this.props.title;
         switch (title) {
             case '熱區資訊':
-            return require('../../img/rsz_notification_off.png');
-            break;
+            return propsTitle === title ?
+                require('../../img/notification_on.png'):
+                require('../../img/notification_off.png');
             case '就醫資訊':
-            return require('../../img/check_list-31.png');
-
-            break;
+            return propsTitle === title ?
+                require('../../img/hospital_on.png'):
+                require('../../img/hospital_off.png');
             case '孳生源舉報':
-            return require('../../img/rsz_source_checkin_off.png');
-
-            break;
+            return propsTitle === title ?
+                require('../../img/source_checkin_on.png'):
+                require('../../img/source_checkin_off.png');
             case '蚊子叮咬舉報':
-            return require('../../img/rsz_mosquito_checkin_off.png');
-
-            break;
+            return propsTitle === title ?
+                require('../../img/mosquito_checkin_on.png'):
+                require('../../img/mosquito_checkin_off.png');
             case '個人資訊':
-            return require('../../img/rsz_setting_off.png');
-
-            break;
+            return propsTitle === title ?
+                require('../../img/setting_on.png'):
+                require('../../img/setting_off.png');
             case '孳生源列表':
-            return require('../../img/check_list-31.png');
-            break;
+            return propsTitle === title ?
+                require('../../img/hospital_on.png'):
+                require('../../img/hospital_off.png');
             default:
 
         }
@@ -129,7 +138,9 @@ var styles = StyleSheet.create({
         backgroundColor: CONSTANTS.backgroundColor,
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems:'center'
+        alignItems:'center',
+        borderTopWidth:1,
+        borderColor: '#ccc'
     },
     tabbarItem: {
         flex:1,
@@ -142,20 +153,22 @@ var styles = StyleSheet.create({
         borderTopWidth:3,
     },
     view: {
-        justifyContent: 'center',
+    justifyContent: 'center',
         alignItems:'center',
     },
     img: {
         height:32,
         resizeMode: 'contain',
     },
-    selected: {
-        borderColor: CONSTANTS.mainColor,
-        borderTopWidth:3,
-
+    selectedTab: {
+        //borderColor: CONSTANTS.mainColor,
+        //borderTopWidth:3,
+    },
+    selectedText: {
+        color: CONSTANTS.mainColor,
     },
     label: {
-        fontSize:12,
+        fontSize:10,
         marginTop:5,
         fontWeight: 'bold',
     }

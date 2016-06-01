@@ -44,6 +44,19 @@ export default class EachBreedingSourceReport extends Component {
             console.warn(err);
         });
     }
+    titleImage(type) {
+        console.log(type);
+        switch (type) {
+            case '住家容器':
+                return require('../../img/home.png');
+            case '戶外容器':
+                return require('../../img/outContainer.png');
+            case '戶外髒亂處':
+                return require('../../img/outMess.png');
+            default:
+
+        }
+    }
     render() {
         let {
             source,
@@ -55,9 +68,14 @@ export default class EachBreedingSourceReport extends Component {
             <View style={styles.eachList}>
                 <View style={styles.source}>
                     <View style={styles.leftSide}>
-                        <Text style={styles.title}>
-                            {source.address}
-                        </Text>
+                        <View style={styles.title}>
+                            <Image style = {styles.titleImage}
+                                source = {this.titleImage(source.source_type)}
+                            />
+                            <Text style = {styles.titleText}>
+                                {source.address}
+                            </Text>
+                        </View>
                         <Text style={styles.description}>
                             {source.description}
                         </Text>
@@ -132,11 +150,23 @@ const styles = StyleSheet.create({
     leftSide: {
         flex: 0.6,
         paddingLeft: 10,
+        flexDirection:'column',
     },
     title: {
-        fontSize:30,
-        fontWeight:'bold',
+        flexDirection: 'row',
         marginTop:10,
+
+    },
+    titleImage: {
+        resizeMode: 'contain',
+        height:30,
+        width:30,
+        alignSelf: 'center',
+    },
+    titleText: {
+        fontSize:30,
+        flex:1,
+        fontWeight:'bold',
     },
     description: {
         marginTop:20,
