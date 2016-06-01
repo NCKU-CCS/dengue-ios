@@ -6,11 +6,13 @@ import React, {
     StyleSheet,
     Image,
     ListView,
+    ActivityIndicatorIOS,
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import StatusBar from '../StatusBar.js';
 import EachSource from './EachSource.js';
 import Buttons from './Buttons.js';
+
 const REQUEST_URL = 'http://140.116.247.113:11401/hospital/nearby/?database=tainan&lng=120.218206&lat=22.993109';
 export default class BreedingSourceReportList extends Component {
     constructor(props) {
@@ -91,9 +93,11 @@ export default class BreedingSourceReportList extends Component {
     renderLoadingView() {
         return (
             <View style={styles.container}>
-                <Text>
-                    Loading sources...
-                </Text>
+                <ActivityIndicatorIOS
+                    animating={true}
+                    style={{height: 80}}
+                    size="large"
+                    />
             </View>
         );
     }
@@ -139,6 +143,7 @@ var styles = StyleSheet.create({
         backgroundColor: CONSTANTS.backgroundColor,
         flex:1,
         paddingTop:30,
+        justifyContent:'center',
     },
     topText: {
         alignSelf:'center',

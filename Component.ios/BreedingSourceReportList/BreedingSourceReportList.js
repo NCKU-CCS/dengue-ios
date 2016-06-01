@@ -7,10 +7,12 @@ import React, {
     ListView,
     AlertIOS,
     Image,
+    ActivityIndicatorIOS,
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import StatusBar from '../StatusBar.js';
 import BreedingListView from './BreedingListView.js';
+import Icon from 'react-native-vector-icons/FontAwesome';
 export default class BreedingSourceReportList extends Component {
     constructor(props) {
         super(props);
@@ -113,9 +115,11 @@ export default class BreedingSourceReportList extends Component {
     renderLoadingView() {
         return (
             <View style={styles.container}>
-                <Text>
-                    Loading sources...
-                </Text>
+                <ActivityIndicatorIOS
+                    animating={true}
+                    style={{height: 80}}
+                    size="large"
+                    />
             </View>
         );
     }
@@ -141,5 +145,6 @@ const styles = StyleSheet.create({
     container:{
         backgroundColor: CONSTANTS.backgroundColor,
         flex:1,
+        justifyContent:'center',
     }
 });
