@@ -4,7 +4,8 @@ import React, {
     TouchableHighlight,
     ListView,
     StyleSheet,
-    Text
+    Text,
+    RefreshControl,
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import EachBreedingSourceReport from './EachBreedingSourceReport.js';
@@ -20,7 +21,7 @@ export default class BreedingListView extends Component {
         }
     }
     render() {
-        let {changeSource, dataSource, sourceNumber, status} = this.props;
+        let {changeSource, dataSource, sourceNumber, status, refreshing, onRefresh} = this.props;
         return (
             <View style={styles.container}>
                 <View style={styles.status}>
@@ -62,6 +63,12 @@ export default class BreedingListView extends Component {
                     </View>
                 </View>
                 <ListView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
                     dataSource = {dataSource}
                     renderRow = {this.renderEachSource}
                     style = {styles.listView}
@@ -72,14 +79,14 @@ export default class BreedingListView extends Component {
     }
     renderEachSource(source) {
         const WaitDone = source.status === '通報處理'?
-            require('../../img/check-1.png') :
-            require('../../img/check-0.png');
+        require('../../img/check-1.png') :
+        require('../../img/check-0.png');
         const Done = source.status === '已處理'?
-            require('../../img/check-1.png') :
-            require('../../img/check-0.png');
+        require('../../img/check-1.png') :
+        require('../../img/check-0.png');
         const Not = source.status === '非孳生源'?
-            require('../../img/cross-1.png') :
-            require('../../img/cross-0.png');
+        require('../../img/cross-1.png') :
+        require('../../img/cross-0.png');
         //return null;
         return(
             <EachBreedingSourceReport
@@ -89,7 +96,7 @@ export default class BreedingListView extends Component {
                 source = {source}
                 status = {this.props.status}
                 updateData ={this.props.updateData}
-            />
+                />
         );
     }
 }

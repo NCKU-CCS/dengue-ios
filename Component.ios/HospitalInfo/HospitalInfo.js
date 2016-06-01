@@ -13,7 +13,6 @@ import StatusBar from '../StatusBar.js';
 import EachSource from './EachSource.js';
 import Buttons from './Buttons.js';
 
-const REQUEST_URL = 'http://140.116.247.113:11401/hospital/nearby/?database=tainan&lng=120.218206&lat=22.993109';
 export default class BreedingSourceReportList extends Component {
     constructor(props) {
         super(props);
@@ -29,9 +28,42 @@ export default class BreedingSourceReportList extends Component {
         this.changeType = this.changeType.bind(this);
         this.renderEachSource = this.renderEachSource.bind(this);
         this.enterCheckPage = this.enterCheckPage.bind(this);
+        this.updateState = this.updateState.bind(this);
     }
     componentDidMount(){
-        this.fetchData();
+        this.loadData();
+    }
+    updateState(responseData) {
+        const sourceNumber = responseData.length;
+        this.setState({
+            dataSource: responseData,
+            displaySource: this.state.displaySource.cloneWithRows(responseData),
+            sourceNumber: sourceNumber,
+            loaded: true,
+        });
+    }
+    loadData() {
+        CONSTANTS.storage.load({
+            key: 'hospitalInfo',
+            autoSync: true,
+            syncInBackground: true
+        }).then(responseData => {
+            //如果找到数据，则在then方法中返回
+            this.updateState(responseData);
+            CONSTANTS.storage.save({
+                key: 'hospitalInfo',  //注意:请不要在key中使用_下划线符号!
+                rawData: responseData,
+
+                //如果不指定过期时间，则会使用defaultExpires参数
+                //如果设为null，则永不过期
+                expires:  1000 * 3600
+            });
+
+        }).catch(err => {
+            //如果没有找到数据且没有同步方法，
+            //或者有其他异常，则在catch中返回
+            console.warn(err);
+        });
     }
     fetchData() {
         navigator.geolocation.getCurrentPosition(
@@ -46,13 +78,7 @@ export default class BreedingSourceReportList extends Component {
                     return response.json();
                 })
                 .then((responseData) => {
-                    let sourceNumber = responseData.length;
-                    this.setState({
-                        dataSource: responseData,
-                        displaySource: this.state.displaySource.cloneWithRows(responseData),
-                        sourceNumber: sourceNumber,
-                        loaded: true,
-                    });
+                    this.updateState(responseData);
                 })
                 .catch((error) => {
                     console.warn(error);

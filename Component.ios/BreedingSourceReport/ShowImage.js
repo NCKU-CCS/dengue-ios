@@ -45,7 +45,6 @@ export default class ShowImage extends Component {
                     return response.json();
                 })
                 .then(responseData => {
-                    console.log(responseData);
                     this.setState({address: responseData.results[0].formatted_address});
                 })
                 .catch(err => {
@@ -155,7 +154,7 @@ export default class ShowImage extends Component {
             console.warn(err);
             alert('舉報失敗了！')
         })
-        alert('感謝你的舉報！')
+        alert('感謝你！舉報中...')
         this.props.toTop();
 
     }

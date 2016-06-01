@@ -109,12 +109,12 @@ export default class TabBar extends Component {
                 require('../../img/notification_off.png');
             case '就醫資訊':
             return propsTitle === title ?
-                require('../../img/hospital_on.png'):
-                require('../../img/hospital_off.png');
+                require('../../img/check_list-32.png'):
+                require('../../img/check_list-31.png');
             case '孳生源舉報':
             return propsTitle === title ?
-                require('../../img/source_checkin_on.png'):
-                require('../../img/source_checkin_off.png');
+                require('../../img/source-15.png'):
+                require('../../img/source-16.png');
             case '蚊子叮咬舉報':
             return propsTitle === title ?
                 require('../../img/mosquito_checkin_on.png'):
@@ -125,8 +125,8 @@ export default class TabBar extends Component {
                 require('../../img/setting_off.png');
             case '孳生源列表':
             return propsTitle === title ?
-                require('../../img/hospital_on.png'):
-                require('../../img/hospital_off.png');
+            require('../../img/check_list-32.png'):
+            require('../../img/check_list-31.png');
             default:
 
         }

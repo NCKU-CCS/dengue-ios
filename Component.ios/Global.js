@@ -49,6 +49,40 @@ storage.sync = {
             console.warn(err);
             reject && reject(err);
         });
+    },
+    hospitalInfo(params) {
+        let { id, resolve, reject } = params;
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                fetch(`http://140.116.247.113:11401/hospital/nearby/?database=tainan&lng=${lon}&lat=${lat}`)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((responseData) => {
+                    if(responseData){
+                        resolve && resolve(responseData);
+                        storage.save({
+                            key: 'hospitalInfo',
+                            rawData: responseData,
+                            expires:  1000 * 3600,
+                        });
+                    }
+                    else{
+                        reject && reject(err);
+
+                    }
+                })
+                .catch((error) => {
+                    console.warn(err);
+                    reject && reject(err);
+                })
+                .done();
+            },
+            (error) => alert(error.message),
+            {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+        );
     }
 };
 export default {

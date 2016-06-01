@@ -45,7 +45,6 @@ export default class EachBreedingSourceReport extends Component {
         });
     }
     titleImage(type) {
-        console.log(type);
         switch (type) {
             case '住家容器':
                 return require('../../img/home.png');

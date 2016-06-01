@@ -24,14 +24,15 @@ export default class BreedingSourceReportList extends Component {
             loaded: false,
             sourceNumber:0,
             status: '未處理',
+            refreshing: false,
         };
         this.renderListView = this.renderListView.bind(this);
         this.changeSource = this.changeSource.bind(this);
         this.updateData = this.updateData.bind(this);
         this.updateState = this.updateState.bind(this);
+        this.onRefresh = this.onRefresh.bind(this);
     }
     componentDidMount(){
-        console.log(123);
         this.loadData(this.state.status);
         //this.updateData(this.state.status);
     }
@@ -55,11 +56,10 @@ export default class BreedingSourceReportList extends Component {
         })
     }
     updateState(responseData) {
-        const sourceNumber = responseData.length;
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(responseData),
             loaded: true,
-            sourceNumber: sourceNumber,
+            sourceNumber: responseData.length,
         });
     }
     loadData(status) {
@@ -89,9 +89,25 @@ export default class BreedingSourceReportList extends Component {
         })
     }
     updateData(status, changeStatus) {
-        CONSTANTS.storage.sync.breedingSourceReport({id:status, resolve:this.updateState});
-        CONSTANTS.storage.sync.breedingSourceReport({id:changeStatus});
+        const {sync} = CONSTANTS.storage;
+        sync.breedingSourceReport({id:status, resolve:this.updateState});
+        sync.breedingSourceReport({id:changeStatus});
 
+    }
+    onRefresh(){
+        this.setState({refreshing: true});
+        const statusArr = ['已處理', '未處理', '通報處理'],
+            {sync} = CONSTANTS.storage;
+        statusArr.forEach((d) => {
+
+            if(this.state.status === d){
+                sync.breedingSourceReport({id:d,resolve:this.updateState});
+            }
+            else{
+                sync.breedingSourceReport({id:d});
+            }
+        })
+        this.setState({refreshing: false});
     }
     changeSource(status){
         if(status !== this.state.status){
@@ -127,7 +143,9 @@ export default class BreedingSourceReportList extends Component {
         let {
             dataSource,
             status,
-            sourceNumber
+            sourceNumber,
+            loaded,
+            refreshing,
         } = this.state;
         return(
             <BreedingListView
@@ -136,6 +154,8 @@ export default class BreedingSourceReportList extends Component {
                 status = {status}
                 changeSource = {this.changeSource}
                 updateData = {this.updateData}
+                refreshing = {refreshing}
+                onRefresh = {this.onRefresh}
                 />
         );
     }
