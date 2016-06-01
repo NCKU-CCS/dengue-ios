@@ -69,7 +69,10 @@ export default class BreedingListView extends Component {
                             onRefresh={onRefresh}
                         />
                     }
+                    initialListSize = {1}
+                    pageSize = {1}
                     dataSource = {dataSource}
+                    scrollRenderAheadDistance = {50}
                     renderRow = {this.renderEachSource}
                     style = {styles.listView}
                     />

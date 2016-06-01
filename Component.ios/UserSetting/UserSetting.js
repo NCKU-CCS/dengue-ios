@@ -17,7 +17,6 @@ import CONSTANTS from '../Global.js';
 export default class UserSetting extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props);
     }
     render() {
         const {
@@ -30,6 +29,7 @@ export default class UserSetting extends Component {
         if(logined){
             return (
                 <InfoView
+                    restart = {restart}
                     score = {score}
                     bites_count = {bites_count}
                     breeding_source_count = {breeding_source_count}

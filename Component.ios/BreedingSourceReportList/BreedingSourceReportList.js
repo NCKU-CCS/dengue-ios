@@ -72,7 +72,7 @@ export default class BreedingSourceReportList extends Component {
         }).then(responseData => {
             //如果找到数据，则在then方法中返回
             this.updateState(responseData);
-            CONSTANTS.storage.save({
+        /*    CONSTANTS.storage.save({
                 key: 'breedingSourceReport',  //注意:请不要在key中使用_下划线符号!
                 id: status,
                 rawData: responseData,
@@ -81,7 +81,7 @@ export default class BreedingSourceReportList extends Component {
                 //如果设为null，则永不过期
                 expires:  1000 * 3600 * 24
             });
-
+*/
         }).catch(err => {
             //如果没有找到数据且没有同步方法，
             //或者有其他异常，则在catch中返回

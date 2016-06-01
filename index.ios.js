@@ -49,36 +49,17 @@ class DengueFever extends Component {
             //设置为false的话，则始终强制返回同步方法提供的最新数据(当然会需要更多等待时间)。
             syncInBackground: true
         })
-        .then( () => {
-            //如果找到数据，则在then方法中返回
-
-            return fetch('http://140.116.247.113:11401/users/info/');
-        })
-        .then((response) => {
-            if(!response.ok){
-                throw Error(response.status);
-            }
-            return response.json();
-        })
         .then((responseData) => {
-            let logined = responseData.name === '' ? false : true;
-            this.setState({
-                info: responseData,
-                logined: logined,
-            })
-            CONSTANTS.storage.save({
+            this.restart(responseData);
+    /*        CONSTANTS.storage.save({
                 key: 'loginState',  //注意:请不要在key中使用_下划线符号!
-                rawData: {
-                    user_uuid: responseData.user_uuid,
-                    //phone: phone,
-                    //password: password,
-                },
+                rawData: responseData,
 
                 //如果不指定过期时间，则会使用defaultExpires参数
                 //如果设为null，则永不过期
-                expires: null
+                expires: 1000 * 60
             });
-        })
+    */    })
         .catch( err => {
             this.fetchData();
             //如果没有找到数据且没有同步方法，
@@ -98,18 +79,16 @@ class DengueFever extends Component {
         .then((responseData) => {
             //let sessionid = responseData[0];
             //let user_uuid = responseData[1].user_uuid;
-            let user_uuid = responseData.user_uuid;
+            this.restart(responseData);
             CONSTANTS.storage.save({
                 key: 'loginState',  //注意:请不要在key中使用_下划线符号!
-                rawData: {
-                    user_uuid: user_uuid,
-                    //sessionid: sessionid,
-                },
+                rawData: responseData,
 
                 //如果不指定过期时间，则会使用defaultExpires参数
                 //如果设为null，则永不过期
-                expires:  null
+                expires:  1000 * 60
             });
+
         })
         .catch((error) => {
             console.warn(error);
@@ -117,10 +96,18 @@ class DengueFever extends Component {
         .done();
     }
     restart(info) {
-        this.setState({
-            info: info,
-            logined: true,
-        })
+        console.log(info);
+        let logined = info.name === undefined ? false : true;
+        if(info.user_uuid === undefined){
+            this.fetchData();
+        }
+        else{
+            this.setState({
+                info: info,
+                logined: logined,
+            })
+        }
+
     }
     render() {
         return(

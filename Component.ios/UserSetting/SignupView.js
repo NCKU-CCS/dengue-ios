@@ -39,6 +39,7 @@ export default class SignupView extends Component {
         })
         .then((response) => {
             if(!response.ok){
+                console.log(123);
                 throw Error(response.status);
             }
             return fetch('http://140.116.247.113:11401/users/info/');
@@ -54,13 +55,11 @@ export default class SignupView extends Component {
             restart(responseData);
             CONSTANTS.storage.save({
                 key: 'loginState',  //注意:请不要在key中使用_下划线符号!
-                rawData: {
-                    user_uuid: responseData.user_uuid,
-                },
+                rawData: responseData,
 
                 //如果不指定过期时间，则会使用defaultExpires参数
                 //如果设为null，则永不过期
-                expires: null
+                expires: 1000 * 60
             });
             alert('註冊成功！') ;
         })

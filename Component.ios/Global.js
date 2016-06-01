@@ -83,6 +83,32 @@ storage.sync = {
             (error) => alert(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
+    },
+    loginState(params) {
+        let { id, resolve, reject } = params;
+        fetch('http://140.116.247.113:11401/users/info/')
+        .then(response => {
+            return response.json();
+        })
+        .then(responseData => {
+            if(responseData){
+                resolve && resolve(responseData);
+                storage.save({
+                    key: 'loginState',
+                    rawData: responseData,
+                    expires:  1000 * 60
+                });
+                // 成功则调用resolve
+            }
+            else{
+                // 失败则调用reject
+                reject && reject('data parse error');
+            }
+        })
+        .catch(err => {
+            console.warn(err);
+            reject && reject(err);
+        });
     }
 };
 export default {

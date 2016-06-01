@@ -49,13 +49,11 @@ export default class SignupView extends Component {
             restart(responseData);
             CONSTANTS.storage.save({
                 key: 'loginState',  //注意:请不要在key中使用_下划线符号!
-                rawData: {
-                    user_uuid: responseData.user_uuid,
-                },
+                rawData: responseData,
 
                 //如果不指定过期时间，则会使用defaultExpires参数
                 //如果设为null，则永不过期
-                expires: null
+                expires: 1000 * 60
             });
             AlertIOS.alert(
                 '登入成功'
