@@ -96,7 +96,6 @@ class DengueFever extends Component {
         .done();
     }
     restart(info) {
-        console.log(info);
         let logined = info.name === undefined ? false : true;
         if(info.user_uuid === undefined){
             this.fetchData();

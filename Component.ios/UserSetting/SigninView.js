@@ -68,7 +68,7 @@ export default class SignupView extends Component {
     }
     render() {
         return(
-            <ScrollView style = {styles.container}>
+            <ScrollView style = {styles.container} ref = 'scrollView'>
                 <Image
                     source = {{ uri : "http://www.opcpest.com/res/images/pest-detail-images/og_mosquito-icon_1.png" }}
                     style = {styles.image}
@@ -87,6 +87,15 @@ export default class SignupView extends Component {
                         selectTextOnFocus = {true}
                         selectionColor = {CONSTANTS.mainColor}
                         autoCorrect = {false}
+                        ref = 'textinput1'
+                        onFocus = {() => {
+                            this.refs.textinput1.measure((x,y,width,height,px,py) => {
+
+                                if(py > CONSTANTS.screenHeight / 2){
+                                    this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                                }
+                            });
+                        }}
                         >
                     </TextInput>
                 </View>
@@ -101,6 +110,15 @@ export default class SignupView extends Component {
                         secureTextEntry = {true}
                         selectionColor = {CONSTANTS.mainColor}
                         autoCorrect = {false}
+                        ref = 'textinput2'
+                        onFocus = {() => {
+                            this.refs.textinput2.measure((x,y,width,height,px,py) => {
+
+                                if(py > CONSTANTS.screenHeight / 2){
+                                    this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                                }
+                            });
+                        }}
                         >
                     </TextInput>
                 </View>

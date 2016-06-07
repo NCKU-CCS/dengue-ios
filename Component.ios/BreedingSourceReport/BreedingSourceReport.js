@@ -30,9 +30,15 @@ export default class Second extends Component {
                         captureTarget={Camera.constants.CaptureTarget.disk}
                         captureAudio={false}
                 >
-                        <View style = {styles.bottomBar}>
-                            <TouchableHighlight onPress={this.takePicture} style={styles.capture} >
-                                <View style={styles.capture}></View>
+                        <View style = {styles.buttomBar}>
+                            <TouchableHighlight
+                                
+                                onPress={this.takePicture}
+                                style={styles.capture}
+                            >
+                                <View style={styles.inside}>
+
+                                </View>
                             </TouchableHighlight>
                         </View>
                 </Camera>
@@ -63,19 +69,30 @@ var styles = StyleSheet.create({
         //width: CONSTANTS.screenwidth,
         //paddingBottom:100,
     },
-    bottonBar: {
-        width: CONSTANTS.screenwidth,
+    buttomBar: {
+        width: CONSTANTS.screenWidth,
         height:60,
-        backgroundColor: '#aaa',
+        backgroundColor: 'rgba(250,250,250,0.4)',
+        alignItems: 'center',
+        justifyContent:'center',
     },
     capture: {
         backgroundColor: '#fff',
-        borderRadius: 30,
+        borderRadius: 25,
         alignItems: 'center',
-        height:60,
-        width:60,
-        marginBottom: 50,
+        height:50,
+        width:50,
+        justifyContent:'center',
     },
+    inside: {
+        backgroundColor: '#fff',
+        borderRadius: 20,
+        alignItems: 'center',
+        height:40,
+        width:40,
+        borderColor: '#333',
+        borderWidth: 2,
+    }
 
 
 });

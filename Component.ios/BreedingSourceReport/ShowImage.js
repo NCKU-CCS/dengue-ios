@@ -5,16 +5,10 @@ import React, {
     View,
     Image,
     TextInput,
-    Dimensions,
     TouchableHighlight,
-    NativeModules,
-    AlertIOS,
-    ActionSheetIOS,
-    ScrollView,
+    ScrollView
 } from 'react-native';
 import CONSTANTS from '../Global.js';
-import StatusBar from '../StatusBar.js';
-import ImageResizer from 'react-native-image-resizer';
 export default class ShowImage extends Component {
     constructor(props) {
         super(props);
@@ -74,7 +68,7 @@ export default class ShowImage extends Component {
             }
         }
         return (
-            <ScrollView  style={styles.container} ref="mount">
+            <ScrollView  style={styles.container} ref="scrollView">
                 <Image ref={'img'} style={styles.image} source={{uri: this.props.uri}}/>
                 <View style={styles.inputs}>
                     <View style={styles.question}>
@@ -106,6 +100,15 @@ export default class ShowImage extends Component {
                         </View>
                         <View style={styles.answer}>
                             <TextInput
+                                ref = 'textinput'
+                                onFocus = {() => {
+                                    this.refs.textinput.measure((x,y,width,height,px,py) => {
+
+                                        if(py > CONSTANTS.screenHeight / 2){
+                                            this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                                        }
+                                    });
+                                }}
                                 multiline = {true}
                                 style = {styles.textInput}
                                 onChangeText = {(text) => this.setState({description:text})}
