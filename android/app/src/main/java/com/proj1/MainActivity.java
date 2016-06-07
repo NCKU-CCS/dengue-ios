@@ -1,6 +1,7 @@
 package com.proj1;
 
 import com.facebook.react.ReactActivity;
+import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.AirMaps.AirPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
@@ -38,6 +39,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new ImageResizerPackage(),
             new AirPackage(),
             new VectorIconsPackage(),
             new RCTCameraPackage()

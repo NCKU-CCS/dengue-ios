@@ -14,7 +14,7 @@ import React, {
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import StatusBar from '../StatusBar.js';
-
+import ImageResizer from 'react-native-image-resizer';
 export default class ShowImage extends Component {
     constructor(props) {
         super(props);
@@ -123,7 +123,6 @@ export default class ShowImage extends Component {
     send() {
         let {type, description, lat, lon, address} = this.state,
         fileName = this.props.uri.split('/').slice(-1)[0];
-        console.log(address);
         let photo = {
             uri: this.props.uri,
             type: 'image/jpeg',

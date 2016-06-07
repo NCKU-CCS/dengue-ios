@@ -12,6 +12,7 @@ import StatusBar from '../StatusBar.js';
 import Camera from 'react-native-camera';
 import ShowImage from './ShowImage.js';
 import CONSTANTS from '../Global.js';
+import ImageResizer from 'react-native-image-resizer';
 export default class Second extends Component {
 
     constructor(props) {
@@ -27,7 +28,8 @@ export default class Second extends Component {
                         style={styles.preview}
                         aspect={Camera.constants.Aspect.fill}
                         captureTarget={Camera.constants.CaptureTarget.disk}
-                        >
+                        captureAudio={false}
+                >
                         <View style = {styles.bottomBar}>
                             <TouchableHighlight onPress={this.takePicture} style={styles.capture} >
                                 <View style={styles.capture}></View>
@@ -40,7 +42,13 @@ export default class Second extends Component {
     }
     takePicture() {
         this.refs.cam.capture([])
-        .then((data) => this.props.enter("showImage", '孳生源舉報', data.path))
+        .then((data) => {
+            return ImageResizer.createResizedImage(data.path, 150, 120, 'JPEG', 50)
+
+        })
+        .then((uri) => {
+            this.props.enter("showImage", '孳生源舉報', uri);
+        })
         .catch(err => console.error(err));
     }
 }
