@@ -43,7 +43,7 @@ export default class Second extends Component {
     takePicture() {
         this.refs.cam.capture([])
         .then((data) => {
-            return ImageResizer.createResizedImage(data.path, 150, 120, 'JPEG', 50)
+            return ImageResizer.createResizedImage(data.path, 300, 240, 'JPEG', 70)
 
         })
         .then((uri) => {
