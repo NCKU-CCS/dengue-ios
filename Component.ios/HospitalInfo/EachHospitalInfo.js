@@ -1,21 +1,16 @@
 import React, {
-    View,
-    Text,
     Component,
-    Image,
-    StyleSheet,
+    StyleSheet
 } from 'react-native';
 
 import MapView from 'react-native-maps';
-import StatusBar from '../StatusBar.js';
 import CONSTANTS from '../Global.js';
-var CANCEL_INDEX = 4;
 export default class BreedingSourceReportList extends Component {
 
     constructor(props) {
         super(props);
-        let lng = parseFloat(props.source.lng),
-        lat = parseFloat(props.source.lat);
+        const lng = parseFloat(props.source.lng),
+            lat = parseFloat(props.source.lat);
         this.state = {
             mapRegion: {
                 longitude: lng,
@@ -34,7 +29,7 @@ export default class BreedingSourceReportList extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let marker = {
+        const marker = {
             coordinate: {
                 longitude: nextProps.source.lng,
                 latitude: nextProps.source.lat,
@@ -53,7 +48,7 @@ export default class BreedingSourceReportList extends Component {
         });
     }
     render() {
-        const {marker, myPosition} = this.state;
+        const {marker} = this.state;
         return(
 
             <MapView
@@ -69,15 +64,14 @@ export default class BreedingSourceReportList extends Component {
 
             </MapView>
 
-        )
+        );
     }
 }
-BreedingSourceReportList.defaultProps = {
-}
+
 var styles = StyleSheet.create({
     map: {
         flex:1,
         width:CONSTANTS.screenWidth,
     },
 
-})
+});

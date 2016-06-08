@@ -14,7 +14,7 @@ export default class EachBreedingSourceReport extends Component {
     }
     updateStatus(source, changeStatus){
         let formData = new FormData();
-        let {
+        const {
             updateData,
             status
         } = this.props;
@@ -57,7 +57,7 @@ export default class EachBreedingSourceReport extends Component {
         }
     }
     render() {
-        let {
+        const {
             source,
             Done,
             Not,

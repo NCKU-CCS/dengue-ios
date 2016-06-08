@@ -1,14 +1,12 @@
 import React, {
     Component,
     StyleSheet,
-    TabBarIOS,
     Image,
     Text,
     View,
     TouchableHighlight
 } from 'react-native';
 import CONSTANTS from '../Global.js';
-import ContextComponent from './ContextComponent.js';
 
 //import Icon from 'react-native-vector-icons/Ionicons';
 

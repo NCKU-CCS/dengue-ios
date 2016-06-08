@@ -1,14 +1,5 @@
 import React, {
-    Component,
-    StyleSheet,
-    View,
-    Image,
-    TextInput,
-    Text,
-    TouchableHighlight,
-    AlertIOS,
-    NativeModules,
-    ScrollView,
+    Component
 } from 'react-native';
 import InfoView from './InfoView.js';
 import SignupView from './SignupView.js';

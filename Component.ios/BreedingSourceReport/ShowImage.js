@@ -25,7 +25,7 @@ export default class ShowImage extends Component {
 
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                let {latitude, longitude} = position.coords;
+                const {latitude, longitude} = position.coords;
 
                 this.setState({
                     lat:latitude,
@@ -43,26 +43,25 @@ export default class ShowImage extends Component {
                 })
                 .catch(err => {
                     console.warn(err);
-                })
+                });
             },
             (error) => alert(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
-    };
+    }
     render() {
         const types = ['住家容器','戶外容器','戶外髒亂處'];
-        let {type} = this.state,
-        imgObj = ['../../img/home', '../../img/outContainer', '../../img/outMess'];
+        let {type} = this.state, imgObj0, imgObj1, imgObj2;
         for(let a in types){
             switch (a) {
                 case '0':
-                let imgObj0 = types[0] === type ? require('../../img/homeSelected.png'):require('../../img/home.png');
+                imgObj0 = types[0] === type ? require('../../img/homeSelected.png'):require('../../img/home.png');
                 break;
                 case '1':
-                let imgObj1 = types[1] === type ? require('../../img/outContainerSelected.png'):require('../../img/outContainer.png');
+                imgObj1 = types[1] === type ? require('../../img/outContainerSelected.png'):require('../../img/outContainer.png');
                 break;
                 case '2':
-                let imgObj2 = types[2] === type ? require('../../img/outMessSelected.png'):require('../../img/outMess.png');
+                imgObj2 = types[2] === type ? require('../../img/outMessSelected.png'):require('../../img/outMess.png');
                 break;
                 default:
             }
@@ -121,8 +120,8 @@ export default class ShowImage extends Component {
                     </TouchableHighlight>
                 </View>
             </ScrollView>
-        )
-    };
+        );
+    }
     send() {
         let {type, description, lat, lon, address} = this.state,
         fileName = this.props.uri.split('/').slice(-1)[0];
@@ -155,8 +154,8 @@ export default class ShowImage extends Component {
         })
         .catch(err => {
             console.warn(err);
-            alert('舉報失敗了！')
-        })
+            alert('舉報失敗了！');
+        });
         this.props.toTop();
 
     }

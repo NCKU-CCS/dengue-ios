@@ -5,7 +5,7 @@ import React, {
     ListView,
     StyleSheet,
     Text,
-    RefreshControl,
+    RefreshControl
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import EachBreedingSourceReport from './EachBreedingSourceReport.js';
@@ -21,7 +21,7 @@ export default class BreedingListView extends Component {
         }
     }
     render() {
-        let {changeSource, dataSource, sourceNumber, status, refreshing, onRefresh} = this.props;
+        const {changeSource, dataSource, sourceNumber, status, refreshing, onRefresh} = this.props;
         return (
             <View style={styles.container}>
                 <View style={styles.status}>

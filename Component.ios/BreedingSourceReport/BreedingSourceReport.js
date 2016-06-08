@@ -1,16 +1,10 @@
 import React, {
     Component,
     StyleSheet,
-    Text,
     View,
-    Image,
-    TextInput,
-    Dimensions,
-    TouchableHighlight,
+    TouchableHighlight
 } from 'react-native';
-import StatusBar from '../StatusBar.js';
 import Camera from 'react-native-camera';
-import ShowImage from './ShowImage.js';
 import CONSTANTS from '../Global.js';
 import ImageResizer from 'react-native-image-resizer';
 export default class Second extends Component {
@@ -32,7 +26,7 @@ export default class Second extends Component {
                 >
                         <View style = {styles.buttomBar}>
                             <TouchableHighlight
-                                
+
                                 onPress={this.takePicture}
                                 style={styles.capture}
                             >
@@ -42,14 +36,14 @@ export default class Second extends Component {
                             </TouchableHighlight>
                         </View>
                 </Camera>
-            )
+            );
 
 
     }
     takePicture() {
         this.refs.cam.capture([])
         .then((data) => {
-            return ImageResizer.createResizedImage(data.path, 300, 240, 'JPEG', 70)
+            return ImageResizer.createResizedImage(data.path, 300, 240, 'JPEG', 70);
 
         })
         .then((uri) => {

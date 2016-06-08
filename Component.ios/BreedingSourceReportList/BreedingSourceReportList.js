@@ -1,18 +1,12 @@
 import React, {
     View,
-    Text,
     Component,
-    TouchableHighlight,
     StyleSheet,
     ListView,
-    AlertIOS,
-    Image,
-    ActivityIndicatorIOS,
+    ActivityIndicatorIOS
 } from 'react-native';
 import CONSTANTS from '../Global.js';
-import StatusBar from '../StatusBar.js';
 import BreedingListView from './BreedingListView.js';
-import Icon from 'react-native-vector-icons/FontAwesome';
 export default class BreedingSourceReportList extends Component {
     constructor(props) {
         super(props);
@@ -35,25 +29,6 @@ export default class BreedingSourceReportList extends Component {
     componentDidMount(){
         this.loadData(this.state.status);
         //this.updateData(this.state.status);
-    }
-    fetchData(status) {
-        status = status === '已處理' ? status + ',非孳生源': status;
-        fetch(`http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=${status}`)
-        .then(response => {
-            return response.json();
-        })
-        .then(responseData => {
-            if(responseData){
-                this.updateState(responseData);
-                storage.save({
-                    key: 'breedingSourceReport',
-                    status:id,
-                    rawData: responseData,
-                    expires:  1000 * 3600 * 24
-                });
-                // 成功则调用resolve
-            }
-        })
     }
     updateState(responseData) {
         this.setState({
@@ -79,14 +54,14 @@ export default class BreedingSourceReportList extends Component {
 
                 //如果不指定过期时间，则会使用defaultExpires参数
                 //如果设为null，则永不过期
-                expires:  1000 * 3600 * 24
+                expires: 1000 * 3600 * 24
             });
 */
         }).catch(err => {
             //如果没有找到数据且没有同步方法，
             //或者有其他异常，则在catch中返回
             console.warn(err);
-        })
+        });
     }
     updateData(status, changeStatus) {
         const {sync} = CONSTANTS.storage;
@@ -106,7 +81,7 @@ export default class BreedingSourceReportList extends Component {
             else{
                 sync.breedingSourceReport({id:d});
             }
-        })
+        });
         this.setState({refreshing: false});
     }
     changeSource(status){
@@ -144,7 +119,6 @@ export default class BreedingSourceReportList extends Component {
             dataSource,
             status,
             sourceNumber,
-            loaded,
             refreshing,
         } = this.state;
         return(

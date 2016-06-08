@@ -2,7 +2,7 @@ import React, {
     Component,
     StyleSheet,
     View,
-    Navigator,
+    Navigator
 
 } from 'react-native';
 import CONSTANTS from './Global.js';
@@ -59,35 +59,36 @@ export default class Nav extends Component {
     }
     enter(id, title, data) {
 
-        let routeList = this.refs.nav.getCurrentRoutes(),
-            route = this.containRoute(id, data, routeList)
+        const routeList = this.refs.nav.getCurrentRoutes(),
+            route = this.containRoute(id, data, routeList),
+            {jumpTo, push} = this.refs.nav;
         if(route){
-            this.refs.nav.jumpTo(route);
+            jumpTo(route);
         }
         else{
-            this.refs.nav.push({id:id, title:title, data:data});
+            push({id:id, title:title, data:data});
         }
         this.setState({
             title: title,
             id: id,
-        })
+        });
     }
     back() {
-        let routeList = this.refs.nav.getCurrentRoutes(),
+        const routeList = this.refs.nav.getCurrentRoutes(),
             currentRoute = routeList[routeList.length - 2];
         this.refs.nav.pop();
         this.setState({
             title: currentRoute.title,
             id: currentRoute.id,
-        })
+        });
     }
     toTop() {
-        let firstRoute = this.refs.nav.getCurrentRoutes()[0];
+        const firstRoute = this.refs.nav.getCurrentRoutes()[0];
         this.refs.nav.popToTop();
         this.setState({
             title: firstRoute.title,
             id: firstRoute.id,
-        })
+        });
     }
     containRoute(routeId, routeData, routeList) {
         for(let x in routeList){

@@ -2,14 +2,11 @@ import React, {
     Component,
     StyleSheet,
     Text,
-    View,
     Image,
     TouchableHighlight,
-    Dimensions,
     AlertIOS,
-    ScrollView,
+    ScrollView
 } from 'react-native';
-import StatusBar from '../StatusBar.js';
 import CONSTANTS from '../Global.js';
 export default class Second extends Component {
 
@@ -25,12 +22,12 @@ export default class Second extends Component {
                 this.setState({
                     lat:position.coords.latitude,
                     lon:position.coords.longitude,
-                })
+                });
             },
             (error) => AlertIOS.alert(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
-    };
+    }
     render() {
 
         return (
@@ -49,14 +46,14 @@ export default class Second extends Component {
                     <Text style={styles.buttonText}>報告！這裡有蚊子</Text>
                 </TouchableHighlight>
             </ScrollView>
-        )
+        );
 
 
     }
     send() {
 
-        let {lat,lon} = this.state,
-            {back, toTop} = this.props;
+        const {lat,lon} = this.state,
+            {toTop} = this.props;
         if(lat === '' || lat === ''){
             AlertIOS.alert("未開啟定位服務");
         }
@@ -78,11 +75,11 @@ export default class Second extends Component {
                     throw Error(response.status);
                 }
                 alert('舉報成功!');
-                this.props.toTop();
+                toTop();
             })
             .catch(err => {
                 console.warn(err);
-                alert('舉報失敗了！')
+                alert('舉報失敗了！');
             });
 
         }

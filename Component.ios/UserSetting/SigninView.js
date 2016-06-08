@@ -7,7 +7,7 @@ import React, {
     StyleSheet,
     Text,
     View,
-    AlertIOS,
+    AlertIOS
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 
@@ -19,8 +19,8 @@ export default class SignupView extends Component {
     }
 
     signin() {
-        let {phone, password} = this.state;
-        let {restart, toTop} = this.props;
+        const {phone, password} = this.state;
+        const {restart, toTop} = this.props;
         let formData = new FormData();
         formData.append('phone', phone);
         formData.append('password', password);

@@ -3,7 +3,7 @@ import React, {
     View,
     Text,
     StyleSheet,
-    TouchableHighlight,
+    TouchableHighlight
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 export default class InfoView extends Component {
@@ -24,7 +24,7 @@ export default class InfoView extends Component {
         })
         .catch(err => {
             console.warn(err);
-        })
+        });
     }
     render() {
         const {
@@ -53,7 +53,7 @@ export default class InfoView extends Component {
                     </Text>
                 </TouchableHighlight>
             </View>
-        )
+        );
     }
 }
 const styles = StyleSheet.create({

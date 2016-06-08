@@ -6,8 +6,7 @@ import React, {
     TouchableHighlight,
     StyleSheet,
     Text,
-    View,
-    AlertIOS,
+    View
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 

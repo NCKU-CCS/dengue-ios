@@ -2,14 +2,11 @@ import React, {
     View,
     Text,
     Component,
-    TouchableHighlight,
     StyleSheet,
-    Image,
     ListView,
-    ActivityIndicatorIOS,
+    ActivityIndicatorIOS
 } from 'react-native';
 import CONSTANTS from '../Global.js';
-import StatusBar from '../StatusBar.js';
 import EachSource from './EachSource.js';
 import Buttons from './Buttons.js';
 
@@ -56,7 +53,7 @@ export default class BreedingSourceReportList extends Component {
 
                 //如果不指定过期时间，则会使用defaultExpires参数
                 //如果设为null，则永不过期
-                expires:  1000 * 3600
+                expires: 1000 * 3600
             });
 
         }).catch(err => {
@@ -73,7 +70,7 @@ export default class BreedingSourceReportList extends Component {
                 fetch(`http://140.116.247.113:11401/hospital/nearby/?database=tainan&lng=${lon}&lat=${lat}`)
                 .then((response) => {
                     if(!response.ok){
-                        throw Error(response.statusText)
+                        throw Error(response.statusText);
                     }
                     return response.json();
                 })
@@ -106,7 +103,7 @@ export default class BreedingSourceReportList extends Component {
             displaySource: this.state.displaySource.cloneWithRows(displaySource),
             type: newType,
             sourceNumber: displaySource.length,
-        })
+        });
     }
     render() {
         if (!this.state.loaded) {
@@ -149,7 +146,7 @@ export default class BreedingSourceReportList extends Component {
                     style={styles.listView}
                     />
             </View>
-        )
+        );
 
     }
     renderEachSource(source) {

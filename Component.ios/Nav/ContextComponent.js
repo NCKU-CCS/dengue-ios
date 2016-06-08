@@ -19,9 +19,9 @@ export default class ContextComponent extends Component {
 
         };
     }
-    
+
     render() {
-        let {enter, back, toTop, data, id, restart, logined, info} = this.props;
+        const {enter, back, toTop, data, id, restart, logined, info} = this.props;
         switch (id) {
             case 'breedingSourceReport':
             return (<BreedingSourceReport enter={enter} back={back}  />);
