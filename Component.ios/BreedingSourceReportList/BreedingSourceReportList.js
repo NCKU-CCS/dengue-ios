@@ -28,13 +28,33 @@ export default class BreedingSourceReportList extends Component {
     }
     componentDidMount(){
         this.loadData(this.state.status);
+        this.loadNumber();
         //this.updateData(this.state.status);
     }
+    loadNumber() {
+        const {status} = this.state,
+            id = status === '已處理' ? status + ',非孳生源': status;
+        fetch(`http://140.116.247.113:11401/breeding_source/total/?database=tainan&status=${id}`)
+        .then(response => {
+            if(response.ok){
+                return response.json();
+            }
+        })
+        .then(responseData => {
+            this.setState({
+                sourceNumber: responseData.total
+            });
+        })
+        .catch(err => {
+            console.warn(err);
+        });
+    }
     updateState(responseData) {
+        this.loadNumber();
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(responseData),
             loaded: true,
-            sourceNumber: responseData.length,
+            //sourceNumber: responseData.length,
         });
     }
     loadData(status) {

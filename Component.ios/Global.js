@@ -25,6 +25,7 @@ storage.sync = {
     breedingSourceReport(params){
         let { id, resolve, reject } = params;
         id = id === '已處理' ? id + ',非孳生源': id;
+        
         fetch(`http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=${id}`)
         .then(response => {
             return response.json();
@@ -36,7 +37,7 @@ storage.sync = {
                     key: 'breedingSourceReport',
                     id:id,
                     rawData: responseData,
-                    expires:  1000 * 3600 * 24
+                    expires: 1000 * 3600 * 24
                 });
                 // 成功则调用resolve
             }

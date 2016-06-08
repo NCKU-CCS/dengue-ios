@@ -20,7 +20,7 @@ export default class ShowImage extends Component {
             address: '',
         };
         //this.showActionSheet = this.showActionSheet.bind(this);
-    };
+    }
     componentDidMount() {
 
         navigator.geolocation.getCurrentPosition(
