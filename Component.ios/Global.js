@@ -25,7 +25,7 @@ storage.sync = {
     breedingSourceReport(params){
         let { id, resolve, reject } = params;
         id = id === '已處理' ? id + ',非孳生源': id;
-        
+
         fetch(`http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=${id}`)
         .then(response => {
             return response.json();
@@ -52,7 +52,7 @@ storage.sync = {
         });
     },
     hospitalInfo(params) {
-        let { id, resolve, reject } = params;
+        let { resolve, reject } = params;
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const lat = position.coords.latitude;

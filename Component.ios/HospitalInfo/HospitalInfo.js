@@ -4,7 +4,8 @@ import React, {
     Component,
     StyleSheet,
     ListView,
-    ActivityIndicatorIOS
+    ActivityIndicatorIOS,
+    RefreshControl
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import EachSource from './EachSource.js';
@@ -20,12 +21,14 @@ export default class BreedingSourceReportList extends Component {
             }),
             type: '全部',
             loaded: false,
-            sourceNumber: 0
+            sourceNumber: 0,
+            refreshing: false,
         };
         this.changeType = this.changeType.bind(this);
         this.renderEachSource = this.renderEachSource.bind(this);
         this.enterCheckPage = this.enterCheckPage.bind(this);
         this.updateState = this.updateState.bind(this);
+        this.onRefresh = this.onRefresh.bind(this);
     }
     componentDidMount(){
         this.loadData();
@@ -105,6 +108,11 @@ export default class BreedingSourceReportList extends Component {
             sourceNumber: displaySource.length,
         });
     }
+    onRefresh(){
+        this.setState({refreshing: true});
+        CONSTANTS.storage.sync.hospitalInfo({resolve:this.updateState});
+        this.setState({refreshing: false});
+    }
     render() {
         if (!this.state.loaded) {
             return this.renderLoadingView();
@@ -141,6 +149,12 @@ export default class BreedingSourceReportList extends Component {
 
                     />
                 <ListView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={this.onRefresh}
+                        />
+                    }
                     dataSource={this.state.displaySource}
                     renderRow={this.renderEachSource}
                     style={styles.listView}
