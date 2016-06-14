@@ -5,27 +5,22 @@
 
 import React, {
     AppRegistry,
-    Component,
-    TextInput,
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    TouchableHighlight,
-    Dimensions,
+    Component
 } from 'react-native';
 
 import Nav from './Component.ios/Nav.js';
 import CONSTANTS from './Component.ios/Global.js';
-import StatusBar from './Component.ios/StatusBar.js';
+import Intro from './Component.ios/Intro.js';
 class DengueFever extends Component {
     constructor(props) {
         super(props);
         this.state = {
             logined: false,
             info: {identity: '一般使用者'},
+            swiper: 0,
         };
         this.restart = this.restart.bind(this);
+        this.fetchData = this.fetchData.bind(this);
     }
 
     componentDidMount() {
@@ -51,20 +46,10 @@ class DengueFever extends Component {
         })
         .then((responseData) => {
             this.restart(responseData);
-    /*        CONSTANTS.storage.save({
-                key: 'loginState',  //注意:请不要在key中使用_下划线符号!
-                rawData: responseData,
-
-                //如果不指定过期时间，则会使用defaultExpires参数
-                //如果设为null，则永不过期
-                expires: 1000 * 60
-            });
-    */    })
-        .catch( err => {
-            this.fetchData();
-            //如果没有找到数据且没有同步方法，
-            //或者有其他异常，则在catch中返回
         })
+        .catch( () => {
+            this.setState({swiper: 1});
+        });
     }
     fetchData() {
         fetch("http://140.116.247.113:11401/users/signup/fast/")
@@ -86,7 +71,7 @@ class DengueFever extends Component {
 
                 //如果不指定过期时间，则会使用defaultExpires参数
                 //如果设为null，则永不过期
-                expires:  1000 * 60
+                expires: 1000 * 60
             });
 
         })
@@ -104,63 +89,29 @@ class DengueFever extends Component {
             this.setState({
                 info: info,
                 logined: logined,
-            })
+                swiper: -1,
+            });
         }
 
     }
     render() {
-        return(
-            <Nav restart={this.restart} {...this.state}></Nav>
-        )
+        const {swiper} = this.state;
+        if(swiper === -1){
+            return(
+                <Nav restart = {this.restart} {...this.state}></Nav>
+            );
+        }
+        else if(swiper === 1){
+            return <Intro fetchData = {this.fetchData} />;
+        }
+        else{
+            return null;
+        }
     }
 }
 
 
 
-var styles = StyleSheet.create({
-    logo:{
-        width: CONSTANTS.screenWidth * 0.8,
-        height: CONSTANTS.screenHeight * 0.6,
-    },
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        //justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: CONSTANTS.backgroundColor,
-    },
-    inputs: {
-        width: CONSTANTS.screenWidth * 0.9,
 
-    },
-    buttons: {
-        flexDirection: 'row',
-        width: CONSTANTS.screenWidth * 0.9,
-
-    },
-    button: {
-        flex:1,
-        backgroundColor:CONSTANTS.mainColor,
-        height: 40,
-        padding: 5,
-        borderRadius :1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    buttonText: {
-        color:'#fff',
-
-    },
-    blank: {
-        width:10,
-    },
-    textInput: {
-        height: 40,
-        backgroundColor: "#ffffff",
-        justifyContent:'center',
-        marginBottom:20
-    }
-
-});
 
 AppRegistry.registerComponent('DengueFever', () => DengueFever);
