@@ -74,7 +74,7 @@ export default class SignupView extends Component {
         return(
             <ScrollView style = {styles.container} ref = 'scrollView'>
                 <Image
-                    source = {{ uri : "http://www.opcpest.com/res/images/pest-detail-images/og_mosquito-icon_1.png" }}
+                    source = {require('../../img/setting_off.png')}
                     style = {styles.image}
                     >
                 </Image>

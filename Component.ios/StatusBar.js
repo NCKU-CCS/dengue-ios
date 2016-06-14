@@ -40,20 +40,19 @@ export default class StatusBar extends Component {
                     <TouchableHighlight
                         underlayColor = {CONSTANTS.mainColor}
                         onPress={this.props.back}
+                        style = {styles.backView}
                     >
-                        <View style = {styles.backView}>
                             <Text style={styles.back}>
-                                {"〈"}
+                                {" 〈  返回"}
                             </Text>
-                        </View>
                     </TouchableHighlight>
                 );
             }
             return(
-                <View style={styles.statusBar}>
+                <View style = {styles.statusBar}>
                     {Back}
 
-                    <View style={styles.title}>
+                    <View style = {styles.title}>
                         <Text style = {styles.titleText}>
                             {this.props.title}
                         </Text>
@@ -73,24 +72,21 @@ var styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent: 'center',
         paddingTop:20,
-        paddingBottom:10,
+        //paddingBottom:10,
         width: CONSTANTS.screenWidth,
-        height:CONSTANTS.statusBarHeight,
-        backgroundColor:CONSTANTS.mainColor,
+        height: CONSTANTS.statusBarHeight,
+        backgroundColor: CONSTANTS.mainColor,
     },
     back: {
         color: "#fff",
         fontSize: 20,
-        marginTop:20,
-        marginBottom:10,
-        marginRight:20,
     },
     backView: {
-        //backgroundColor: 'red',
-        flex:0.1,
+        paddingVertical:5,
+        flex:0.25,
     },
     title: {
-        flex:0.8,
+        flex:0.5,
         alignItems:'center',
     },
     titleText: {
@@ -98,6 +94,6 @@ var styles = StyleSheet.create({
         fontSize: 22,
     },
     space: {
-        flex:0.1,
+        flex:0.25,
     }
 });
