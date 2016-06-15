@@ -125,6 +125,7 @@ export default class SignupView extends Component {
                 <TouchableHighlight
                     onPress = {this.signin}
                     style = {styles.signin}
+                    underlayColor = {CONSTANTS.backgroundColor}
                     >
                     <Text style = {styles.signinText}>
                         登入

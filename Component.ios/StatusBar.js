@@ -14,6 +14,7 @@ export default class StatusBar extends Component {
             statusBarDisplay: true,
             backDisplay: false,
         };
+        this.logout = this.logout.bind(this);
     }
     componentWillReceiveProps(nextProps) {
         const falseStatusBarDisplay = [],
@@ -31,10 +32,25 @@ export default class StatusBar extends Component {
             backDisplay: backDisplay
         });
     }
-    render(){
+    logout() {
+        fetch("http://140.116.247.113:11401/users/signout/")
+        .then((response) => {
+            if(response.ok){
+                this.props.loginFast();
+                alert('已登出！') ;
+
+            }
+            else{
+                throw Error("");
+            }
+        })
+        .catch(() => {console.warn('登出問題');});
+    }
+    render() {
 
         if(this.state.statusBarDisplay){
-            let Back = <View style={styles.space} />;
+            let Back = <View style = {styles.space} />,
+                Logout = <View style = {styles.space} />;
             if(this.state.backDisplay){
                 Back = (
                     <TouchableHighlight
@@ -43,7 +59,20 @@ export default class StatusBar extends Component {
                         style = {styles.backView}
                     >
                             <Text style={styles.back}>
-                                {" 〈  返回"}
+                                {"〈  返回"}
+                            </Text>
+                    </TouchableHighlight>
+                );
+            }
+            if(this.props.info.name !== undefined){
+                Logout = (
+                    <TouchableHighlight
+                        underlayColor = {CONSTANTS.mainColor}
+                        onPress = {this.logout}
+                        style = {styles.logoutView}
+                    >
+                            <Text style={styles.logout}>
+                                {"登出"}
                             </Text>
                     </TouchableHighlight>
                 );
@@ -57,7 +86,7 @@ export default class StatusBar extends Component {
                             {this.props.title}
                         </Text>
                     </View>
-                    <View style={styles.space} />
+                    {Logout}
                 </View>
             );
         }
@@ -66,7 +95,7 @@ export default class StatusBar extends Component {
         }
     }
 }
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
     statusBar: {
         alignItems:'center',
         flexDirection:'row',
@@ -80,6 +109,7 @@ var styles = StyleSheet.create({
     back: {
         color: "#fff",
         fontSize: 20,
+        paddingLeft: 20,
     },
     backView: {
         paddingVertical:5,
@@ -92,6 +122,16 @@ var styles = StyleSheet.create({
     titleText: {
         color: '#fff',
         fontSize: 22,
+    },
+    logout: {
+        color: "#fff",
+        fontSize: 20,
+        alignSelf: 'flex-end',
+        paddingRight:25,
+    },
+    logoutView: {
+        paddingVertical:5,
+        flex:0.25,
     },
     space: {
         flex:0.25,

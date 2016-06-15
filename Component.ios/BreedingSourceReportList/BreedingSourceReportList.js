@@ -117,7 +117,7 @@ export default class BreedingSourceReportList extends Component {
             if(response.ok){
                 return response.json();
             }
-            throw Error;
+            throw Error("");
         })
         .then(responseData => {
             if(responseData){
@@ -136,7 +136,7 @@ export default class BreedingSourceReportList extends Component {
                 });
                 // 成功则调用resolve
             }
-            throw Error;
+            throw Error("");
         })
         .catch(err => {
             console.warn(err);

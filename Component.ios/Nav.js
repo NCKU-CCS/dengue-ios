@@ -30,6 +30,9 @@ export default class Nav extends Component {
                     id = {this.state.id}
                     back = {this.back}
                     toTop = {this.toTop}
+                    loginFast = {this.props.loginFast}
+                    restart = {this.props.restart}
+                    info = {this.props.info}
                     />
                 <Navigator
                     ref="nav"

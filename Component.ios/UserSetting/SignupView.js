@@ -38,7 +38,6 @@ export default class SignupView extends Component {
         })
         .then((response) => {
             if(!response.ok){
-                console.log(123);
                 throw Error(response.status);
             }
             return fetch('http://140.116.247.113:11401/users/info/');
@@ -65,7 +64,7 @@ export default class SignupView extends Component {
         .catch((error) => {
 
             console.warn(error);
-            alert("不好意思！註冊出了問題，請等候維修：）");
+            alert("不好意思！註冊出了問題：）");
         });
     }
 
@@ -152,6 +151,7 @@ export default class SignupView extends Component {
                 <TouchableHighlight
                     onPress = {this.signup}
                     style = {styles.signup}
+                    underlayColor = {CONSTANTS.backgroundColor}
                     >
                     <Text style = {styles.signupText}>
                         註冊
@@ -163,6 +163,7 @@ export default class SignupView extends Component {
                 <TouchableHighlight
                     style = {styles.login}
                     onPress = {() => {enter('signinView', "個人資訊");}}
+                    underlayColor = {CONSTANTS.backgroundColor}
                     >
                     <Text style = {styles.loginText}>
                         登入
