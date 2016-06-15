@@ -21,7 +21,15 @@ export default class BreedingListView extends Component {
         }
     }
     render() {
-        const {changeSource, dataSource, sourceNumber, status, refreshing, onRefresh} = this.props;
+        const {
+            changeSource,
+            dataSource,
+            sourceNumber,
+            status,
+            refreshing,
+            onRefresh,
+            onEndReached
+        } = this.props;
         return (
             <View style={styles.container}>
                 <View style={styles.status}>
@@ -75,6 +83,9 @@ export default class BreedingListView extends Component {
                     scrollRenderAheadDistance = {50}
                     renderRow = {this.renderEachSource}
                     style = {styles.listView}
+                    onEndReachedThreshold = {0}
+                    onEndReached = {onEndReached}
+
                     />
 
             </View>

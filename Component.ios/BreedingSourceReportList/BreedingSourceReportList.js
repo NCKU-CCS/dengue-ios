@@ -15,6 +15,7 @@ export default class BreedingSourceReportList extends Component {
                 rowHasChanged: (row1, row2) => row1 !== row2,
             }),
             data: null,
+            timestamp: '',
             loaded: false,
             sourceNumber:0,
             status: '未處理',
@@ -25,6 +26,7 @@ export default class BreedingSourceReportList extends Component {
         this.updateData = this.updateData.bind(this);
         this.updateState = this.updateState.bind(this);
         this.onRefresh = this.onRefresh.bind(this);
+        this.onEndReached = this.onEndReached.bind(this);
     }
     componentDidMount(){
         this.loadData(this.state.status);
@@ -54,6 +56,8 @@ export default class BreedingSourceReportList extends Component {
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(responseData),
             loaded: true,
+            data: responseData,
+            timestamp: responseData[responseData.length - 1].timestamp
             //sourceNumber: responseData.length,
         });
     }
@@ -67,16 +71,7 @@ export default class BreedingSourceReportList extends Component {
         }).then(responseData => {
             //如果找到数据，则在then方法中返回
             this.updateState(responseData);
-        /*    CONSTANTS.storage.save({
-                key: 'breedingSourceReport',  //注意:请不要在key中使用_下划线符号!
-                id: status,
-                rawData: responseData,
 
-                //如果不指定过期时间，则会使用defaultExpires参数
-                //如果设为null，则永不过期
-                expires: 1000 * 3600 * 24
-            });
-*/
         }).catch(err => {
             //如果没有找到数据且没有同步方法，
             //或者有其他异常，则在catch中返回
@@ -114,7 +109,39 @@ export default class BreedingSourceReportList extends Component {
             });
         }
     }
-
+    onEndReached() {
+        let id = this.state.status, timestamp = this.state.timestamp;
+        id = id === '已處理' ? id + ',非孳生源': id;
+        fetch(`http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=${id}&before_timestamp=${timestamp}`)
+        .then(response => {
+            if(response.ok){
+                return response.json();
+            }
+            throw Error;
+        })
+        .then(responseData => {
+            if(responseData){
+                responseData = this.state.data.concat(responseData);
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(responseData),
+                    loaded: true,
+                    data: responseData,
+                    timestamp: responseData[responseData.length - 1].timestamp
+                });
+                CONSTANTS.storage.save({
+                    key: 'breedingSourceReport',
+                    id:id,
+                    rawData: responseData,
+                    expires: 1000 * 3600 * 24
+                });
+                // 成功则调用resolve
+            }
+            throw Error;
+        })
+        .catch(err => {
+            console.warn(err);
+        });
+    }
     render() {
         if (!this.state.loaded) {
             return this.renderLoadingView();
@@ -150,6 +177,7 @@ export default class BreedingSourceReportList extends Component {
                 updateData = {this.updateData}
                 refreshing = {refreshing}
                 onRefresh = {this.onRefresh}
+                onEndReached = {this.onEndReached}
                 />
         );
     }

@@ -23,7 +23,7 @@ storage.sync = {
     //方法接受的参数为一整个object，所有参数从object中解构取出
     //这里可以使用promise。或是使用普通回调函数，但需要调用resolve或reject。
     breedingSourceReport(params){
-        let { id, resolve, reject } = params;
+        let { id, resolve, reject, timestamp } = params;
         id = id === '已處理' ? id + ',非孳生源': id;
 
         fetch(`http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=${id}`)

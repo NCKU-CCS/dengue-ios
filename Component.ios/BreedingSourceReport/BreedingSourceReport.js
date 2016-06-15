@@ -43,13 +43,14 @@ export default class Second extends Component {
     takePicture() {
         this.refs.cam.capture([])
         .then((data) => {
+            //console.log(data);
             return ImageResizer.createResizedImage(data.path, 300, 240, 'JPEG', 70);
 
         })
         .then((uri) => {
             this.props.enter("showImage", '孳生源舉報', uri);
         })
-        .catch(err => console.error(err));
+        .catch(() => {});
     }
 }
 
