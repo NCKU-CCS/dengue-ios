@@ -191,4 +191,4 @@ var styles = StyleSheet.create({
         color: CONSTANTS.mainColor,
     },
 
-})
+});

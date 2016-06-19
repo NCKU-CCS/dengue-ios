@@ -70,7 +70,7 @@ export default class SignupView extends Component {
         return(
             <ScrollView style = {styles.container} ref = 'scrollView'>
                 <Image
-                    source = {require('../../img/setting_off.png')}
+                    source = {require('../../img/people.png')}
                     style = {styles.image}
                     >
                 </Image>

@@ -39,6 +39,9 @@ export default class EachSource extends Component {
                         />
                         <Text>{source.phone}</Text>
                     </View>
+                    <Text style = {styles.text}>
+                         〉
+                    </Text>
                 </View>
             </TouchableHighlight>
         );
@@ -83,5 +86,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#000',
         borderRadius: 10,
+    },
+    text: {
+        fontSize: 20,
+        position: 'absolute',
+        right:5,
+        top:40,
     },
 });
