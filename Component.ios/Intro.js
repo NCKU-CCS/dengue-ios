@@ -28,6 +28,17 @@ export default class Intro extends Component {
                     <Text style = {styles.description}>
                         掌握即時登革熱熱區，了解哪些地區較危險需避開。
                     </Text>
+                    <TouchableHighlight
+                        style = {styles.button}
+                        underlayColor = {CONSTANTS.backgroundColor}
+                        onPress = {()=>{fetchData();}}
+                    >
+                        <Text
+                            style = {styles.buttonText}
+                        >
+                            直接開始
+                        </Text>
+                    </TouchableHighlight>
                 </View>
                 <View style = {styles.container}>
                     <Text style = {styles.title}>
@@ -63,6 +74,17 @@ export default class Intro extends Component {
                     <Text style = {styles.description}>
                         輕鬆舉報周邊孳生源，讓防疫網更加沒有漏洞，也能舉報蚊子，供自己紀錄自身狀況。
                     </Text>
+                    <TouchableHighlight
+                        style = {styles.button}
+                        underlayColor = {CONSTANTS.backgroundColor}
+                        onPress = {()=>{fetchData();}}
+                    >
+                        <Text
+                            style = {styles.buttonText}
+                        >
+                            直接開始
+                        </Text>
+                    </TouchableHighlight>
                 </View>
             </Swiper>
         );
