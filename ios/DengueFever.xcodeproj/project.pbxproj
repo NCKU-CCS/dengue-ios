@@ -24,6 +24,7 @@
 		21063A711D116ABD00848574 /* mosquito.png in Resources */ = {isa = PBXBuildFile; fileRef = 21063A701D116ABD00848574 /* mosquito.png */; };
 		213638A81D2528BA0043E615 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		21421FCB1CF9503E0056BDC7 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21421FBE1CF9502C0056BDC7 /* libAirMaps.a */; };
+		21464E1F1D27E47600CA1192 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21464E1D1D27E2B400CA1192 /* libRNBlur.a */; };
 		2185D98D1CF5549B0020513B /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2185D98C1CF554870020513B /* libRCTCamera.a */; };
 		21C9572E1D06AF17003C27A6 /* libRCTImageResizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21C957261D06AEEA003C27A6 /* libRCTImageResizer.a */; };
 		21E08D201CCFC5C30078167E /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 21E08D1F1CCFC5C30078167E /* default.gpx */; };
@@ -109,6 +110,13 @@
 			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
 			remoteInfo = AirMaps;
 		};
+		21464E1C1D27E2B400CA1192 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5E0094A4ACB34D1E8B3FBC62 /* RNBlur.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A68BD7BC1BC31318005F02DF;
+			remoteInfo = RNBlur;
+		};
 		2185D98B1CF554870020513B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2185D9871CF554860020513B /* RCTCamera.xcodeproj */;
@@ -173,6 +181,7 @@
 		4F43D81261D64BD18F7A51DC /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		521F2DE45A064281A919A646 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		59989C7890AF4AA8AA37D2BA /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		5E0094A4ACB34D1E8B3FBC62 /* RNBlur.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
 		7560D3BF4D4E4F26A596F161 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -197,6 +206,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21464E1F1D27E47600CA1192 /* libRNBlur.a in Frameworks */,
 				21C9572E1D06AF17003C27A6 /* libRCTImageResizer.a in Frameworks */,
 				2185D98D1CF5549B0020513B /* libRCTCamera.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -320,6 +330,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		21464E0C1D27E2B400CA1192 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				21464E1D1D27E2B400CA1192 /* libRNBlur.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		2185D9881CF554860020513B /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,6 +387,7 @@
 				7560D3BF4D4E4F26A596F161 /* AirMaps.xcodeproj */,
 				A9B68BDCEF9C4838BA92B923 /* RCTImageResizer.xcodeproj */,
 				D68B0601A249484E9C7A027E /* RNVectorIcons.xcodeproj */,
+				5E0094A4ACB34D1E8B3FBC62 /* RNBlur.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -541,6 +560,10 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
+					ProductGroup = 21464E0C1D27E2B400CA1192 /* Products */;
+					ProjectRef = 5E0094A4ACB34D1E8B3FBC62 /* RNBlur.xcodeproj */;
+				},
+				{
 					ProductGroup = 218972A51D1FFBDC006D39A0 /* Products */;
 					ProjectRef = D68B0601A249484E9C7A027E /* RNVectorIcons.xcodeproj */;
 				},
@@ -615,6 +638,13 @@
 			fileType = archive.ar;
 			path = libAirMaps.a;
 			remoteRef = 21421FBD1CF9502C0056BDC7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		21464E1D1D27E2B400CA1192 /* libRNBlur.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNBlur.a;
+			remoteRef = 21464E1C1D27E2B400CA1192 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		2185D98C1CF554870020513B /* libRCTCamera.a */ = {
@@ -762,6 +792,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -783,6 +814,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -809,6 +841,7 @@
 					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 					"$(SRCROOT)/../node_modules/react-native-image-resizer/ios/RCTImageResizer/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 				);
 				INFOPLIST_FILE = DengueFever/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -836,6 +869,7 @@
 					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 					"$(SRCROOT)/../node_modules/react-native-image-resizer/ios/RCTImageResizer/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 				);
 				INFOPLIST_FILE = DengueFever/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -891,6 +925,7 @@
 					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 					"$(SRCROOT)/../node_modules/react-native-image-resizer/ios/RCTImageResizer/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -935,6 +970,7 @@
 					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 					"$(SRCROOT)/../node_modules/react-native-image-resizer/ios/RCTImageResizer/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

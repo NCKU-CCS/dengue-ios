@@ -10,7 +10,7 @@ import React, {
 
 import Nav from './Component.ios/Nav.js';
 import CONSTANTS from './Component.ios/Global.js';
-import Intro from './Component.ios/Intro.js';
+import Intro from './Component.ios/Intro/Intro.js';
 class DengueFever extends Component {
     constructor(props) {
         super(props);

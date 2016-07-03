@@ -1,6 +1,7 @@
 package com.proj1;
 
 import com.facebook.react.ReactActivity;
+import com.cmcewen.blurview.BlurViewPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.AirMaps.AirPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -39,6 +40,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new BlurViewPackage(),
             new ImageResizerPackage(),
             new AirPackage(),
             new VectorIconsPackage(),

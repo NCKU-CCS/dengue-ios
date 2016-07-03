@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "&#x638c;&#x7d0b;&#x4eba;.app"
+               BuildableName = "&#x638c;&#x868a;&#x4eba;.app"
                BlueprintName = "DengueFever"
                ReferencedContainer = "container:DengueFever.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "&#x638c;&#x7d0b;&#x4eba;.app"
+            BuildableName = "&#x638c;&#x868a;&#x4eba;.app"
             BlueprintName = "DengueFever"
             ReferencedContainer = "container:DengueFever.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "&#x638c;&#x7d0b;&#x4eba;.app"
+            BuildableName = "&#x638c;&#x868a;&#x4eba;.app"
             BlueprintName = "DengueFever"
             ReferencedContainer = "container:DengueFever.xcodeproj">
          </BuildableReference>
@@ -99,7 +99,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "&#x638c;&#x7d0b;&#x4eba;.app"
+            BuildableName = "&#x638c;&#x868a;&#x4eba;.app"
             BlueprintName = "DengueFever"
             ReferencedContainer = "container:DengueFever.xcodeproj">
          </BuildableReference>
