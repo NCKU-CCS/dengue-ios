@@ -95,15 +95,16 @@ class DengueFever extends Component {
 
     }
     render() {
+        return(
+            <Nav restart = {this.restart}
+                loginFast = {this.fetchData}
+                {...this.state} >
+
+            </Nav>
+        );
         const {swiper} = this.state;
         if(swiper === -1){
-            return(
-                <Nav restart = {this.restart}
-                    loginFast = {this.fetchData}
-                    {...this.state} >
 
-                </Nav>
-            );
         }
         else if(swiper === 1){
             return <Intro fetchData = {this.fetchData} />;

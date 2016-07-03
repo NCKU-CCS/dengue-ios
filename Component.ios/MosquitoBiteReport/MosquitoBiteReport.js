@@ -37,7 +37,6 @@ export default class Second extends Component {
                     </Text>
                 <Image style={styles.image} source = {require('../../img/mosquito.png')}>
                 </Image>
-
                 <TouchableHighlight
                     style={styles.button}
                     underlayColor="#eee"
@@ -107,7 +106,7 @@ var styles = StyleSheet.create({
         marginTop: 50,
     },
     button: {
-        marginTop: 50,
+        marginTop: 20,
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
