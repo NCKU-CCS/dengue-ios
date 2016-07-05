@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     },
     back: {
         color: "#fff",
-        fontSize: 20,
+        fontSize: 15,
         paddingLeft: 20,
     },
     backView: {
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     },
     logout: {
         color: "#fff",
-        fontSize: 20,
+        fontSize: 15,
         alignSelf: 'flex-end',
         paddingRight:25,
     },

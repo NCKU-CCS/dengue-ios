@@ -72,9 +72,12 @@ export default class EachBreedingSourceReport extends Component {
                                 source = {this.titleImage(source.source_type)}
                             />
                             <Text style = {styles.titleText}>
-                                {source.address}
+                                {source.modified_address}
                             </Text>
                         </View>
+                        <Text style={styles.description}>
+                            {source.address}
+                        </Text>
                         <Text style={styles.description}>
                             {source.description}
                         </Text>

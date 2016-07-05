@@ -75,7 +75,7 @@ storage.sync = {
 
                     }
                 })
-                .catch((error) => {
+                .catch((err) => {
                     console.warn(err);
                     reject && reject(err);
                 })

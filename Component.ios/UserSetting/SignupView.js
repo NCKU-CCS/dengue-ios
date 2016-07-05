@@ -85,7 +85,7 @@ export default class SignupView extends Component {
                         style = {styles.textInput}
                         onChangeText = {(text) => this.setState({name: text})}
                         value = {this.state.text}
-                        keyboardType = 'numeric'
+                        keyboardType = 'default'
                         selectTextOnFocus = {true}
                         selectionColor = {CONSTANTS.mainColor}
                         autoCorrect = {false}

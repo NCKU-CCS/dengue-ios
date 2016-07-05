@@ -20,7 +20,7 @@ export default class EachSource extends Component {
                 onPress={() => {enterCheckPage(source);}}
                 underlayColor = {CONSTANTS.backgroundColor}
                 activeOpacity = {0.5}
-            >
+                >
                 <View>
                     <View style={styles.name}>
                         <Text style={styles.nameText}>{source.name}</Text>
@@ -29,18 +29,20 @@ export default class EachSource extends Component {
                         <Image
                             style = {styles.icon}
                             source = {require('../../img/location.png')}
-                        />
-                        <Text>{source.address}</Text>
+                            />
+                        <View style = {styles.addView}>
+                            <Text>{source.address}</Text>
+                        </View>
                     </View>
                     <View style={styles.phone}>
                         <Image
                             style = {styles.icon}
                             source={require('../../img/telephone.png')}
-                        />
+                            />
                         <Text>{source.phone}</Text>
                     </View>
                     <Text style = {styles.text}>
-                         〉
+                        〉
                     </Text>
                 </View>
             </TouchableHighlight>
@@ -58,12 +60,16 @@ const styles = StyleSheet.create({
         fontSize: 18,
         lineHeight:20,
     },
+    addView: {
+        width: 150,
+    },
     address: {
         flexDirection: 'row',
         flex:1,
         marginTop:5,
         alignItems: 'center',
     },
+
     phone: {
         flexDirection: 'row',
         flex:1,

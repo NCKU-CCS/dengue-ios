@@ -19,6 +19,7 @@ export default class ShowImage extends Component {
             lat:'',
             lon:'',
             address: '',
+            modifiedAddress: '',
         };
         //this.showActionSheet = this.showActionSheet.bind(this);
     }
@@ -68,78 +69,97 @@ export default class ShowImage extends Component {
             }
         }
         return (
-            // <ScrollView  style={styles.container} ref="scrollView">
-            //     <Image ref={'img'} style={styles.image} source={{uri: this.props.uri}}>
-            //
-            //     </Image>
-            //     <View style={styles.inputs}>
-            //         <View style={styles.question}>
-            //             <View style={styles.title}>
-            //                 <Text style={styles.subTitle}>
-            //                     孳生源類型
-            //                 </Text>
-            //             </View>
-            //             <View style={styles.types}>
-            //                 <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'住家容器'});}}>
-            //                     <Image style={styles.typeImage} source = {imgObj0}/>
-            //
-            //                 </TouchableHighlight>
-            //                 <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'戶外容器'});}}>
-            //
-            //                     <Image style={styles.typeImage} source = {imgObj1}/>
-            //                 </TouchableHighlight>
-            //                 <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'戶外髒亂處'});}}>
-            //                     <Image style={styles.typeImage} source = {imgObj2}/>
-            //
-            //                 </TouchableHighlight>
-            //             </View>
-            //         </View>
-            //         <View style = {styles.question}>
-            //             <View style={styles.title}>
-            //                 <Text style={styles.subTitle}>
-            //                     簡介
-            //                 </Text>
-            //                 <Text style={styles.hint}>
-            //                     ex地點：樓層/地下室/女廁旁
-            //                 </Text>
-            //                 <Text style={styles.hint}>
-            //                     ex物件：藍色水桶/盆栽
-            //                 </Text>
-            //             </View>
-            //             <View style={styles.answer}>
-            //                 <TextInput
-            //                     ref = 'textinput'
-            //                     onFocus = {() => {
-            //                         this.refs.textinput.measure((x,y,width,height,px,py) => {
-            //
-            //                             if(py > CONSTANTS.screenHeight / 2){
-            //                                 this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
-            //                             }
-            //                         });
-            //                     }}
-            //                     multiline = {false}
-            //                     style = {styles.textInput}
-            //                     onChangeText = {(text) => this.setState({description:text})}
-            //                     >
-            //                 </TextInput>
-            //             </View>
-            //         </View>
-            //         <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this.send.bind(this)}>
-            //             <Text style={styles.buttonText}>舉報</Text>
-            //         </TouchableHighlight>
-            //     </View>
-            // </ScrollView>
-            <View>
+            <ScrollView  style={styles.container} ref="scrollView">
                 <Image ref={'img'} style={styles.image} source={{uri: this.props.uri}}>
-                    <BlurView blurType="light" style={styles.blur}>
-                        <Text>Hi, I am a tiny menu item</Text>
-                    </BlurView>
+
                 </Image>
-            </View>
+                <View style={styles.inputs}>
+                    <View style={styles.question}>
+                        <View style={styles.title}>
+                            <Text style={styles.subTitle}>
+                                孳生源類型
+                            </Text>
+                        </View>
+                        <View style={styles.types}>
+                            <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'住家容器'});}}>
+                                <Image style={styles.typeImage} source = {imgObj0}/>
+
+                            </TouchableHighlight>
+                            <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'戶外容器'});}}>
+
+                                <Image style={styles.typeImage} source = {imgObj1}/>
+                            </TouchableHighlight>
+                            <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'戶外髒亂處'});}}>
+                                <Image style={styles.typeImage} source = {imgObj2}/>
+
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                    <View style={styles.question}>
+                        <View style={styles.title}>
+                            <Text style={styles.subTitle}>
+                                住址
+                            </Text>
+                        </View>
+                        <View style={styles.answer}>
+                            <TextInput
+                                ref = 'modifiedAddress'
+                                onFocus = {() => {
+                                    this.refs.modifiedAddress.measure((x,y,width,height,px,py) => {
+
+                                        if(py > CONSTANTS.screenHeight / 2){
+                                            this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                                        }
+                                    });
+                                }}
+                                placeholder={this.state.address}
+                                multiline = {false}
+                                style = {styles.textInput}
+                                onChangeText = {(text) => this.setState({modifiedAddress:text})}
+                                >
+                            </TextInput>
+                        </View>
+                    </View>
+                    <View style = {styles.question}>
+                        <View style={styles.title}>
+                            <Text style={styles.subTitle}>
+                                簡介
+                            </Text>
+                            <Text style={styles.hint}>
+                                ex地點：樓層/地下室/女廁旁
+                            </Text>
+                            <Text style={styles.hint}>
+                                ex物件：藍色水桶/盆栽
+                            </Text>
+                        </View>
+                        <View style={styles.answer}>
+                            <TextInput
+                                ref = 'textinput'
+                                onFocus = {() => {
+                                    this.refs.textinput.measure((x,y,width,height,px,py) => {
+
+                                        if(py > CONSTANTS.screenHeight / 2){
+                                            this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                                        }
+                                    });
+                                }}
+                                multiline = {false}
+                                style = {styles.textInput}
+                                onChangeText = {(text) => this.setState({description:text})}
+                                >
+                            </TextInput>
+                        </View>
+                    </View>
+                    <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this.send.bind(this)}>
+                        <Text style={styles.buttonText}>舉報</Text>
+                    </TouchableHighlight>
+                </View>
+            </ScrollView>
+
         );
     }
     send() {
-        let {type, description, lat, lon, address} = this.state,
+        let {type, description, lat, lon, address, modifiedAddress} = this.state,
         fileName = this.props.uri.split('/').slice(-1)[0];
         let photo = {
             uri: this.props.uri,
@@ -151,6 +171,7 @@ export default class ShowImage extends Component {
         formData.append('lat', lat);
         formData.append('lng', lon);
         formData.append('address', address);
+        formData.append('modified_address', modifiedAddress);
         formData.append('source_type', type);
         formData.append('description', description);
         formData.append('status', '未處理');
@@ -221,6 +242,7 @@ var styles = StyleSheet.create({
         borderColor:'#aaa',
         borderWidth:1,
         borderRadius:5,
+        paddingLeft:10,
         height: 40,
         marginRight:10,
     },
@@ -246,7 +268,7 @@ var styles = StyleSheet.create({
         //height:40,
         paddingVertical: 7,
         paddingHorizontal: 18,
-        marginTop:20,
+        marginVertical:20,
         borderRadius :3,
         borderColor: CONSTANTS.mainColor,
         borderWidth:1,
