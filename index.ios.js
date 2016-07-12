@@ -8,6 +8,10 @@ import React, {
     Component
 } from 'react-native';
 
+import { connect, Provider } from 'react-redux';
+import { createStore } from 'redux';
+
+
 import Nav from './Component.ios/Nav.js';
 import CONSTANTS from './Component.ios/Global.js';
 import Intro from './Component.ios/Intro/Intro.js';

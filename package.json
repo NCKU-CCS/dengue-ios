@@ -18,7 +18,9 @@
     "react-native-storage": "0.0.16",
     "react-native-swiper": "^1.4.5",
     "react-native-tabbar": "^0.3.6",
-    "react-native-vector-icons": "^2.0.2"
+    "react-native-vector-icons": "^2.0.2",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2"
   },
   "description": "a react-native app",
   "main": "index.ios.js",
