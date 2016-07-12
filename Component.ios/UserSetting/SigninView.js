@@ -24,7 +24,7 @@ export default class SignupView extends Component {
         let formData = new FormData();
         formData.append('phone', phone);
         formData.append('password', password);
-        fetch('http://140.116.247.113:11401/users/signin/', {
+        fetch('http://api.denguefever.tw/users/signin/', {
             method: 'POST',
             headers: {
                 'Accept': 'multipart/form-data',
@@ -36,7 +36,7 @@ export default class SignupView extends Component {
             if(!response.ok){
                 throw Error(response.status);
             }
-            return fetch('http://140.116.247.113:11401/users/info/');
+            return fetch('http://api.denguefever.tw/users/info/');
         })
         .then(response => {
             if(!response.ok){

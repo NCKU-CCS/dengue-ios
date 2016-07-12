@@ -52,7 +52,7 @@ class DengueFever extends Component {
         });
     }
     fetchData() {
-        fetch("http://140.116.247.113:11401/users/signup/fast/")
+        fetch("http://api.denguefever.tw/users/signup/fast/")
         .then((response) => {
             if(!response.ok){
                 throw Error(response.status);
@@ -95,7 +95,7 @@ class DengueFever extends Component {
 
     }
     render() {
-
+        console.log(this.state.info);
         const {swiper} = this.state;
         if(swiper === -1){
             return(

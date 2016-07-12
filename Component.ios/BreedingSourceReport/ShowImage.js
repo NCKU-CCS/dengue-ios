@@ -175,7 +175,7 @@ export default class ShowImage extends Component {
         formData.append('source_type', type);
         formData.append('description', description);
         formData.append('status', '未處理');
-        fetch("http://140.116.247.113:11401/breeding_source/insert/", {
+        fetch("http://api.denguefever.tw/breeding_source/insert/", {
             method: 'POST',
             headers: {
                 'Accept': 'multipart/form-data',

@@ -33,7 +33,7 @@ export default class StatusBar extends Component {
         });
     }
     logout() {
-        fetch("http://140.116.247.113:11401/users/signout/")
+        fetch("http://api.denguefever.tw/users/signout/")
         .then((response) => {
             if(response.ok){
                 this.props.loginFast();

@@ -21,7 +21,7 @@ export default class EachBreedingSourceReport extends Component {
         formData.append('database','tainan');
         formData.append('source_id', source.source_id);
         formData.append('status', changeStatus);
-        fetch('http://140.116.247.113:11401/breeding_source/update/', {
+        fetch('http://api.denguefever.tw/breeding_source/update/', {
             method: 'POST',
             headers: {
                 'Accept': 'multipart/form-data',

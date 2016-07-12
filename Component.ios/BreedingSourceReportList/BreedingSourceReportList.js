@@ -36,7 +36,7 @@ export default class BreedingSourceReportList extends Component {
     loadNumber() {
         const {status} = this.state,
             id = status === '已處理' ? status + ',非孳生源': status;
-        fetch(`http://140.116.247.113:11401/breeding_source/total/?database=tainan&status=${id}`)
+        fetch(`http://api.denguefever.tw/breeding_source/total/?database=tainan&status=${id}`)
         .then(response => {
             if(response.ok){
                 return response.json();
@@ -112,7 +112,7 @@ export default class BreedingSourceReportList extends Component {
     onEndReached() {
         let id = this.state.status, timestamp = this.state.timestamp;
         id = id === '已處理' ? id + ',非孳生源': id;
-        fetch(`http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=${id}&before_timestamp=${timestamp}`)
+        fetch(`http://api.denguefever.tw/breeding_source/get/?database=tainan&status=${id}&before_timestamp=${timestamp}`)
         .then(response => {
             if(response.ok){
                 return response.json();

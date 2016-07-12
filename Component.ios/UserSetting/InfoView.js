@@ -13,7 +13,7 @@ export default class InfoView extends Component {
         this.signout = this.signout.bind(this);
     }
     signout() {
-        fetch('http://140.116.247.113:11401/users/signout/')
+        fetch('http://api.denguefever.tw/users/signout/')
         .then((response) => {
             if(!response.ok){
                 throw Error(response.status);

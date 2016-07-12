@@ -26,7 +26,7 @@ storage.sync = {
         let { id, resolve, reject, timestamp } = params;
         id = id === '已處理' ? id + ',非孳生源': id;
 
-        fetch(`http://140.116.247.113:11401/breeding_source/get/?database=tainan&status=${id}`)
+        fetch(`http://api.denguefever.tw/breeding_source/get/?database=tainan&status=${id}`)
         .then(response => {
             return response.json();
         })
@@ -57,8 +57,9 @@ storage.sync = {
             (position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
-                fetch(`http://140.116.247.113:11401/hospital/nearby/?database=tainan&lng=${lon}&lat=${lat}`)
+                fetch(`http://api.denguefever.tw/hospital/nearby/?database=tainan&lng=${lon}&lat=${lat}`)
                 .then((response) => {
+                    console.log(response);
                     return response.json();
                 })
                 .then((responseData) => {
@@ -76,7 +77,7 @@ storage.sync = {
                     }
                 })
                 .catch((err) => {
-                    console.warn(err);
+                    console.warn(new Error('hospitalInfo error'));
                     reject && reject(err);
                 })
                 .done();
@@ -87,7 +88,7 @@ storage.sync = {
     },
     loginState(params) {
         let { id, resolve, reject } = params;
-        fetch('http://140.116.247.113:11401/users/info/')
+        fetch('http://api.denguefever.tw/users/info/')
         .then(response => {
             return response.json();
         })

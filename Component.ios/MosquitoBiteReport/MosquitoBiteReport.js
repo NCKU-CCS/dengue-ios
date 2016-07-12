@@ -61,7 +61,7 @@ export default class Second extends Component {
             formData.append('database', 'tainan');
             formData.append('lat', lat);
             formData.append('lng', lon);
-            fetch('http://140.116.247.113:11401/bite/insert/', {
+            fetch('http://api.denguefever.tw/bite/insert/', {
                 method: 'POST',
                 headers: {
                     'Accept': 'multipart/form-data',

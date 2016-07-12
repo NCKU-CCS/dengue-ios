@@ -70,7 +70,7 @@ export default class BreedingSourceReportList extends Component {
             (position) => {
                 let lat = position.coords.latitude;
                 let lon = position.coords.longitude;
-                fetch(`http://140.116.247.113:11401/hospital/nearby/?database=tainan&lng=${lon}&lat=${lat}`)
+                fetch(`http://api.denguefever.tw/hospital/nearby/?database=tainan&lng=${lon}&lat=${lat}`)
                 .then((response) => {
                     if(!response.ok){
                         throw Error(response.statusText);
