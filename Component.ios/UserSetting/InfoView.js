@@ -3,6 +3,7 @@ import React, {
     View,
     Text,
     StyleSheet,
+    Image,
     TouchableHighlight
 } from 'react-native';
 import CONSTANTS from '../Global.js';
@@ -34,20 +35,25 @@ export default class InfoView extends Component {
         } = this.props;
         return (
             <View style = {styles.container}>
+                <Image
+                    source = {require('../../img/people.png')}
+                    style = {styles.image}
+                    >
+                </Image>
                 <View style = {styles.texts}>
-                <Text style = {styles.text}>
-                    積分：{score}
-                </Text>
-                <Text style = {styles.text}>
-                    舉報滋生源：{breeding_source_count}
-                </Text>
-                <Text style = {styles.text}>
-                    舉報蚊子叮咬：{bites_count}
-                </Text>
-            </View>
+                    <Text style = {styles.text}>
+                        積分：{score}
+                    </Text>
+                    <Text style = {styles.text}>
+                        舉報滋生源：{breeding_source_count}
+                    </Text>
+                    <Text style = {styles.text}>
+                        舉報蚊子叮咬：{bites_count}
+                    </Text>
+                </View>
                 <TouchableHighlight style = {styles.button}
                     onPress = {this.signout}
-                >
+                    >
                     <Text>
                         登出
                     </Text>
@@ -59,6 +65,7 @@ export default class InfoView extends Component {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
+        backgroundColor: CONSTANTS.backgroundColor,
     },
     texts: {
 

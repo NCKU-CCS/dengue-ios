@@ -37,6 +37,7 @@ export default class SignupView extends Component {
             body: formData
         })
         .then((response) => {
+            console.log(response);
             if(!response.ok){
                 throw Error(response.status);
             }

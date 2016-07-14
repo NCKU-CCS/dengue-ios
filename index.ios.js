@@ -95,7 +95,6 @@ class DengueFever extends Component {
 
     }
     render() {
-        console.log(this.state.info);
         const {swiper} = this.state;
         if(swiper === -1){
             return(
