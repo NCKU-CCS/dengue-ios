@@ -14,7 +14,7 @@ export default class ShowImage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            type:'住家容器',
+            type:'住家',
             description:'',
             lat:'',
             lon:'',
@@ -52,22 +52,22 @@ export default class ShowImage extends Component {
         );
     }
     render() {
-        const types = ['住家容器','戶外容器','戶外髒亂處'];
-        let {type} = this.state, imgObj0, imgObj1, imgObj2;
-        for(let a in types){
-            switch (a) {
-                case '0':
-                imgObj0 = types[0] === type ? require('../../img/homeSelected.png'):require('../../img/home.png');
-                break;
-                case '1':
-                imgObj1 = types[1] === type ? require('../../img/outContainerSelected.png'):require('../../img/outContainer.png');
-                break;
-                case '2':
-                imgObj2 = types[2] === type ? require('../../img/outMessSelected.png'):require('../../img/outMess.png');
-                break;
-                default:
-            }
-        }
+        const types = ['住家', '戶外'];
+        //let {type} = this.state, imgObj0, imgObj1, imgObj2;
+        //for(let a in types){
+        //  switch (a) {
+        //      case '0':
+        //      imgObj0 = types[0] === type ? require('../../img/homeSelected.png'):require('../../img/home.png');
+        //      break;
+        //      case '1':
+        //      imgObj1 = types[1] === type ? require('../../img/outContainerSelected.png'):require('../../img/outContainer.png');
+        //      break;
+        //      case '2':
+        //      imgObj2 = types[2] === type ? require('../../img/outMessSelected.png'):require('../../img/outMess.png');
+        //      break;
+        //      default:
+        //  }
+        //}
         return (
             <ScrollView  style={styles.container} ref="scrollView">
                 <Image ref={'img'} style={styles.image} source={{uri: this.props.uri}}>
@@ -81,18 +81,29 @@ export default class ShowImage extends Component {
                             </Text>
                         </View>
                         <View style={styles.types}>
-                            <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'住家容器'});}}>
-                                <Image style={styles.typeImage} source = {imgObj0}/>
+                        {
+                          types.map( type =>
+                          <TouchableHighlight key={type}  style={[styles.type, this.state.type == type ? styles.click : null]} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type: type});}}>
+                             <Text style={this.state.type == type ? styles.clickText : null}>
+                                {type}
+                              </Text>
+                          </TouchableHighlight>
+                          )
+                        }
+                        {
+                          //<TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'住家容器'});}}>
+                          //    <Image style={styles.typeImage} source = {imgObj0}/>
 
-                            </TouchableHighlight>
-                            <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'戶外容器'});}}>
+                          //</TouchableHighlight>
+                          //<TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'戶外容器'});}}>
 
-                                <Image style={styles.typeImage} source = {imgObj1}/>
-                            </TouchableHighlight>
-                            <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'戶外髒亂處'});}}>
-                                <Image style={styles.typeImage} source = {imgObj2}/>
+                          //    <Image style={styles.typeImage} source = {imgObj1}/>
+                          //</TouchableHighlight>
+                          //<TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'戶外髒亂處'});}}>
+                          //    <Image style={styles.typeImage} source = {imgObj2}/>
 
-                            </TouchableHighlight>
+                          //    </TouchableHighlight>
+                        }
                         </View>
                     </View>
                     <View style={styles.question}>
@@ -247,7 +258,7 @@ var styles = StyleSheet.create({
         marginRight:10,
     },
     types: {
-        //flex:1,
+        flex:1,
         height:50,
         flexDirection: 'row',
         alignItems:'center',
@@ -255,13 +266,22 @@ var styles = StyleSheet.create({
     },
 
 
-    typeImage: {
-        width: 50,
-        height: 50,
-        resizeMode: 'contain',
+    type: {
+        width: 100,
         marginHorizontal:20,
+        padding:10,
+        borderRadius: 5,
+        borderColor: 'black',
+        borderWidth: 1,
+        alignItems:'center',
+        alignSelf:'center',
     },
-
+    click: {
+      backgroundColor: CONSTANTS.mainColor,
+    },
+    clickText: {
+      color: 'white',
+    },
     button: {
         backgroundColor: "#fff",
         //width:70,

@@ -30,7 +30,7 @@ export default class SignupView extends Component {
         console.log(formData);
         fetch('http://api.denguefever.tw/users/signup/', {
             method: 'POST',
-            headers: {
+			headers: {
                 'Accept': 'multipart/form-data',
                 'Content-Type': 'multipart/form-data',
             },

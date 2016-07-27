@@ -1,5 +1,6 @@
 import {
-    Dimensions
+    Dimensions,
+
 } from 'react-native';
 import Storage from 'react-native-storage';
 let storage = new Storage({

@@ -33,7 +33,7 @@ export default class InfoView extends Component {
             breeding_source_count,
             bites_count
         } = this.props;
-        return (
+        return(
             <View style = {styles.container}>
                 <Image
                     source = {require('../../img/people.png')}
@@ -66,6 +66,8 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         backgroundColor: CONSTANTS.backgroundColor,
+        flex: 1,
+        paddingTop: 30,
     },
     texts: {
 

@@ -7,7 +7,8 @@ import React, {
     StyleSheet,
     Text,
     View,
-    AlertIOS
+    AlertIOS,
+
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 
@@ -26,14 +27,15 @@ export default class SignupView extends Component {
         formData.append('password', password);
         fetch('http://api.denguefever.tw/users/signin/', {
             method: 'POST',
-            headers: {
+			headers: {
                 'Accept': 'multipart/form-data',
                 'Content-Type': 'multipart/form-data',
             },
             body: formData
         })
         .then(response =>{
-            if(!response.ok){
+				if(!response.ok){
+					console.log(response.status);
                 throw Error(response.status);
             }
             return fetch('http://api.denguefever.tw/users/info/');
@@ -67,7 +69,7 @@ export default class SignupView extends Component {
         });
     }
     render() {
-        return(
+ 	return (
             <ScrollView style = {styles.container} ref = 'scrollView'>
                 <Image
                     source = {require('../../img/people.png')}
