@@ -162,7 +162,7 @@ export default class ShowImage extends Component {
                         </View>
                     </View>
                     <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this.send.bind(this)}>
-                        <Text style={styles.buttonText}>舉報</Text>
+                        <Text style={styles.buttonText}>這裡是孳生源！</Text>
                     </TouchableHighlight>
                 </View>
             </ScrollView>
@@ -198,11 +198,11 @@ export default class ShowImage extends Component {
             if(!response.ok){
                 throw Error(response.status);
             }
-            alert('舉報成功！');
+            alert('上傳成功！');
         })
         .catch(err => {
             console.warn(err);
-            alert('舉報失敗了！');
+            alert('上傳失敗了！');
         });
         this.props.toTop();
 
