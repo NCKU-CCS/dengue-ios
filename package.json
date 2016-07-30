@@ -24,7 +24,11 @@
   },
   "description": "a react-native app",
   "main": "index.ios.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "react-native-device-info": "^0.9.3",
+    "redux-logger": "^2.6.1",
+    "redux-thunk": "^2.1.0"
+  },
   "repository": {
     "type": "git",
     "url": "http://ec2-54-175-108-116.compute-1.amazonaws.com/denguefever/dengue-ios.git"

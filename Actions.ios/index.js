@@ -1,21 +1,7 @@
-"use strict".
-/*
+import { requestLogin, storageLoadLogin, requestQuickLogin } from './login.js';
+export {
+  requestLogin,
+  storageLoadLogin,
+  requestQuickLogin,
 
-actions
-
-*/
-export const quickLogin = () => {
-    return {
-        type: 'QUICKLOGIN',
-    };
 };
-export function login() {
-    return {
-        type: 'LOGIN',
-    };
-}
-export function logout() {
-    return {
-        type: 'LOGOUT',
-    }
-}

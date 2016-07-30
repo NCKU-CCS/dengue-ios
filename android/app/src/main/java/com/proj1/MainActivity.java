@@ -1,6 +1,7 @@
 package com.proj1;
 
 import com.facebook.react.ReactActivity;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.cmcewen.blurview.BlurViewPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.AirMaps.AirPackage;
@@ -40,6 +41,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new RNDeviceInfo(),
             new BlurViewPackage(),
             new ImageResizerPackage(),
             new AirPackage(),
