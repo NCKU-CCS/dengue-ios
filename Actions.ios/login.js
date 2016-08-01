@@ -63,7 +63,7 @@ export function requestLogin(phone, password) {
 }
 export function requestQuickLogin() {
   return dispatch =>
-    fetch(`${APIDomain}/users/signin/fast/`)
+    fetch(`${APIDomain}/users/signup/fast/`)
       .then(response => {
         if (!response.ok) throw new Error('requestQuickLogin Error');
         return response.json();

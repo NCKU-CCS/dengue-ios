@@ -6,44 +6,42 @@ import React, {
 
 } from 'react-native';
 import CONSTANTS from './Global.js';
-
+import { connect } from 'react-redux';
 import StatusBar from './StatusBar.js';
 import ContextComponent from './Nav/ContextComponent.js';
 import TabBar from './Nav/TabBar.js';
-export default class Nav extends Component {
+import { changeStatus } from '../Actions.ios/index.js';
+
+class Nav extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            title:"熱區資訊",
-            statusBarDisplay: true,
-            backDisplay: false,
-        };
         this.enter = this.enter.bind(this);
         this.back = this.back.bind(this);
         this.toTop = this.toTop.bind(this);
     }
     render() {
+      const { status, login } = this.props;
         return (
             <View style = {styles.container}>
                 <StatusBar
-                    title = {this.state.title}
-                    id = {this.state.id}
+                    title = {status.title}
+                    id = {status.id}
                     back = {this.back}
                     toTop = {this.toTop}
                     loginFast = {this.props.loginFast}
                     restart = {this.props.restart}
-                    info = {this.props.info}
+                    info = {login.info}
                     />
                 <Navigator
                     ref="nav"
-                    initialRoute={{id: 'hotZoneInfo', title: '熱區資訊'}}
+                    initialRoute = {status}
                     renderScene={(route) =>
                         <ContextComponent
-                            info = {this.props.info}
+                            info = {login.info}
                             logined = {this.props.logined}
                             id = {route.id}
                             data = {route.data}
-                            title = {this.state.title}
+                            title = {status.title}
                             enter = {this.enter}
                             back = {this.back}
                             toTop = {this.toTop}
@@ -52,8 +50,8 @@ export default class Nav extends Component {
                     }
                 />
                 <TabBar
-                    info = {this.props.info}
-                    title = {this.state.title}
+                    info = {login.info}
+                    title = {status.title}
                     enter = {this.enter}
                     back = {this.back}
                 />
@@ -61,7 +59,7 @@ export default class Nav extends Component {
         );
     }
     enter(id, title, data) {
-
+      //TODO change nav to redux
         const routeList = this.refs.nav.getCurrentRoutes(),
             route = this.containRoute(id, data, routeList),
             {jumpTo, push} = this.refs.nav;
@@ -71,27 +69,18 @@ export default class Nav extends Component {
         else{
             push({id:id, title:title, data:data});
         }
-        this.setState({
-            title: title,
-            id: id,
-        });
+        this.props.dispatch(changeStatus(title, id));
     }
     back() {
         const routeList = this.refs.nav.getCurrentRoutes(),
             currentRoute = routeList[routeList.length - 2];
         this.refs.nav.pop();
-        this.setState({
-            title: currentRoute.title,
-            id: currentRoute.id,
-        });
+        this.props.dispatch(changeStatus(currentRoute.title,currentRoute.id,));
     }
     toTop() {
         const firstRoute = this.refs.nav.getCurrentRoutes()[0];
         this.refs.nav.popToTop();
-        this.setState({
-            title: firstRoute.title,
-            id: firstRoute.id,
-        });
+        this.props.dispathc(changeStatus(firstRoute.title, firstRoute.id));
     }
     containRoute(routeId, routeData, routeList) {
         for(let x in routeList){
@@ -103,6 +92,14 @@ export default class Nav extends Component {
     }
 
 }
+function select(state) {
+  return {
+    status: state.status,
+    login: state.login,
+
+  };
+}
+export default connect(select)(Nav);
 var styles = StyleSheet.create({
     texts: {
         color: '#000',
