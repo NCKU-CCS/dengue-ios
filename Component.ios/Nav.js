@@ -28,8 +28,6 @@ class Nav extends Component {
                     id = {status.id}
                     back = {this.back}
                     toTop = {this.toTop}
-                    loginFast = {this.props.loginFast}
-                    restart = {this.props.restart}
                     info = {login.info}
                     />
                 <Navigator
@@ -38,14 +36,13 @@ class Nav extends Component {
                     renderScene={(route) =>
                         <ContextComponent
                             info = {login.info}
-                            logined = {this.props.logined}
+                            logined = {login.logined}
                             id = {route.id}
                             data = {route.data}
                             title = {status.title}
                             enter = {this.enter}
                             back = {this.back}
                             toTop = {this.toTop}
-                            restart = {this.props.restart}
                         />
                     }
                 />

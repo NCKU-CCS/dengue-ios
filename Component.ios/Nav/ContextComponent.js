@@ -21,7 +21,7 @@ export default class ContextComponent extends Component {
     }
 
     render() {
-        const {enter, back, toTop, data, id, restart, logined, info} = this.props;
+        const {enter, back, toTop, data, id, logined, info} = this.props;
         switch (id) {
             case 'breedingSourceReport':
             return (<BreedingSourceReport enter={enter} back={back}  />);
@@ -40,13 +40,13 @@ export default class ContextComponent extends Component {
             case 'mosquitoBiteReport':
             return (<MosquitoBiteReport enter={enter} back={back} toTop={toTop} />);
             case 'userSetting':
-            return (<UserSetting restart = {restart} enter={enter} back={back}
+            return (<UserSetting enter={enter} back={back}
                 toTop={toTop}
                 logined = {logined}
                 info = {info}
                 />);
                 case 'signinView':
-                return (<SigninView restart = {restart} toTop = {toTop}/>);
+                return (<SigninView toTop = {toTop}/>);
             }
         }
     }

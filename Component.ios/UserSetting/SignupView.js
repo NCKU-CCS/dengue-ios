@@ -22,7 +22,9 @@ export default class SignupView extends Component {
             password,
             name
         } = this.state;
-        const {restart} = this.props;
+        //TODO log redux
+        // const { dispatch } = this.props;
+        //dispatch(requestSignup(name, phone, password));
         let formData = new FormData();
         formData.append('name', name);
         formData.append('phone', phone);

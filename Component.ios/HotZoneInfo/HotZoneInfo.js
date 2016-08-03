@@ -4,7 +4,7 @@ import React, {
     WebView
 } from 'react-native';
 import CONSTANTS from '../Global.js';
-var DEFAULT_URL = 'https://abz53378.github.io/dengue-vis/' || 'http://real.taiwanstat.com/kaohsiung-2015-dengue/';
+var DEFAULT_URL = 'https://www.taiwanstat.com/realtime/dengue-vis/';
 export default class BreedingSourceReportList extends Component {
     constructor(props) {
         super(props);

@@ -6,33 +6,28 @@ import React, {
     TouchableHighlight
 } from 'react-native';
 import CONSTANTS from '../Global.js';
-export default class InfoView extends Component {
+import { connect } from 'react-redux';
+import { requestLogout } from '../../Actions.ios/index.js';
+class InfoView extends Component {
 
     constructor(props) {
-        super(props);
-        this.signout = this.signout.bind(this);
+      super(props);
+      this.signin = this.signin.bind(this);
     }
-    signout() {
-        fetch('http://api.denguefever.tw/users/signout/')
-        .then((response) => {
-            if(!response.ok){
-                throw Error(response.status);
-            }
-            //let sessionid = response.headers.map['set-cookie'][0].match(/sessionid=([^;]+);/)[1];
-            //return [sessionid, response.json()];
-            this.props.restart({});
-        })
-        .catch(err => {
-            console.warn(err);
-        });
+    signin() {
+      const { dispatch } = this.props;
+      dispatch(requestLogout());
     }
     render() {
         const {
             score,
             breeding_source_count,
-            bites_count
+            bites_count,
+            dispatch,
+
         } = this.props;
         return (
+
             <View style = {styles.container}>
                 <View style = {styles.texts}>
                 <Text style = {styles.text}>
@@ -46,7 +41,7 @@ export default class InfoView extends Component {
                 </Text>
             </View>
                 <TouchableHighlight style = {styles.button}
-                    onPress = {this.signout}
+                onPress = {() => this.signout}
                 >
                     <Text>
                         登出
@@ -56,6 +51,7 @@ export default class InfoView extends Component {
         );
     }
 }
+export default connect()(InfoView);
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',

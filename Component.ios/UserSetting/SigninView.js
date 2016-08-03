@@ -10,8 +10,9 @@ import React, {
     AlertIOS
 } from 'react-native';
 import CONSTANTS from '../Global.js';
-
-export default class SignupView extends Component {
+import { connect } from 'react-redux';
+import { requestLogin } from '../../Actions.ios/index.js';
+class SigninView extends Component {
     constructor(props) {
         super(props);
         this.state = {phone: "", password: ""};
@@ -20,51 +21,8 @@ export default class SignupView extends Component {
 
     signin() {
         const {phone, password} = this.state;
-        const {restart, toTop} = this.props;
-        let formData = new FormData();
-        formData.append('phone', phone);
-        formData.append('password', password);
-        fetch('http://api.denguefever.tw/users/signin/', {
-            method: 'POST',
-            headers: {
-                'Accept': 'multipart/form-data',
-                'Content-Type': 'multipart/form-data',
-            },
-            body: formData
-        })
-        .then(response =>{
-            if(!response.ok){
-                throw Error(response.status);
-            }
-            return fetch('http://api.denguefever.tw/users/info/');
-        })
-        .then(response => {
-            if(!response.ok){
-                throw Error(response.status);
-            }
-            return response.json();
-        })
-        .then(responseData => {
-            toTop();
-            restart(responseData);
-            CONSTANTS.storage.save({
-                key: 'loginState',  //注意:请不要在key中使用_下划线符号!
-                rawData: responseData,
-
-                //如果不指定过期时间，则会使用defaultExpires参数
-                //如果设为null，则永不过期
-                expires: 1000 * 60
-            });
-            AlertIOS.alert(
-                '登入成功'
-            );
-        })
-        .catch(err => {
-            AlertIOS.alert(
-                '登入失敗'
-            );
-            console.warn(err);
-        });
+        const {toTop, dispatch} = this.props;
+        dispatch(requestLogin(phone, password)).done(() => toTop());
     }
     render() {
         return(
@@ -136,7 +94,7 @@ export default class SignupView extends Component {
         );
     }
 }
-
+export default connect()(SigninView);
 const styles = StyleSheet.create({
     container: {
         backgroundColor: CONSTANTS.backgroundColor,

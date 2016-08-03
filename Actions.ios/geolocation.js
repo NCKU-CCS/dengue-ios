@@ -1,13 +1,6 @@
-import { APIDomain, storage } from './global.js';
+import { storage } from './global.js';
 
-const saveLoginState = responseData =>
-  storage.save({
-    key: 'loginState',  //注意:请不要在key中使用_下划线符号!
-    rawData: responseData,
-    expires: 1000 * 60
-  });
-
-export function quickLogin(info) {
+export function (info) {
   return {
     type: 'QUICKLOGIN',
     info,
