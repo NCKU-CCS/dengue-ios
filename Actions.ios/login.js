@@ -1,12 +1,14 @@
 import { APIDomain, storage } from './global.js';
-
 const saveLoginState = responseData =>
   storage.save({
     key: 'loginState',  //注意:请不要在key中使用_下划线符号!
     rawData: responseData,
     expires: 1000 * 60
   });
-
+const removeLoginState = () =>
+  storage.remove({
+    key: 'loginState'
+  });
 export function quickLogin(info) {
   return {
     type: 'QUICKLOGIN',
@@ -56,7 +58,6 @@ export function requestLogin(phone, password) {
       .then(responseData => {
         dispatch(login(responseData));
         saveLoginState(responseData);
-        console.log(responseData);
       })
       .catch(err => console.error(err));
   };
@@ -69,7 +70,6 @@ export function requestQuickLogin() {
         return response.json();
       })
       .then(responseData => {
-        console.log(responseData);
         dispatch(quickLogin(responseData));
         saveLoginState(responseData);
       })
@@ -80,6 +80,7 @@ export function requestLogout() {
     fetch(`${APIDomain}/users/signout/`)
       .then(response => {
         if (!response.ok) throw new Error('requestLogout Error');
+        removeLoginState();
         dispatch(logout());
       })
       .catch(err => console.error(err));

@@ -12,9 +12,9 @@ class InfoView extends Component {
 
     constructor(props) {
       super(props);
-      this.signin = this.signin.bind(this);
+      this.signout = this.signout.bind(this);
     }
-    signin() {
+    signout() {
       const { dispatch } = this.props;
       dispatch(requestLogout());
     }
@@ -41,7 +41,7 @@ class InfoView extends Component {
                 </Text>
             </View>
                 <TouchableHighlight style = {styles.button}
-                onPress = {() => this.signout}
+                onPress = {this.signout}
                 >
                     <Text>
                         登出

@@ -22,7 +22,6 @@ class App extends Component {
       //this.getLoginState();
     }
     render() {
-        console.log(this.props.login);
         const {swiper} = this.props.login;
         if(swiper === -1){
             return <Nav />;
