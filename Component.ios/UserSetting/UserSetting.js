@@ -14,10 +14,11 @@ export default class UserSetting extends Component {
             score,
             bites_count,
             breeding_source_count,
+            name,
         } = this.props.info;
-        const {enter, logined} = this.props;
+        const {enter} = this.props;
 
-        if(logined){
+        if(name){
             return (
                 <InfoView
                     score = {score}

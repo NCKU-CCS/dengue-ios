@@ -53,6 +53,10 @@ export function requestLogin(phone, password) {
     })
       .then(response => {
         if (!response.ok) throw new Error('requestLogin Error');
+        return fetch(`${APIDomain}/users/info/`);
+      })
+      .then(response => {
+        if(!response.ok) throw new Error('getInfo Error');
         return response.json();
       })
       .then(responseData => {
