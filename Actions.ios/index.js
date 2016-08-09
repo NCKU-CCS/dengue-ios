@@ -8,7 +8,10 @@ import {
   changeDescription,
   requestUpload,
 } from './breedingSource.js';
-
+import {
+  geoLocation,
+  requestMosquitoBite,
+} from './mosquitoBite.js';
 export {
   requestLogin,
   requestLogout,
@@ -29,5 +32,6 @@ export {
   changeDescription,
   requestUpload,
 
-
+  geoLocation,
+  requestMosquitoBite,
 };

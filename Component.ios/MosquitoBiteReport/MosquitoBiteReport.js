@@ -8,21 +8,23 @@ import React, {
     ScrollView
 } from 'react-native';
 import CONSTANTS from '../Global.js';
-export default class Second extends Component {
+import { connect } from 'react-redux';
+import { geoLocation, requestMosquitoBite } from '../../Actions.ios/index.js';
+class MosquitoBiteReport extends Component {
 
     constructor(props) {
         super(props);
-        this.state={};
         this.send = this.send.bind(this);
     }
     componentDidMount() {
 
         navigator.geolocation.getCurrentPosition(
-            (position) => {
-                this.setState({
-                    lat:position.coords.latitude,
-                    lon:position.coords.longitude,
-                });
+          (position) => {
+
+                this.props.dispatch(geoLocation(
+                    position.coords.latitude,
+                    position.coords.longitude,
+                ));
             },
             (error) => AlertIOS.alert(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
@@ -51,8 +53,8 @@ export default class Second extends Component {
     }
     send() {
 
-        const {lat,lon} = this.state,
-            {toTop} = this.props;
+        const { lat, lng } = this.props.mosquitoBite,
+            {toTop, dispatch } = this.props;
         if(lat === '' || lat === ''){
             AlertIOS.alert("未開啟定位服務");
         }
@@ -60,32 +62,20 @@ export default class Second extends Component {
             let formData = new FormData();
             formData.append('database', 'tainan');
             formData.append('lat', lat);
-            formData.append('lng', lon);
-            fetch('http://api.denguefever.tw/bite/insert/', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'multipart/form-data',
-                    'Content-Type': 'multipart/form-data',
-                },
-                body: formData
-            })
-            .then(response => {
-                if(!response.ok){
-                    throw Error(response.status);
-                }
-                alert('舉報成功!');
-                toTop();
-            })
-            .catch(err => {
-                console.warn(err);
-                alert('舉報失敗了！');
-            });
+            formData.append('lng', lng);
+            dispatch(requestMosquitoBite(formData))
+              .then(() => toTop());
 
         }
 
     }
 }
-
+function select(state) {
+  return {
+    mosquitoBite: state.mosquitoBite,
+  };
+}
+export default connect(select)(MosquitoBiteReport);
 var styles = StyleSheet.create({
     container: {
         backgroundColor: CONSTANTS.backgroundColor,
