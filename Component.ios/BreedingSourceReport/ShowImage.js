@@ -10,17 +10,18 @@ import React, {
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import BlurView from 'react-native-blur';
-export default class ShowImage extends Component {
+import {
+  selectType,
+  modifyAddress,
+  requestAddress,
+  changeDescription,
+  requestUpload
+} from '../../Actions.ios/index.js';
+import { connect } from 'react-redux';
+
+class ShowImage extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            type:'住家容器',
-            description:'',
-            lat:'',
-            lon:'',
-            address: '',
-            modifiedAddress: '',
-        };
         //this.showActionSheet = this.showActionSheet.bind(this);
     }
     componentDidMount() {
@@ -29,31 +30,17 @@ export default class ShowImage extends Component {
             (position) => {
                 const {latitude, longitude} = position.coords;
 
-                this.setState({
-                    lat:latitude,
-                    lon:longitude,
-                });
-                fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&result_type=street_address&language=zh-TW&key=AIzaSyBKewv2_WjbQe8kW46Ld525jQ299gwKnIA`)
-                .then(response => {
-                    if(!response.ok){
-                        throw Error('turn address failed');
-                    }
-                    return response.json();
-                })
-                .then(responseData => {
-                    this.setState({address: responseData.results[0].formatted_address});
-                })
-                .catch(err => {
-                    console.warn(err);
-                });
+                this.props.dispatch(requestAddress(latitude, longitude));
             },
             (error) => alert(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
     }
     render() {
+      const { dispatch, uri }  = this.props,
+            { address, modifiedAddress, type } = this.props.breedingSource;
         const types = ['住家容器','戶外容器','戶外髒亂處'];
-        let {type} = this.state, imgObj0, imgObj1, imgObj2;
+        let imgObj0, imgObj1, imgObj2;
         for(let a in types){
             switch (a) {
                 case '0':
@@ -70,7 +57,7 @@ export default class ShowImage extends Component {
         }
         return (
             <ScrollView  style={styles.container} ref="scrollView">
-                <Image ref={'img'} style={styles.image} source={{uri: this.props.uri}}>
+                <Image ref={'img'} style={styles.image} source={{uri}}>
 
                 </Image>
                 <View style={styles.inputs}>
@@ -81,15 +68,15 @@ export default class ShowImage extends Component {
                             </Text>
                         </View>
                         <View style={styles.types}>
-                            <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'住家容器'});}}>
+                          <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={() => dispatch(selectType('住家容器'))}>
                                 <Image style={styles.typeImage} source = {imgObj0}/>
 
                             </TouchableHighlight>
-                            <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'戶外容器'});}}>
+                            <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={() => dispatch(selectType('戶外容器'))}>
 
                                 <Image style={styles.typeImage} source = {imgObj1}/>
                             </TouchableHighlight>
-                            <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={()=>{this.setState({type:'戶外髒亂處'});}}>
+                            <TouchableHighlight  style={styles.type} underlayColor={CONSTANTS.backgroundColor} onPress={() => dispatch(selectType('戶外髒亂處'))}>
                                 <Image style={styles.typeImage} source = {imgObj2}/>
 
                             </TouchableHighlight>
@@ -112,10 +99,10 @@ export default class ShowImage extends Component {
                                         }
                                     });
                                 }}
-                                placeholder={this.state.address}
+                                placeholder={address}
                                 multiline = {false}
                                 style = {styles.textInput}
-                                onChangeText = {(text) => this.setState({modifiedAddress:text})}
+                                onChangeText = {text => dispatch(modifyAddress(text))}
                                 >
                             </TextInput>
                         </View>
@@ -145,7 +132,7 @@ export default class ShowImage extends Component {
                                 }}
                                 multiline = {false}
                                 style = {styles.textInput}
-                                onChangeText = {(text) => this.setState({description:text})}
+                                onChangeText = {text => dispatch(changeDescription(text))}
                                 >
                             </TextInput>
                         </View>
@@ -159,46 +146,38 @@ export default class ShowImage extends Component {
         );
     }
     send() {
-        let {type, description, lat, lon, address, modifiedAddress} = this.state,
-        fileName = this.props.uri.split('/').slice(-1)[0];
-        let photo = {
-            uri: this.props.uri,
+      const { type, description, lat, lng, address, modifiedAddress } = this.props.breedingSource,
+        { dispatch, uri, toTop } = this.props;
+        fileName = uri.split('/').slice(-1)[0];
+        const photo = {
+            uri: uri,
             type: 'image/jpeg',
             name: fileName,
         }, formData = new FormData();
         formData.append('photo', photo);
         formData.append('database', 'tainan');
         formData.append('lat', lat);
-        formData.append('lng', lon);
+        formData.append('lng', lng);
         formData.append('address', address);
         formData.append('modified_address', modifiedAddress);
         formData.append('source_type', type);
         formData.append('description', description);
         formData.append('status', '未處理');
-        fetch("http://api.denguefever.tw/breeding_source/insert/", {
-            method: 'POST',
-            headers: {
-                'Accept': 'multipart/form-data',
-                'Content-Type': 'multipart/form-data',
-            },
-            body: formData
-        })
-        .then(response => {
-            if(!response.ok){
-                throw Error(response.status);
-            }
-            alert('舉報成功！');
-        })
-        .catch(err => {
-            console.warn(err);
-            alert('舉報失敗了！');
-        });
-        this.props.toTop();
+        dispatch(requestUpload(formData))
+          .then(() => toTop());
 
     }
 
 }
-var styles = StyleSheet.create({
+function select(state) {
+  return {
+    breedingSource: state.breedingSource,
+
+  };
+}
+export default connect(select)(ShowImage);
+
+const styles = StyleSheet.create({
     container: {
         backgroundColor: CONSTANTS.backgroundColor,
     },

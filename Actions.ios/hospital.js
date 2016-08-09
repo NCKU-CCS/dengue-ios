@@ -64,7 +64,6 @@ export function requestHospitalInfo(lat, lng) {
   return dispatch =>
     fetch(`${APIDomain}/hospital/nearby/?database=tainan&lng=${lng}&lat=${lat}`)
       .then(response => {
-        console.log(response);
         if(!response.ok){
           throw Error(response.statusText);
         }

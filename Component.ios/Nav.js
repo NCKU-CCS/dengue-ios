@@ -78,7 +78,7 @@ class Nav extends Component {
   toTop() {
     const firstRoute = this.refs.nav.getCurrentRoutes()[0];
     this.refs.nav.popToTop();
-    this.props.dispathc(changeStatus(firstRoute.title, firstRoute.id));
+    this.props.dispatch(changeStatus(firstRoute.title, firstRoute.id));
   }
   containRoute(routeId, routeData, routeList) {
     for(let x in routeList){
