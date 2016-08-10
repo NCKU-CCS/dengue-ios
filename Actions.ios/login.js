@@ -85,8 +85,9 @@ export function requestLogout() {
       .then(response => {
         if (!response.ok) throw new Error('requestLogout Error');
         removeLoginState();
-        dispatch(logout());
+        return dispatch(logout());
       })
+      .then(() => dispatch(requestQuickLogin()))
       .catch(err => console.error(err));
 }
 

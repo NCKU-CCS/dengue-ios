@@ -16,6 +16,7 @@ class StatusBar extends Component {
             statusBarDisplay: true,
             backDisplay: false,
         };
+        this.logout = this.logout.bind(this);
     }
     componentWillReceiveProps(nextProps) {
         const falseStatusBarDisplay = [],
@@ -55,7 +56,7 @@ class StatusBar extends Component {
                 Logout = (
                     <TouchableHighlight
                         underlayColor = {CONSTANTS.mainColor}
-                        onPress = {() => dispatch(requestLogout())}
+                        onPress = {this.logout}
                         style = {styles.logoutView}
                     >
                             <Text style={styles.logout}>
@@ -80,6 +81,10 @@ class StatusBar extends Component {
         else{
             return null;
         }
+    }
+    logout() {
+      this.props.dispatch(requestLogout())
+        .then(this.props.toTop);
     }
 }
 function select(state) {
