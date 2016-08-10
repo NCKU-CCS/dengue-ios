@@ -1,4 +1,4 @@
-import { requestLogout, requestLogin, storageLoadLogin, requestQuickLogin } from './login.js';
+import { requestLogout, requestLogin, storageLoadLogin, requestQuickLogin, requestSignup } from './login.js';
 import { changeStatus } from './status.js';
 import { loadHospitalInfo, changeType, requestHospitalInfo, refreshStart, refreshDone } from './hospital.js';
 import {
@@ -26,6 +26,7 @@ export {
   requestLogout,
   storageLoadLogin,
   requestQuickLogin,
+  requestSignup,
 
   changeStatus,
 

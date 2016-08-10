@@ -9,8 +9,9 @@ import React, {
     View
 } from 'react-native';
 import CONSTANTS from '../Global.js';
-
-export default class SignupView extends Component {
+import { requestSignup } from '../../Actions.ios/index.js';
+import { connect } from 'react-redux';
+class SignupView extends Component {
     constructor(props) {
         super(props);
         this.state = {phone: "", password: "", name: ''};
@@ -30,44 +31,7 @@ export default class SignupView extends Component {
         formData.append('phone', phone);
         formData.append('password', password);
         console.log(formData);
-        fetch('http://api.denguefever.tw/users/signup/', {
-            method: 'POST',
-            headers: {
-                'Accept': 'multipart/form-data',
-                'Content-Type': 'multipart/form-data',
-            },
-            body: formData
-        })
-        .then((response) => {
-            if(!response.ok){
-                throw Error(response.status);
-            }
-            return fetch('http://api.denguefever.tw/users/info/');
-        })
-        .then((response) => {
-
-            if(!response.ok){
-                throw Error(response.status);
-            }
-            return response.json();
-        })
-        .then((responseData) => {
-            restart(responseData);
-            CONSTANTS.storage.save({
-                key: 'loginState',  //注意:请不要在key中使用_下划线符号!
-                rawData: responseData,
-
-                //如果不指定过期时间，则会使用defaultExpires参数
-                //如果设为null，则永不过期
-                expires: 1000 * 60
-            });
-            alert('註冊成功！') ;
-        })
-        .catch((error) => {
-
-            console.warn(error);
-            alert("不好意思！註冊出了問題：）");
-        });
+        this.props.dispatch(requestSignup(formData));
     }
 
     render() {
@@ -175,7 +139,7 @@ export default class SignupView extends Component {
         );
     }
 }
-
+export default connect()(SignupView);
 const styles = StyleSheet.create({
     container: {
         backgroundColor: CONSTANTS.backgroundColor,

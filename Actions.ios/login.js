@@ -91,3 +91,37 @@ export function requestLogout() {
       .catch(err => console.error(err));
 }
 
+export function requestSignup(formData) {
+  return dispatch =>
+    fetch(`${APIDomain}/users/signup/`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'multipart/form-data',
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData
+    })
+      .then((response) => {
+        if(!response.ok){
+          throw Error(response.status);
+        }
+        return fetch(`${APIDomain}/users/info/`);
+      })
+      .then((response) => {
+
+        if(!response.ok){
+          throw Error(response.status);
+        }
+        return response.json();
+      })
+      .then(responseData => {
+        dispatch(login(responseData));
+        saveLoginState(responseData);
+        alert('註冊成功！') ;
+      })
+      .catch((error) => {
+        console.warn(error);
+        alert("不好意思！註冊出了問題：）");
+      });
+
+}
