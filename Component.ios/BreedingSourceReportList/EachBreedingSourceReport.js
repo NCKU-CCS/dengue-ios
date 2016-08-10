@@ -6,8 +6,9 @@ import React, {
     Text,
     Image
 } from 'react-native';
-
-export default class EachBreedingSourceReport extends Component {
+import { requestUpdateStatus } from '../../Actions.ios/index.js';
+import { connect } from 'react-redux';
+class EachBreedingSourceReport extends Component {
     constructor(props) {
         super(props);
 
@@ -16,33 +17,13 @@ export default class EachBreedingSourceReport extends Component {
         let formData = new FormData();
         const {
             updateData,
-            status
+            status,
+            dispatch
         } = this.props;
         formData.append('database','tainan');
         formData.append('source_id', source.source_id);
         formData.append('status', changeStatus);
-        fetch('http://api.denguefever.tw/breeding_source/update/', {
-            method: 'POST',
-            headers: {
-                'Accept': 'multipart/form-data',
-                'Content-Type': 'multipart/form-data',
-            },
-            body: formData
-        })
-        .then((response) => {
-            if(!response.ok){
-                throw Error(response.status);
-            }
-
-            return updateData(status, changeStatus);
-        })
-        .then(() => {
-            alert('更新完成！');
-        })
-        .catch( err => {
-            alert('更新失敗！');
-            console.warn(err);
-        });
+        dispatch(requestUpdateStatus(status, formData));
     }
     titleImage(type) {
         switch (type) {
@@ -136,6 +117,7 @@ export default class EachBreedingSourceReport extends Component {
         );
     }
 }
+export default connect()(EachBreedingSourceReport);
 const styles = StyleSheet.create({
     eachList: {
         backgroundColor: '#fff',

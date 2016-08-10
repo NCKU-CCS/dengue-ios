@@ -13,7 +13,7 @@ storage.sync = {
   //同步方法的名字必须和所存数据的key完全相同
   //方法接受的参数为一整个object，所有参数从object中解构取出
   //这里可以使用promise。或是使用普通回调函数，但需要调用resolve或reject。
-  breedingSourceReport(params){
+  breedingSourceList(params){
     let { id, resolve, reject, timestamp } = params;
     id = id === '已處理' ? id + ',非孳生源': id;
     fetch(`${APIDomain}/breeding_source/get/?database=tainan&status=${id}`)
@@ -22,7 +22,7 @@ storage.sync = {
         if (responseData) {
           resolve && resolve(responseData);
           storage.save({
-            key: 'breedingSourceReport',
+            key: 'breedingSourceList',
             id:id,
             rawData: responseData,
             expires: 1000 * 3600 * 24
@@ -37,7 +37,7 @@ storage.sync = {
       .catch(err => {
         console.error(err);
         reject && reject(err);
-      });
+      })
   },
   hospitalInfo(params) {
     let { resolve, reject } = params;
