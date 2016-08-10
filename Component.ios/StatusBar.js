@@ -6,8 +6,10 @@ import React,{
     TouchableHighlight
 } from 'react-native';
 import CONSTANTS from './Global.js';
+import { connect } from 'react-redux';
+import { requestLogout } from '../Actions.ios/index.js';
 
-export default class StatusBar extends Component {
+class StatusBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,22 +34,8 @@ export default class StatusBar extends Component {
             backDisplay: backDisplay
         });
     }
-    logout() {
-        fetch("http://api.denguefever.tw/users/signout/")
-        .then((response) => {
-            if(response.ok){
-                this.props.loginFast();
-                alert('已登出！') ;
-
-            }
-            else{
-                throw Error("");
-            }
-        })
-        .catch(() => {console.warn('登出問題');});
-    }
     render() {
-
+        const { dispatch, info } = this.props;
         if(this.state.statusBarDisplay){
             let Back = <View style = {styles.space} />,
                 Logout = <View style = {styles.space} />;
@@ -64,7 +52,7 @@ export default class StatusBar extends Component {
                     </TouchableHighlight>
                 );
             }
-            if(this.props.info.name !== undefined){
+            if(info.name !== undefined){
                 Logout = (
                     <TouchableHighlight
                         underlayColor = {CONSTANTS.mainColor}
@@ -94,7 +82,17 @@ export default class StatusBar extends Component {
             return null;
         }
     }
+    logout() {
+      this.props.dispatch(requestLogout())
+        .then(this.props.toTop);
+    }
 }
+function select(state) {
+  return {
+
+  };
+}
+export default connect(select)(StatusBar);
 const styles = StyleSheet.create({
     statusBar: {
         alignItems:'center',

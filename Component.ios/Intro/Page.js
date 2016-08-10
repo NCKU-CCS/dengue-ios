@@ -1,18 +1,20 @@
 import React, {
     Component,
-    StyleSheet,
     View,
     Text,
     TouchableHighlight,
     Image
 } from 'react-native';
+import { connect } from 'react-redux';
 import CONSTANTS from '../Global.js';
-export default class Intro extends Component {
+import { requestQuickLogin } from '../../Actions.ios/index.js';
+import { styles } from './Page.style.js';
+class Page extends Component {
     constructor(props) {
         super(props);
     }
     render() {
-        const {titleText, imgSource, description, fetchData} = this.props;
+        const { titleText, imgSource, description, dispatch } = this.props;
         return(
             <View style = {styles.container}>
                 <View style = {styles.title}>
@@ -30,7 +32,7 @@ export default class Intro extends Component {
                 <TouchableHighlight
                     style = {styles.button}
                     underlayColor = {CONSTANTS.backgroundColor}
-                    onPress = {()=>{fetchData();}}
+                    onPress = {() => dispatch(requestQuickLogin())}
                 >
                     <Text
                         style = {styles.buttonText}
@@ -42,55 +44,4 @@ export default class Intro extends Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: 40,
-        backgroundColor: CONSTANTS.backgroundColor,
-    },
-    title: {
-        position: 'absolute',
-        justifyContent: 'center',
-        alignItems: 'center',
-        top: 50,
-        width: CONSTANTS.screenWidth - 80,
-    },
-    titleText: {
-        fontSize: 30,
-        fontWeight: 'bold',
-    },
-    description: {
-        position: 'absolute',
-        fontSize: 16,
-        color: "#555",
-        lineHeight:25,
-        bottom: 100,
-        paddingHorizontal: 32,
-        marginLeft:8,
-
-    },
-    img: {
-        width: CONSTANTS.screenWidth*0.5,
-        height: CONSTANTS.screenWidth*0.5,
-        resizeMode: 'contain',
-        marginBottom: 40,
-    },
-    button: {
-        position: 'absolute',
-        bottom: 20,
-        right: 20,
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: CONSTANTS.mainColor,
-
-    },
-    buttonText: {
-        paddingHorizontal: 5,
-        paddingVertical: 10,
-        color: CONSTANTS.mainColor,
-        fontSize: 25,
-    }
-});
+export default connect()(Page);

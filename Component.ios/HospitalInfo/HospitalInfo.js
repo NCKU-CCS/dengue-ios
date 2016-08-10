@@ -7,83 +7,32 @@ import React, {
     ActivityIndicatorIOS,
     RefreshControl
 } from 'react-native';
+import { connect } from 'react-redux';
 import CONSTANTS from '../Global.js';
 import EachSource from './EachSource.js';
 import Buttons from './Buttons.js';
-
-export default class BreedingSourceReportList extends Component {
+import { loadHospitalInfo, changeType, requestHospitalInfo, refreshStart, refreshDone } from '../../Actions.ios/index.js';
+class HospitalInfo extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            dataSource: null,
-            displaySource: new ListView.DataSource({
-                rowHasChanged: (row1, row2) => row1 !== row2,
-            }),
-            type: '全部',
-            loaded: false,
-            sourceNumber: 0,
-            refreshing: false,
-        };
         this.changeType = this.changeType.bind(this);
         this.renderEachSource = this.renderEachSource.bind(this);
         this.enterCheckPage = this.enterCheckPage.bind(this);
-        this.updateState = this.updateState.bind(this);
         this.onRefresh = this.onRefresh.bind(this);
     }
     componentDidMount(){
         this.loadData();
     }
-    updateState(responseData) {
-        const sourceNumber = responseData.length;
-        this.setState({
-            dataSource: responseData,
-            displaySource: this.state.displaySource.cloneWithRows(responseData),
-            sourceNumber: sourceNumber,
-            loaded: true,
-        });
-    }
     loadData() {
-        CONSTANTS.storage.load({
-            key: 'hospitalInfo',
-            autoSync: true,
-            syncInBackground: true
-        }).then(responseData => {
-            //如果找到数据，则在then方法中返回
-            this.updateState(responseData);
-            CONSTANTS.storage.save({
-                key: 'hospitalInfo',  //注意:请不要在key中使用_下划线符号!
-                rawData: responseData,
-
-                //如果不指定过期时间，则会使用defaultExpires参数
-                //如果设为null，则永不过期
-                expires: 1000 * 3600
-            });
-
-        }).catch(err => {
-            //如果没有找到数据且没有同步方法，
-            //或者有其他异常，则在catch中返回
-            console.warn(err);
-        });
+      this.props.dispatch(loadHospitalInfo());
     }
     fetchData() {
+      const { dispatch } = this.props;
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 let lat = position.coords.latitude;
-                let lon = position.coords.longitude;
-                fetch(`http://api.denguefever.tw/hospital/nearby/?database=tainan&lng=${lon}&lat=${lat}`)
-                .then((response) => {
-                    if(!response.ok){
-                        throw Error(response.statusText);
-                    }
-                    return response.json();
-                })
-                .then((responseData) => {
-                    this.updateState(responseData);
-                })
-                .catch((error) => {
-                    console.warn(error);
-                })
-                .done();
+                let lng = position.coords.longitude;
+                dispatch(requestHospitalInfo(lat, lng));
             },
             (error) => alert(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
@@ -91,30 +40,31 @@ export default class BreedingSourceReportList extends Component {
 
     }
     changeType(newType) {
-        let displaySource = [];
-        if(newType === '全部'){
-            displaySource = [...this.state.dataSource];
-        }
-        else{
-            displaySource = this.state.dataSource.filter((d) => {
-                if(d.name.indexOf(newType) !== -1){
-                    return d;
-                }
-            });
-        }
-        this.setState({
-            displaySource: this.state.displaySource.cloneWithRows(displaySource),
-            type: newType,
-            sourceNumber: displaySource.length,
-        });
+      this.props.dispatch(changeType(newType));
     }
     onRefresh(){
-        this.setState({refreshing: true});
-        CONSTANTS.storage.sync.hospitalInfo({resolve:this.updateState});
-        this.setState({refreshing: false});
+      const { dispatch } = this.props;
+      dispatch(refreshStart());
+      navigator.geolocation.getCurrentPosition(
+          position => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            dispatch(requestHospitalInfo(lat, lng))
+              .then(() => dispatch(refreshDone()));
+          },
+          error => {
+            console.warn(error)
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 20000,
+            maximumAge: 1000
+          }
+        );
+
     }
     render() {
-        if (!this.state.loaded) {
+        if (!this.props.hospital.loaded) {
             return this.renderLoadingView();
         }
         return this.renderListView();
@@ -133,29 +83,30 @@ export default class BreedingSourceReportList extends Component {
         );
     }
     renderListView() {
+      const { sourceNumber, displaySource, type, refreshing } = this.props.hospital;
         return(
             <View style={styles.container}>
                 <Text style={styles.topText}>
                     {`您附近有  `}
                     <Text style={styles.sourceNumber}>
-                        {this.state.sourceNumber}
+                        {sourceNumber}
                     </Text>
                     {`  間醫療診所`}
 
                 </Text>
                 <Buttons
                     changeType = {this.changeType}
-                    type = {this.state.type}
+                    type = {type}
 
                     />
                 <ListView
                     refreshControl={
                         <RefreshControl
-                            refreshing={this.state.refreshing}
+                            refreshing={refreshing}
                             onRefresh={this.onRefresh}
                         />
                     }
-                    dataSource={this.state.displaySource}
+                    dataSource={displaySource}
                     renderRow={this.renderEachSource}
                     style={styles.listView}
                     />
@@ -175,6 +126,12 @@ export default class BreedingSourceReportList extends Component {
         this.props.enter("eachHospitalInfo",'就醫資訊',source);
     }
 }
+function select(state) {
+  return {
+    hospital: state.hospital,
+  }
+}
+export default connect(select)(HospitalInfo);
 var styles = StyleSheet.create({
     container: {
         backgroundColor: CONSTANTS.backgroundColor,
