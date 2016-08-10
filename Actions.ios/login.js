@@ -38,7 +38,7 @@ export function storageLoadLogin() {
       autoSync: false,
       syncInBackground: true
     })
-      .then(responseData => dispatch(login(responseData)))
+      .then(responseData => dispatch(getInfo()))
       .catch(() => dispatch(firstOpen()));
 }
 
@@ -90,7 +90,21 @@ export function requestLogout() {
       .then(() => dispatch(requestQuickLogin()))
       .catch(err => console.error(err));
 }
+export function getInfo() {
+  return dispatch =>
+    fetch(`${APIDomain}/users/info/`)
+      .then(response => {
+         if(!response.ok){
+          throw Error(response.status);
+        }
+        return response.json();
+      })
+    .then(responseData => {
+        dispatch(login(responseData));
+        saveLoginState(responseData);
+      })
 
+}
 export function requestSignup(formData) {
   return dispatch =>
     fetch(`${APIDomain}/users/signup/`, {
@@ -105,18 +119,9 @@ export function requestSignup(formData) {
         if(!response.ok){
           throw Error(response.status);
         }
-        return fetch(`${APIDomain}/users/info/`);
+        return dispatch(getInfo());
       })
-      .then((response) => {
-
-        if(!response.ok){
-          throw Error(response.status);
-        }
-        return response.json();
-      })
-      .then(responseData => {
-        dispatch(login(responseData));
-        saveLoginState(responseData);
+      .then(() => {
         alert('註冊成功！') ;
       })
       .catch((error) => {
