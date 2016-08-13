@@ -1,6 +1,7 @@
 import { ListView } from 'react-native';
 
 const initState = {
+  data: [],
   dataSource: new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
   }),
@@ -11,62 +12,61 @@ const initState = {
   refreshing: false,
 };
 export function breedingSourceList(state = initState, action) {
+  const { responseData, status } = action;
+  let data,
+    dataSource = new ListView.DataSource({
+      rowHasChanged: (row1, row2) => row1 !== row2,
+    });
   switch(action.type) {
     case 'BREEDINGSOURCELIST':
-      const { responseData } = action,
-        dataSource = new ListView.DataSource({
-          rowHasChanged: (row1, row2) => row1 !== row2,
-        }).cloneWithRows(responseData);
+      data = responseData;
+      dataSourse = dataSource.cloneWithRows(data);
       return {
+        ...state,
+        data,
         dataSource,
-        sourceNumber: state.sourceNumber,
         loaded: true,
-        status: state.status,
         refreshing: false,
-        timestamp: state.timestamp,
       };
+    case 'ADDBREEDINGSOURCELIST':
+      data = [...state.data,...responseData];
+      dataSource = dataSource.cloneWithRows(data);
+      return {
+        ...state,
+        data,
+        dataSource,
+        loaded: true,
+        refreshing: false,
+      }
     case 'SOURCENUMBER':
       return {
-        dataSource: state.dataSource,
-        status: state.status,
+        ...state,
         sourceNumber: action.number,
         loaded: true,
         refreshing: false,
-        timestamp: state.timestamp,
       };
     case 'SELECTSTATUS':
-      const { status } = action;
       return {
-        dataSource: state.dataSource,
+        ...state,
         status,
-        sourceNumber: state.sourceNumber,
         loaded: false,
         refreshing: false,
-        timestamp: state.timestamp,
       };
     case 'BREEDINGREFRESHSTART':
       return {
-        dataSource: state.dataSource,
-        status: state.status,
-        sourceNumber: state.sourceNumber,
+        ...state,
         loaded: true,
         refreshing: true,
-        timestamp: state.timestamp,
       }
     case 'BREEDINGREFRESHDONE':
       return {
-        dataSource: state.dataSource,
-        status: state.status,
-        sourceNumber: state.sourceNumber,
+        ...state,
         loaded: true,
         refreshing: false,
-        timestamp: state.timestamp,
       }
     case 'TIMESTAMP':
       return {
-        dataSource: state.dataSource,
-        status: state.status,
-        sourceNumber: state.sourceNumber,
+        ...state,
         loaded: true,
         refreshing: false,
         timestamp: action.timestamp,

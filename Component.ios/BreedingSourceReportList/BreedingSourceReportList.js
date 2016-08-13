@@ -38,8 +38,8 @@ class BreedingSourceReportList extends Component {
     dispatch(breedingrefreshStart());
 
     dispatch(requestBreedingSourceListNumber(status))
-      .then(() =>  dispatch(requestBreedingSourceList(status, '')));
-    dispatch(breedingrefreshDone());
+      .then(() =>  dispatch(requestBreedingSourceList(status, '')))
+      .then(() => dispatch(breedingrefreshDone()));
   }
   changeSource(status){
     const { dispatch } = this.props;
@@ -50,11 +50,11 @@ class BreedingSourceReportList extends Component {
     }
   }
   onEndReached() {
-    let { id, timestamp } = this.props.breedingSourceList;
-    id = id === '已處理' ? id + ',非孳生源': id;
+    let { status, timestamp } = this.props.breedingSourceList;
+    status = status === '已處理' ? status + ',非孳生源': status;
     const { dispatch } = this.props;
-    dispatch(requestBreedingSourceListNumber(id))
-      .then(() => dispatch(requestBreedingSourceList(id, timestamp)));
+    dispatch(requestBreedingSourceListNumber(status))
+      .then(() => dispatch(requestBreedingSourceList(status, timestamp)));
   }
   render() {
     if (!this.props.breedingSourceList.loaded) {

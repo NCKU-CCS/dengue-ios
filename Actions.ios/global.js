@@ -35,7 +35,7 @@ storage.sync = {
         }
       })
       .catch(err => {
-        console.error(err);
+        console.warn(err);
         reject && reject(err);
       })
   },
@@ -66,7 +66,7 @@ storage.sync = {
           })
           .done();
       },
-      error => console.error(error),
+      error => console.warn(error),
       {
         enableHighAccuracy: true,
         timeout: 20000,

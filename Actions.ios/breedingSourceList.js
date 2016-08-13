@@ -14,6 +14,12 @@ export function breedingSourceList(responseData) {
 
   };
 }
+export function addBreedingSourceList(responseData) {
+  return {
+    type: 'ADDBREEDINGSOURCELIST',
+    responseData,
+  }
+}
 export function sourceNumber(number) {
   return {
     type: 'SOURCENUMBER',
@@ -79,6 +85,14 @@ export function requestBreedingSourceListNumber(id) {
 
 export function requestBreedingSourceList(id, timestamp) {
   timestamp = timestamp === '' ? '' : `&before_timestamp=${timestamp}`;
+  let actionFunction;
+  if (timestamp === '') {
+    actionFunction = breedingSourceList;
+  }
+  else {
+    actionFunction = addBreedingSourceList;
+    timestamp = `&before_timestamp=${timestamp}`;
+  }
   return dispatch =>
     fetch(`${APIDomain}/breeding_source/get/?database=tainan&status=${id}${timestamp}`)
       .then(response => {
@@ -88,14 +102,8 @@ export function requestBreedingSourceList(id, timestamp) {
       .then(responseData => {
         const dataLength = responseData.length;
         if(dataLength !== 0) dispatch(timeStamp(responseData[dataLength - 1].timestamp));
-        dispatch(breedingSourceList(responseData));
-        storage.save({
-          key: 'breedingSourceList',
-          id:id,
-          rawData: responseData,
-          expires: 1000 * 3600 * 24
-        });
-        // 成功则调用resolve
+        dispatch(actionFunction(responseData));
+        saveBreedingSourceList(id, responseData);
       })
       .catch(err => {
         console.error(err);

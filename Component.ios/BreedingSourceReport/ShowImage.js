@@ -42,9 +42,7 @@ class ShowImage extends Component {
             { address, modifiedAddress, type } = this.props.breedingSource;
         return (
             <ScrollView  style={styles.container} ref="scrollView">
-                <Image ref={'img'} style={styles.image} source={{uri}}>
-
-                </Image>
+                <Image ref={'img'} style={styles.image} source={{uri}}></Image>
                 <View style={styles.inputs}>
                     <View style={styles.question}>
                         <View style={styles.title}>
@@ -228,6 +226,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         alignItems:'center',
         alignSelf:'center',
+        backgroundColor: '#fff',
     },
     click: {
       backgroundColor: CONSTANTS.mainColor,
