@@ -26,7 +26,7 @@ class MosquitoBiteReport extends Component {
                     position.coords.longitude,
                 ));
             },
-            (error) => AlertIOS.alert(error.message),
+            (error) => alert('找不到定位資訊'),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
     }

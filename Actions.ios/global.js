@@ -66,7 +66,10 @@ storage.sync = {
           })
           .done();
       },
-      error => console.warn(error),
+      error => {
+        alert('找不到定位資訊');
+        console.warn(error);
+      },
       {
         enableHighAccuracy: true,
         timeout: 20000,

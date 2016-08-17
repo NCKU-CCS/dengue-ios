@@ -43,6 +43,7 @@ class HospitalInfo extends Component {
       this.props.dispatch(changeType(newType));
     }
     onRefresh(){
+      alert('test');
       const { dispatch } = this.props;
       dispatch(refreshStart());
       navigator.geolocation.getCurrentPosition(
@@ -53,7 +54,8 @@ class HospitalInfo extends Component {
               .then(() => dispatch(refreshDone()));
           },
           error => {
-            console.warn(error)
+            //console.warn(error);
+            alert('找不到定位資訊');
           },
           {
             enableHighAccuracy: true,

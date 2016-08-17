@@ -32,7 +32,7 @@ class ShowImage extends Component {
 
                 this.props.dispatch(requestAddress(latitude, longitude));
             },
-            (error) => alert(error.message),
+            (error) => alert('找不到定位資訊'),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
     }

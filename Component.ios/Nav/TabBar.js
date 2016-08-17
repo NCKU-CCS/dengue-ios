@@ -24,8 +24,8 @@ export default class TabBar extends Component {
         title = [
             '熱區資訊',
             '就醫資訊',
-            '孳生源舉報',
-            '蚊子叮咬舉報',
+            '環境回報',
+            '蚊子叮咬',
             '個人資訊'
 
         ];
@@ -41,8 +41,8 @@ export default class TabBar extends Component {
             title = [
                 '熱區資訊',
                 '就醫資訊',
-                '孳生源舉報',
-                '蚊子叮咬舉報',
+                '環境回報',
+                '蚊子叮咬',
                 '孳生源列表',
                 //'個人資訊'
 

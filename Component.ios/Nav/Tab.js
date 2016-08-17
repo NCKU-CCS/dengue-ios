@@ -33,11 +33,11 @@ export default class Tab extends Component {
             return propsTitle === title ?
                 require('../../img/check_list-32.png'):
                 require('../../img/check_list-31.png');
-            case '孳生源舉報':
+            case '環境回報':
             return propsTitle === title ?
                 require('../../img/source-15.png'):
                 require('../../img/source-16.png');
-            case '蚊子叮咬舉報':
+            case '蚊子叮咬':
             return propsTitle === title ?
                 require('../../img/mosquito_checkin_on.png'):
                 require('../../img/mosquito_checkin_off.png');

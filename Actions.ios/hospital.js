@@ -49,7 +49,8 @@ export function loadHospitalInfo() {
             dispatch(requestHospitalInfo(lat, lng));
           },
           error => {
-            console.warn(error)
+            //console.warn(error)
+            alert('找不到定位資訊');
           },
           {
             enableHighAccuracy: true,
@@ -73,6 +74,9 @@ export function requestHospitalInfo(lat, lng) {
         dispatch(hospitalInfo(responseData));
         saveHospitalInfo(responseData);
       })
-      .catch(error => console.error(error));
+      .catch(error => {
+        //console.error(error);
+        alert('找不到定位資訊');
+      });
 
 }
