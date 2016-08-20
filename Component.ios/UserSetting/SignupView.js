@@ -30,7 +30,6 @@ class SignupView extends Component {
     formData.append('name', name);
     formData.append('phone', phone);
     formData.append('password', password);
-    console.log(formData);
     this.props.dispatch(requestSignup(formData));
   }
 
@@ -176,12 +175,12 @@ const styles = StyleSheet.create({
   },
   signup: {
     //height: 40,
-    //width:60,
+    width:200,
     marginTop: 30,
     paddingVertical: 8,
-    paddingHorizontal: 25,
+    //paddingHorizontal: 25,
     backgroundColor: CONSTANTS.backgroundColor,
-    borderRadius :3,
+    borderRadius :5,
     borderColor: CONSTANTS.mainColor,
     borderWidth:1,
     alignSelf: 'center',
@@ -191,6 +190,7 @@ const styles = StyleSheet.create({
   },
   signupText: {
     fontSize: 20,
+    color: '#444',
   },
   psText: {
     marginTop:30,

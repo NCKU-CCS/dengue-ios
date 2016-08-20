@@ -67,7 +67,7 @@ class StatusBar extends Component {
         );
       }
       if(title === '環境回報') {
-        subTitle = '請拍積水髒亂處';
+        subTitle = '請拍積水、髒亂處';
       }
       return(
         <View style = {styles.statusBar}>
