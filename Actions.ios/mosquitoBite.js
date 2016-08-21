@@ -20,7 +20,6 @@ export function requestMosquitoBite(formData) {
         if(!response.ok){
           throw Error(response.status);
         }
-        alert('舉報成功!');
       })
       .catch(err => {
         console.warn(err);
