@@ -65,7 +65,6 @@ export function requestUpload(formData) {
             if(!response.ok){
                 throw Error(response.status);
             }
-            alert('上傳成功！');
         })
         .catch(err => {
             console.warn(err);

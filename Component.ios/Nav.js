@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import StatusBar from './StatusBar.js';
 import ContextComponent from './Nav/ContextComponent.js';
 import TabBar from './Nav/TabBar.js';
+import PopImage from './Nav/PopImage.js';
 import { changeStatus } from '../Actions.ios/index.js';
 
 class Nav extends Component {
@@ -53,6 +54,7 @@ class Nav extends Component {
           enter = {this.enter}
           back = {this.back}
             />
+          <PopImage />
       </View>
     );
   }

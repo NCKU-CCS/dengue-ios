@@ -11,7 +11,7 @@ import { hospital } from './hospital.js';
 import { breedingSource } from './breedingSource.js';
 import { mosquitoBite } from './mosquitoBite.js';
 import { breedingSourceList } from './breedingSourceList.js';
-
+import { popImage } from './popImage.js';
 const reducer = combineReducers({
   login,
   status,
@@ -19,7 +19,7 @@ const reducer = combineReducers({
   breedingSource,
   mosquitoBite,
   breedingSourceList,
-
+  popImage,
 })
 
 export default reducer ;

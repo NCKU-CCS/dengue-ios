@@ -21,6 +21,7 @@ import {
   breedingrefreshDone,
   requestUpdateStatus,
 } from './breedingSourceList.js';
+import { popImage, dropImage } from './popImage.js';
 export {
   requestLogin,
   requestLogout,
@@ -52,4 +53,7 @@ export {
   breedingrefreshStart,
   breedingrefreshDone,
   requestUpdateStatus,
+
+  popImage,
+  dropImage,
 };

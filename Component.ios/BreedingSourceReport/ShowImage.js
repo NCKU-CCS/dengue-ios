@@ -15,7 +15,9 @@ import {
   modifyAddress,
   requestAddress,
   changeDescription,
-  requestUpload
+  requestUpload,
+  popImage,
+
 } from '../../Actions.ios/index.js';
 import { connect } from 'react-redux';
 
@@ -148,7 +150,7 @@ class ShowImage extends Component {
         formData.append('description', description);
         formData.append('status', '未處理');
         dispatch(requestUpload(formData))
-          .then(() => toTop());
+          .then(() => dispatch(popImage()));
     }
 
 }

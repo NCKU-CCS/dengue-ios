@@ -11,16 +11,11 @@ import React, {
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import { connect } from 'react-redux';
-import { geoLocation, requestMosquitoBite } from '../../Actions.ios/index.js';
+import { geoLocation, requestMosquitoBite, popImage } from '../../Actions.ios/index.js';
 class MosquitoBiteReport extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      top: new Animated.Value(CONSTANTS.screenHeight),
-      imageIndex: 0,
-    };
-    this.closeImage = this.closeImage.bind(this);
     this.send = this.send.bind(this);
   }
   componentDidMount() {
@@ -38,12 +33,6 @@ class MosquitoBiteReport extends Component {
     );
   }
   render() {
-    const arr = [
-      require('../../img/popImage1.png'),
-      require('../../img/popImage2.png'),
-      require('../../img/popImage3.png'),
-    ],
-    { imageIndex, top } = this.state;
     return (
       <ScrollView style = {styles.container}>
         <Text style={styles.text}>
@@ -58,36 +47,6 @@ class MosquitoBiteReport extends Component {
           >
             <Text style={styles.buttonText}>報告！這裡有蚊子</Text>
           </TouchableHighlight>
-          <Animated.View
-            style = {{
-              width: CONSTANTS.screenWidth,
-              height: CONSTANTS.screenHeight,
-              backgroundColor:CONSTANTS.backgroundColor,
-              position: 'absolute',
-              top: top,
-            }}
-            >
-            </Animated.View>
-          <TouchableWithoutFeedback
-            onPress={this.closeImage}
-            style = {{
-              position: 'absolute',
-              top: 0,
-            }}
-          >
-          <Animated.Image
-            source = {arr[imageIndex]}
-            style = {{
-              width: CONSTANTS.screenWidth - 100,
-              height: CONSTANTS.screenHeight,
-              marginLeft: 50,
-              resizeMode: 'contain',
-              position: 'absolute',
-              top: top,
-            }}
-            >
-            </Animated.Image>
-          </TouchableWithoutFeedback>
           </ScrollView>
     );
 
@@ -101,35 +60,14 @@ class MosquitoBiteReport extends Component {
       AlertIOS.alert("未開啟定位服務");
     }
     else{
-      this.setState({imageIndex: Math.floor(Math.random()*3)});
       let formData = new FormData();
       formData.append('database', 'tainan');
       formData.append('lat', lat);
       formData.append('lng', lng);
       dispatch(requestMosquitoBite(formData))
-        .then(() => {
-          this.state.top.setValue(500);
-          Animated.timing(
-            this.state.top,
-            {
-              toValue: 0,
-              duration: 300,
-            }
-          ).start();
-          //toTop();
-        });
-
+        .then(() => dispatch(popImage()));
     }
 
-  }
-  closeImage() {
-    Animated.timing(
-      this.state.top,
-      {
-        toValue: CONSTANTS.screenHeight,
-        duration: 300,
-      }
-    ).start();
   }
 }
 function select(state) {
