@@ -5,18 +5,22 @@ import React, {
   Image,
   TouchableHighlight,
   TouchableWithoutFeedback,
+  ActivityIndicatorIOS,
   AlertIOS,
   ScrollView,
+  View,
   Animated,
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import { connect } from 'react-redux';
-import { geoLocation, requestMosquitoBite, popImage } from '../../Actions.ios/index.js';
+import { geoLocation, requestMosquitoBite,
+  startUploadBite, endUploadBite, popImage } from '../../Actions.ios/index.js';
 class MosquitoBiteReport extends Component {
 
   constructor(props) {
     super(props);
     this.send = this.send.bind(this);
+    this.renderButton = this.renderButton.bind(this);
   }
   componentDidMount() {
 
@@ -45,12 +49,27 @@ class MosquitoBiteReport extends Component {
           underlayColor="#eee"
           onPress={this.send}
           >
-            <Text style={styles.buttonText}>報告！這裡有蚊子</Text>
+
+          {this.renderButton()}
           </TouchableHighlight>
-          </ScrollView>
+
+        </ScrollView>
     );
 
 
+  }
+  renderButton() {
+    if(this.props.mosquitoBite.uploadingBite) {
+      return (
+        <ActivityIndicatorIOS color={CONSTANTS.mainColor}>
+        </ActivityIndicatorIOS>
+      );
+    }
+    else {
+      return (
+        <Text style={styles.buttonText}>報告！這裡有蚊子</Text>
+      );
+    }
   }
   send() {
 

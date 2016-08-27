@@ -6,9 +6,20 @@ export function geoLocation(lat, lng) {
     lng,
   };
 }
+export function startUploadBite() {
+  return {
+    type: 'UPLOADING',
+  }
+}
+export function endUploadBite() {
+  return {
+    type: 'UPLOADED',
+  }
+}
 export function requestMosquitoBite(formData) {
-  return dispatch =>
-    fetch(`${APIDomain}/bite/insert/`, {
+  return dispatch =>{
+    dispatch(startUploadBite());
+    return fetch(`${APIDomain}/bite/insert/`, {
       method: 'POST',
       headers: {
         'Accept': 'multipart/form-data',
@@ -17,13 +28,15 @@ export function requestMosquitoBite(formData) {
       body: formData
     })
       .then(response => {
+        dispatch(endUploadBite());
         if(!response.ok){
           throw Error(response.status);
         }
       })
       .catch(err => {
         console.warn(err);
-        alert('舉報失敗了！');
+        alert('回報失敗了！');
       });
+  }
 
 }

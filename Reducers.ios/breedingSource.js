@@ -5,6 +5,7 @@ const initState = {
   description:'',
   address: '',
   modifiedAddress: '',
+  uploading: false,
 };
 export function breedingSource(state = initState, action) {
   switch(action.type) {
@@ -36,6 +37,15 @@ export function breedingSource(state = initState, action) {
           lng: action.lng,
         }
       );
+    case 'UPLOADING_IMAGE':
+      return Object.assign({}, state, {
+        uploading: true,
+      });
+    case 'UPLOADED_IMAGE':
+      return Object.assign({}, state, {
+        uploading: false,
+      });
+
     default :
       return state;
   }

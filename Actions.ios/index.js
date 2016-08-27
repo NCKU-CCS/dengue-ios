@@ -11,6 +11,9 @@ import {
 import {
   geoLocation,
   requestMosquitoBite,
+  startUploadBite,
+  endUploadBite,
+
 } from './mosquitoBite.js';
 import {
   requestBreedingSourceListNumber,
@@ -45,6 +48,8 @@ export {
 
   geoLocation,
   requestMosquitoBite,
+  startUploadBite,
+  endUploadBite,
 
   requestBreedingSourceListNumber,
   requestBreedingSourceList,

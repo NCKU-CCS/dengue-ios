@@ -6,7 +6,8 @@ import React, {
     Image,
     TextInput,
     TouchableHighlight,
-    ScrollView
+    ScrollView,
+    ActivityIndicatorIOS,
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import BlurView from 'react-native-blur';
@@ -25,6 +26,7 @@ class ShowImage extends Component {
     constructor(props) {
         super(props);
         //this.showActionSheet = this.showActionSheet.bind(this);
+        this.renderButton = this.renderButton.bind(this);
     }
     componentDidMount() {
 
@@ -41,7 +43,7 @@ class ShowImage extends Component {
     render() {
         const types = ['住家', '戶外'];
       const { dispatch, uri }  = this.props,
-            { address, modifiedAddress, type } = this.props.breedingSource;
+            { address, modifiedAddress, type, uploading } = this.props.breedingSource;
         return (
             <ScrollView  style={styles.container} ref="scrollView">
                 <Image ref={'img'} style={styles.image} source={{uri}}></Image>
@@ -123,17 +125,31 @@ class ShowImage extends Component {
                             </TextInput>
                         </View>
                     </View>
-                    <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this.send.bind(this)}>
-                        <Text style={styles.buttonText}>這裡是孳生源！</Text>
-                    </TouchableHighlight>
+                    {this.renderButton()}
                 </View>
             </ScrollView>
 
         );
     }
+    renderButton() {
+      if(this.props.breedingSource.uploading) {
+        return (
+          <View style={styles.button}>
+            <ActivityIndicatorIOS color={CONSTANTS.mainColor}></ActivityIndicatorIOS>
+          </View>
+        );
+      }
+      else {
+        return (
+          <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this.send.bind(this)}>
+            <Text style={styles.buttonText}>這裡是孳生源！</Text>
+          </TouchableHighlight>
+        );
+      }
+    }
     send() {
       const { type, description, lat, lng, address, modifiedAddress } = this.props.breedingSource,
-        { dispatch, uri, toTop } = this.props;
+        { dispatch, uri, back } = this.props;
         fileName = uri.split('/').slice(-1)[0];
         const photo = {
             uri: uri,
@@ -150,7 +166,10 @@ class ShowImage extends Component {
         formData.append('description', description);
         formData.append('status', '未處理');
         dispatch(requestUpload(formData))
-          .then(() => dispatch(popImage()));
+          .then(() => {
+            dispatch(popImage());
+            back();
+          });
     }
 
 }
@@ -238,7 +257,7 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: "#fff",
-        //width:70,
+        width: 200,
         //height:40,
         paddingVertical: 7,
         paddingHorizontal: 18,

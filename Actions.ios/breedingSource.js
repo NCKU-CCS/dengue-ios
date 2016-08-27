@@ -34,6 +34,16 @@ export function modifyAddress(modifiedAddress) {
 
   };
 }
+export function startUploadImage() {
+  return {
+    type: 'UPLOADING_IMAGE',
+  }
+}
+export function endUploadImage() {
+  return {
+    type: 'UPLOADED_IMAGE',
+  }
+}
 export function requestAddress(lat, lng) {
   return dispatch =>
     dispatch(geoLocation(lat, lng));
@@ -52,8 +62,9 @@ export function requestAddress(lat, lng) {
       });
 }
 export function requestUpload(formData) {
-  return dispatch =>
-    fetch(`${APIDomain}/breeding_source/insert/`, {
+  return dispatch => {
+    dispatch(startUploadImage());
+    return fetch(`${APIDomain}/breeding_source/insert/`, {
             method: 'POST',
             headers: {
                 'Accept': 'multipart/form-data',
@@ -62,6 +73,7 @@ export function requestUpload(formData) {
             body: formData
         })
         .then(response => {
+            dispatch(endUploadImage());
             if(!response.ok){
                 throw Error(response.status);
             }
@@ -70,5 +82,6 @@ export function requestUpload(formData) {
             console.warn(err);
             alert('抱歉~上傳失敗了！');
         });
+  }
 
 }
