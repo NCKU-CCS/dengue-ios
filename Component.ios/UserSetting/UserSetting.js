@@ -17,7 +17,6 @@ export default class UserSetting extends Component {
             name,
         } = this.props.info;
         const {enter} = this.props;
-
         if(name){
             return (
                 <InfoView

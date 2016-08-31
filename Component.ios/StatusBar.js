@@ -53,7 +53,7 @@ class StatusBar extends Component {
               </TouchableHighlight>
         );
       }
-      if(info.name !== undefined){
+      if(info.name !== ''){
         Logout = (
           <TouchableHighlight
             underlayColor = {CONSTANTS.mainColor}
