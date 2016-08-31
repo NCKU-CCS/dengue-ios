@@ -26,6 +26,9 @@ class SignupView extends Component {
     //TODO log redux
     // const { dispatch } = this.props;
     //dispatch(requestSignup(name, phone, password));
+    if(phone == '' || password == '' || name == '') {
+      return alert('有未填資訊唷！');
+    }
     let formData = new FormData();
     formData.append('name', name);
     formData.append('phone', phone);

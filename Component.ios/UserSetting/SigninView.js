@@ -22,6 +22,10 @@ class SigninView extends Component {
   signin() {
     const {phone, password} = this.state;
     const {toTop, dispatch} = this.props;
+    if(phone == '' || password == '') {
+      return alert('有未填資訊唷！');
+    }
+
     dispatch(requestLogin(phone, password)).then(() => toTop());
   }
   render() {
