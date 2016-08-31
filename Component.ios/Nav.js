@@ -54,7 +54,10 @@ class Nav extends Component {
           enter = {this.enter}
           back = {this.back}
             />
-          <PopImage />
+            <PopImage
+              id = {status.id}
+              back = {this.back}
+            />
       </View>
     );
   }

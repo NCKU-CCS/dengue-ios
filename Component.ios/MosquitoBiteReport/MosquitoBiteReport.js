@@ -84,7 +84,7 @@ class MosquitoBiteReport extends Component {
       formData.append('lat', lat);
       formData.append('lng', lng);
       dispatch(requestMosquitoBite(formData))
-        .then(() => dispatch(popImage()));
+      .then(() => dispatch(popImage()));
     }
 
   }

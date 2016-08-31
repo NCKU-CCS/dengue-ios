@@ -53,6 +53,7 @@ export function timeStamp(timestamp) {
 export function loadBreedingSourceList(status) {
   return dispatch =>{
     dispatch(selectStatus(status));
+    status = status === '已處理' ? status + ',非孳生源': status;
     return storage.load({
       key: 'breedingSourceList',
       id: status,
@@ -70,9 +71,10 @@ export function loadBreedingSourceList(status) {
       });
   }
 }
-export function requestBreedingSourceListNumber(id) {
+export function requestBreedingSourceListNumber(status) {
+  status = status === '已處理' ? status + ',非孳生源': status;
   return dispatch =>
-    fetch(`${APIDomain}/breeding_source/total/?database=tainan&status=${id}`)
+    fetch(`${APIDomain}/breeding_source/total/?database=tainan&status=${status}`)
       .then(response => {
         if(!response.ok) throw Error(response.statusText);
         return response.json();
@@ -83,7 +85,8 @@ export function requestBreedingSourceListNumber(id) {
       .catch(error => console.warn(error));
 }
 
-export function requestBreedingSourceList(id, timestamp) {
+export function requestBreedingSourceList(status, timestamp) {
+  status = status === '已處理' ? status + ',非孳生源': status;
   timestamp = timestamp === '' ? '' : `&before_timestamp=${timestamp}`;
   let actionFunction;
   if (timestamp === '') {
@@ -94,16 +97,20 @@ export function requestBreedingSourceList(id, timestamp) {
     timestamp = `&before_timestamp=${timestamp}`;
   }
   return dispatch =>
-    fetch(`${APIDomain}/breeding_source/get/?database=tainan&status=${id}${timestamp}`)
+    fetch(`${APIDomain}/breeding_source/get/?database=tainan&status=${status}${timestamp}`)
       .then(response => {
         if(!response.ok) throw new Error("requestBreedingSourceList");
         return response.json();
       })
       .then(responseData => {
         const dataLength = responseData.length;
-        if(dataLength !== 0) dispatch(timeStamp(responseData[dataLength - 1].timestamp));
+        if(dataLength !== 0) {
+          dispatch(timeStamp(responseData[dataLength - 1].timestamp));
+        }
         dispatch(actionFunction(responseData));
-        saveBreedingSourceList(id, responseData);
+        if(timestamp === '') {
+          saveBreedingSourceList(status, responseData);
+        }
       })
       .catch(err => {
         console.error(err);

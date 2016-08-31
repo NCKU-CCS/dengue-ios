@@ -19,8 +19,8 @@ export function breedingSourceList(state = initState, action) {
     });
   switch(action.type) {
     case 'BREEDINGSOURCELIST':
-      data = responseData;
-      dataSourse = dataSource.cloneWithRows(data);
+      data = [...responseData];
+      dataSource = dataSource.cloneWithRows(data);
       return {
         ...state,
         data,

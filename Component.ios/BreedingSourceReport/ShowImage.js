@@ -168,7 +168,6 @@ class ShowImage extends Component {
         dispatch(requestUpload(formData))
           .then(() => {
             dispatch(popImage());
-            back();
           });
     }
 

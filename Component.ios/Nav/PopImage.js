@@ -2,8 +2,9 @@ import React, {
   Component,
   Animated,
   View,
+  Text,
   TouchableWithoutFeedback,
-
+  Image,
 } from 'react-native';
 
 import CONSTANTS from '../Global.js';
@@ -52,33 +53,35 @@ class PopImage extends Component {
       require('../../img/popImage3.png'),
     ],
     { imageIndex, top } = this.state,
-    { dispatch } = this.props;
+    { dispatch, back, id } = this.props;
     return (
-
           <Animated.View
             style = {{
               width: CONSTANTS.screenWidth,
               height: CONSTANTS.screenHeihgt,
-              backgroundColor: CONSTANTS.backgroundColor,
               position: 'absolute',
               top: top
             }}>
           <TouchableWithoutFeedback
-            onPress={() => dispatch(dropImage())}
+          onPress={() => {
+            dispatch(dropImage())
+            if(id === 'showImage') back();
+          }}
             style = {{
             }}
             >
-          <Animated.Image
+            <Image
             source = {arr[imageIndex]}
             style = {{
               width: CONSTANTS.screenWidth - 100,
               height: CONSTANTS.screenHeight,
+              opacity:1,
               marginLeft: 50,
               resizeMode: 'contain',
             }}
             >
-            </Animated.Image>
-          </TouchableWithoutFeedback>
+            </Image>
+            </TouchableWithoutFeedback>
           </Animated.View>
     )
   }

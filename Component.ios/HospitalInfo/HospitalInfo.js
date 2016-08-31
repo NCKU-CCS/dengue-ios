@@ -43,7 +43,6 @@ class HospitalInfo extends Component {
       this.props.dispatch(changeType(newType));
     }
     onRefresh(){
-      alert('test');
       const { dispatch } = this.props;
       dispatch(refreshStart());
       navigator.geolocation.getCurrentPosition(

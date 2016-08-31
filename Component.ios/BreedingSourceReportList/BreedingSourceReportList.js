@@ -26,7 +26,6 @@ class BreedingSourceReportList extends Component {
   componentDidMount(){
     let { status } = this.props.breedingSourceList;
     const { dispatch } = this.props;
-    status = status === '已處理' ? status + ',非孳生源': status;
     dispatch(requestBreedingSourceListNumber(status))
       .then(() => dispatch(loadBreedingSourceList(status)));
 
@@ -51,10 +50,9 @@ class BreedingSourceReportList extends Component {
   }
   onEndReached() {
     let { status, timestamp } = this.props.breedingSourceList;
-    status = status === '已處理' ? status + ',非孳生源': status;
     const { dispatch } = this.props;
     dispatch(requestBreedingSourceListNumber(status))
-      .then(() => dispatch(requestBreedingSourceList(status, timestamp)));
+    .then(() => dispatch(requestBreedingSourceList(status, timestamp)));
   }
   render() {
     if (!this.props.breedingSourceList.loaded) {

@@ -45,9 +45,9 @@ export function endUploadImage() {
   }
 }
 export function requestAddress(lat, lng) {
-  return dispatch =>
+  return dispatch => {
     dispatch(geoLocation(lat, lng));
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&result_type=street_address&language=zh-TW&key=AIzaSyBKewv2_WjbQe8kW46Ld525jQ299gwKnIA`)
+    return fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&result_type=street_address&language=zh-TW&key=AIzaSyBKewv2_WjbQe8kW46Ld525jQ299gwKnIA`)
       .then(response => {
         if(!response.ok){
           throw Error('turn address failed');
@@ -60,6 +60,7 @@ export function requestAddress(lat, lng) {
       .catch(err => {
         console.warn(err);
       });
+  }
 }
 export function requestUpload(formData) {
   return dispatch => {
@@ -80,7 +81,7 @@ export function requestUpload(formData) {
         })
         .catch(err => {
             console.warn(err);
-            alert('抱歉~上傳失敗了！');
+            alert('抱歉,上傳失敗了！');
         });
   }
 

@@ -83,7 +83,7 @@ export default class BreedingListView extends Component {
                     scrollRenderAheadDistance = {50}
                     renderRow = {this.renderEachSource}
                     style = {styles.listView}
-                    onEndReachedThreshold = {0}
+                    onEndReachedThreshold = {1000}
                     onEndReached = {onEndReached}
 
                     />

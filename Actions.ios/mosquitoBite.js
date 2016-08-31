@@ -34,7 +34,7 @@ export function requestMosquitoBite(formData) {
         }
       })
       .catch(err => {
-        console.warn(err);
+        //console.warn(err);
         alert('回報失敗了！');
       });
   }
