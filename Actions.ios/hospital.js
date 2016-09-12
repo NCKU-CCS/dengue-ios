@@ -3,7 +3,7 @@ const saveHospitalInfo = responseData =>
   storage.save({
     key: 'hospitalInfo',
     rawData: responseData,
-    expires: 1000 * 3600
+    expires: 1000 * 60
   });
 
 export function hospitalInfo(responseData) {

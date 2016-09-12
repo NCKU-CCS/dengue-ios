@@ -13,7 +13,7 @@ export default class BreedingSourceReportList extends Component {
       lng: 120.22,
     }
   }
-  componentＷillMount() {
+  componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         let lat = position.coords.latitude;
