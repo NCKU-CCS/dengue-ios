@@ -50,7 +50,7 @@ class MosquitoBiteReport extends Component {
           onPress={this.send}
           >
 
-          {this.renderButton()}
+        <Text style={styles.buttonText}>報告！這裡有蚊子</Text>
           </TouchableHighlight>
 
         </ScrollView>
@@ -65,7 +65,7 @@ class MosquitoBiteReport extends Component {
         </ActivityIndicatorIOS>
       );
     }
-    else {
+     else {
       return (
         <Text style={styles.buttonText}>報告！這裡有蚊子</Text>
       );
@@ -73,16 +73,17 @@ class MosquitoBiteReport extends Component {
   }
   send() {
 
-    const { lat, lng } = this.props.mosquitoBite,
+     const { lat, lng } = this.props.mosquitoBite,
       {toTop, dispatch } = this.props;
     if(lat === '' || lat === ''){
       AlertIOS.alert("未開啟定位服務");
     }
     else{
-      let formData = new FormData();
-      formData.append('database', 'tainan');
-      formData.append('lat', lat);
-      formData.append('lng', lng);
+    let formData = new FormData();
+    formData.append('database', 'tainan');
+    formData.append('lat', lat);
+    formData.append('lng', lng);
+
       dispatch(requestMosquitoBite(formData))
       .then(() => dispatch(popImage()));
     }
