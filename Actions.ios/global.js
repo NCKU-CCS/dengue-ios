@@ -1,8 +1,10 @@
 import DeviceInfo from 'react-native-device-info';
 import Storage from 'react-native-storage';
-export const APIDomain = DeviceInfo.getModel() === 'Simulator'
+export let APIDomain = DeviceInfo.getModel() === 'Simulator'
   ? 'http://140.116.247.113:11401'
   : 'http://api.denguefever.tw';
+// NOTICE ncku server shut down so use production server a while
+APIDomain = 'http://api.denguefever.tw';
 export const storage = new Storage({
   size: 1000,
   defaultExpires: null,

@@ -11,6 +11,9 @@ import React, {
 import CONSTANTS from '../Global.js';
 import { requestSignup } from '../../Actions.ios/index.js';
 import { connect } from 'react-redux';
+import Button from '../Common/Button.js';
+import FBLink from '../Common/FBLink.js';
+import WebLink from '../Common/WebLink.js';
 class SignupView extends Component {
   constructor(props) {
     super(props);
@@ -43,101 +46,88 @@ class SignupView extends Component {
         <Image
           source = {require('../../img/people.png')}
           style = {styles.image}
-          >
-          </Image>
-          <View style = {styles.textInputView}>
-            <Text style = {styles.label}>
-              姓名
-            </Text>
-            <TextInput
-              style = {styles.textInput}
-              onChangeText = {(text) => this.setState({name: text})}
-              value = {this.state.text}
-              keyboardType = 'default'
-              selectTextOnFocus = {true}
-              selectionColor = {CONSTANTS.mainColor}
-              autoCorrect = {false}
-              ref = 'textinput1'
-              onFocus = {() => {
-                this.refs.textinput1.measure((x,y,width,height,px,py) => {
-
+        />
+        <View style = {styles.textInputView}>
+          <Text style = {styles.label}>
+            姓名
+          </Text>
+          <TextInput
+            style = {styles.textInput}
+            onChangeText = {(text) => this.setState({name: text})}
+            value = {this.state.text}
+            keyboardType = 'default'
+            selectTextOnFocus = {true}
+            autoCorrect = {false}
+            ref = 'textinput1'
+            onFocus = {() => {
+              this.refs.textinput1.measure((x,y,width,height,px,py) => {
                   if(py > CONSTANTS.screenHeight / 2){
                     this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
                   }
                 });
               }}
-              >
-              </TextInput>
-            </View>
-            <View style = {styles.textInputView}>
-              <Text style = {styles.label}>
-                電話
-              </Text>
-              <TextInput
-                style = {styles.textInput}
-                onChangeText = {(text) => this.setState({phone: text})}
-                value = {this.state.text}
-                keyboardType = 'numeric'
-                selectTextOnFocus = {true}
-                selectionColor = {CONSTANTS.mainColor}
-                autoCorrect = {false}
-                ref = 'textinput2'
-                onFocus = {() => {
-                  this.refs.textinput2.measure((x,y,width,height,px,py) => {
+          />
+        </View>
+        <View style = {styles.textInputView}>
+          <Text style = {styles.label}>
+            電話
+          </Text>
+          <TextInput
+            style = {styles.textInput}
+            onChangeText = {(text) => this.setState({phone: text})}
+            value = {this.state.text}
+            keyboardType = 'numeric'
+            selectTextOnFocus = {true}
+            autoCorrect = {false}
+            ref = 'textinput2'
+            onFocus = {() => {
+              this.refs.textinput2.measure((x,y,width,height,px,py) => {
 
-                    if(py > CONSTANTS.screenHeight / 2){
-                      this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
-                    }
-                  });
-                }}
-                >
-                </TextInput>
-              </View>
-              <View style = {styles.textInputView}>
-                <Text style = {styles.label}>
-                  密碼
-                </Text>
-                <TextInput
-                  style = {styles.textInput}
-                  onChangeText = {(text) => this.setState({password: text})}
-                  value = {this.state.text}
-                  secureTextEntry = {true}
-                  selectionColor = {CONSTANTS.mainColor}
-                  autoCorrect = {false}
-                  ref = 'textinput3'
-                  onFocus = {() => {
-                    this.refs.textinput3.measure((x,y,width,height,px,py) => {
+                if(py > CONSTANTS.screenHeight / 2){
+                  this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                }
+              });
+            }}
+          />
+        </View>
+        <View style = {styles.textInputView}>
+          <Text style = {styles.label}>
+            密碼
+          </Text>
+          <TextInput
+            style = {styles.textInput}
+            onChangeText = {(text) => this.setState({password: text})}
+            value = {this.state.text}
+            secureTextEntry = {true}
+            autoCorrect = {false}
+            ref = 'textinput3'
+            onFocus = {() => {
+              this.refs.textinput3.measure((x,y,width,height,px,py) => {
 
-                      if(py > CONSTANTS.screenHeight / 2){
-                        this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
-                      }
-                    });
-                  }}
-                  >
-                  </TextInput>
-                </View>
-                <TouchableHighlight
-                  onPress = {this.signup}
-                  style = {styles.signup}
-                  underlayColor = {CONSTANTS.backgroundColor}
-                  >
-                    <Text style = {styles.signupText}>
-                      註冊
-                    </Text>
-                  </TouchableHighlight>
-                  <Text style = {styles.psText}>
-                    已經註冊了？
-                  </Text>
-                  <TouchableHighlight
-                    style = {styles.login}
-                    onPress = {() => {enter('signinView', "個人資訊");}}
-                    underlayColor = {CONSTANTS.backgroundColor}
-                    >
-                      <Text style = {styles.loginText}>
-                        登入
-                      </Text>
-                    </TouchableHighlight>
-                  </ScrollView>
+                if(py > CONSTANTS.screenHeight / 2){
+                  this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                }
+              });
+            }}
+          />
+        </View>
+        <Button onPress={this.signup} buttonText="註冊"/>
+        <Text style = {styles.psText}>
+          ———  已經註冊了?  ———
+        </Text>
+        <TouchableHighlight
+          style = {styles.login}
+          onPress = {() => {enter('signinView', "個人資訊");}}
+          underlayColor = {CONSTANTS.backgroundColor}
+        >
+          <Text style = {styles.loginText}>
+            登入
+          </Text>
+        </TouchableHighlight>
+        <FBLink />
+        <WebLink />
+        <View style={styles.footer}/>
+      </ScrollView>
     );
   }
 }
@@ -148,8 +138,8 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: 30,
-    height: 150,
-    width: 200,
+    height: 100,
+    width: 100,
     alignSelf: 'center',
     resizeMode: 'contain',
   },
@@ -169,8 +159,6 @@ const styles = StyleSheet.create({
 
     height: 30,
     width:200,
-    marginTop: 10,
-    marginBottom: 5,
     alignSelf: 'center',
   },
   hundredWidth: {
@@ -196,17 +184,20 @@ const styles = StyleSheet.create({
     color: '#444',
   },
   psText: {
-    marginTop:30,
+    marginVertical: 10,
     color:"#777",
     alignSelf: 'center',
   },
   login: {
     alignSelf: 'center',
-    marginBottom: 30,
+    marginBottom: 20,
   },
   loginText: {
     color:"#00ace6",
     fontSize: 20,
+  },
+  footer: {
+    marginBottom: 50,
   }
 
 

@@ -12,6 +12,8 @@ import React, {
 import CONSTANTS from '../Global.js';
 import { connect } from 'react-redux';
 import { requestLogin } from '../../Actions.ios/index.js';
+import Button from '../Common/Button.js';
+
 class SigninView extends Component {
   constructor(props) {
     super(props);
@@ -83,16 +85,9 @@ class SigninView extends Component {
                 >
                 </TextInput>
               </View>
-              <TouchableHighlight
-                onPress = {this.signin}
-                style = {styles.signin}
-                underlayColor = {CONSTANTS.backgroundColor}
-                >
-                  <Text style = {styles.signinText}>
-                    登入
-                  </Text>
-                </TouchableHighlight>
-
+              <Button onPress={this.signin}
+                buttonText="登入"
+              />
               </ScrollView>
     );
   }

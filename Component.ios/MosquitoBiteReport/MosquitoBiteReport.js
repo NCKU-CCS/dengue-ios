@@ -15,6 +15,7 @@ import CONSTANTS from '../Global.js';
 import { connect } from 'react-redux';
 import { geoLocation, requestMosquitoBite,
   startUploadBite, endUploadBite, popImage } from '../../Actions.ios/index.js';
+import Button from '../Common/Button.js';
 class MosquitoBiteReport extends Component {
 
   constructor(props) {
@@ -44,14 +45,9 @@ class MosquitoBiteReport extends Component {
         </Text>
         <Image style={styles.image} source = {require('../../img/mosquito.png')}>
         </Image>
-        <TouchableHighlight
-          style={styles.button}
-          underlayColor="#eee"
-          onPress={this.send}
-          >
-
-        <Text style={styles.buttonText}>報告！這裡有蚊子</Text>
-          </TouchableHighlight>
+        <Button onPress={this.send}
+          buttonText="報告！這裡有蚊子"
+        />
 
         </ScrollView>
     );

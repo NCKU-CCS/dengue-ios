@@ -1,14 +1,13 @@
 import React, {
-    Component,
-    View,
-    Text,
-    StyleSheet,
-    Image,
-    TouchableHighlight
+  Component, View, Text, ScrollView,
+  StyleSheet, Image, TouchableHighlight
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import { connect } from 'react-redux';
 import { requestLogout } from '../../Actions.ios/index.js';
+import Button from '../Common/Button.js';
+import FBLink from '../Common/FBLink.js';
+import WebLink from '../Common/WebLink.js';
 class InfoView extends Component {
 
     constructor(props) {
@@ -28,7 +27,7 @@ class InfoView extends Component {
 
         } = this.props;
         return (
-            <View style = {styles.container}>
+            <ScrollView>
                 <Image
                     source = {require('../../img/people.png')}
                     style = {styles.image}
@@ -44,15 +43,15 @@ class InfoView extends Component {
                     <Text style = {styles.text}>
                         舉報蚊子叮咬：{bites_count}
                     </Text>
-                </View>
-                <TouchableHighlight style = {styles.button}
-                onPress = {this.signout}
-                >
-                    <Text>
-                        登出
-                    </Text>
-                </TouchableHighlight>
-            </View>
+                  </View>
+                  <View style={styles.buttons}>
+                    <Button onPress={this.signout}
+                      buttonText="登出"
+                    />
+                    <FBLink />
+                    <WebLink />
+                  </View>
+            </ScrollView>
         );
     }
 }
@@ -64,12 +63,23 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 30,
     },
+    image: {
+      alignSelf: 'center',
+      width: 100,
+      height: 100,
+      resizeMode: 'contain',
+      marginTop: 30,
+    },
     texts: {
-
+      alignSelf: 'center',
+      marginTop: 15,
     },
     text: {
         fontSize: 25,
-        marginTop: 30,
+        marginTop: 15,
+    },
+    buttons: {
+      marginTop: 15,
     },
     button: {
         marginTop: 30,
@@ -77,8 +87,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 25,
         backgroundColor: CONSTANTS.backgroundColor,
         borderRadius :3,
-        borderColor: CONSTANTS.mainColor,
-        borderWidth:1,
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
