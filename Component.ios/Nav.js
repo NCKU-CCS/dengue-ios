@@ -45,8 +45,8 @@ class Nav extends Component {
                 enter = {this.enter}
                 back = {this.back}
                 toTop = {this.toTop}
-                  />
-                  }
+              />
+            }
           />
         <TabBar
           info = {login.info}
