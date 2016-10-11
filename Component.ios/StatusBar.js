@@ -7,7 +7,7 @@ import React,{
 } from 'react-native';
 import CONSTANTS from './Global.js';
 import { connect } from 'react-redux';
-import { requestLogout } from '../Actions.ios/index.js';
+import { requestQuickLogin } from '../Actions.ios/index.js';
 
 class StatusBar extends Component {
   constructor(props) {
@@ -35,7 +35,7 @@ class StatusBar extends Component {
     });
   }
   render() {
-    const { dispatch, info, title } = this.props;
+    const { dispatch, login, title } = this.props;
     let subTitle = undefined;
     if(this.state.statusBarDisplay){
       let Back = <View style = {styles.space} />,
@@ -53,7 +53,8 @@ class StatusBar extends Component {
               </TouchableHighlight>
         );
       }
-      if(info.name !== ''){
+      // not quicl login
+      if(login.quick !== true){
         Logout = (
           <TouchableHighlight
             underlayColor = {CONSTANTS.mainColor}
@@ -90,13 +91,13 @@ class StatusBar extends Component {
     }
   }
   logout() {
-    this.props.dispatch(requestLogout())
+    this.props.dispatch(requestQuickLogin())
       .then(this.props.toTop);
   }
 }
 function select(state) {
   return {
-
+    login: state.login,
   };
 }
 export default connect(select)(StatusBar);

@@ -6,8 +6,8 @@ import React, {
 import CONSTANTS from '../Global.js';
 import Tab from './Tab.js';
 //import Icon from 'react-native-vector-icons/Ionicons';
-
-export default class TabBar extends Component {
+import { connect } from 'react-redux';
+class TabBar extends Component {
     constructor(props){
         super(props);
 
@@ -29,7 +29,8 @@ export default class TabBar extends Component {
             '個人資訊'
 
         ];
-        if(this.props.info.identity === '里長') {
+      // use is logined
+        if(this.props.login.quick === false) {
             menu = [
                 "hotZoneInfo",
                 "hospitalInfo",
@@ -71,6 +72,12 @@ export default class TabBar extends Component {
     }
 
 }
+function select(state) {
+  return {
+    login: state.login
+  };
+}
+export default connect(select)(TabBar);
 var styles = StyleSheet.create({
     tabbar: {
         height:60,

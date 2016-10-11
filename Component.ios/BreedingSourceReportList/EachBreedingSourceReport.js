@@ -23,7 +23,7 @@ class EachBreedingSourceReport extends Component {
         formData.append('database','tainan');
         formData.append('source_id', source.source_id);
         formData.append('status', changeStatus);
-        dispatch(requestUpdateStatus(status, formData));
+      //dispatch(requestUpdateStatus(status, formData));
     }
     titleImage(type) {
         switch (type) {
@@ -42,7 +42,8 @@ class EachBreedingSourceReport extends Component {
             source,
             Done,
             Not,
-            WaitDone,
+          WaitDone,
+          selectedStatus
         } = this.props;
         return(
             <View style={styles.eachList}>
@@ -73,51 +74,37 @@ class EachBreedingSourceReport extends Component {
                     </Image>
                 </View>
                 <View style={styles.buttons}>
-                    <TouchableHighlight
-                        underlayColor = '#fff'
-                        style = {styles.buttonTouch}
-                        onPress={()=>{this.updateStatus(source,'已處理');}}
-                        >
+                        <View style={styles.button}>
+                            <Text style={[styles.text, selectedStatus === '待審核' ? styles.selectedText : null]}>
+                                待審核
+                            </Text>
+                        </View>
                         <View
                             style={styles.button}
 
                         >
                             <Image style = {styles.icon} source = {Done} />
-                            <Text style = {styles.text}>
-                                已處理
+                            <Text style = {[styles.text, selectedStatus === '已通過' ? styles.selectedText : null]}>
+                                已通過
                             </Text>
                         </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        underlayColor = '#fff'
-                        style = {styles.buttonTouch}
-                        onPress={()=>{this.updateStatus(source,'通報處理');}}
-                        >
-                        <View style={styles.button}>
-                            <Image style = {styles.icon} source = {WaitDone} />
-                            <Text style={styles.text}>
-                                通報處理
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        underlayColor = '#fff'
-                        style = {styles.buttonTouch}
-                        onPress={()=>{this.updateStatus(source,'非孳生源');}}
-                        >
                         <View style={styles.button}>
                             <Image style = {styles.icon} source = {Not} />
-                            <Text style={styles.text}>
-                                非孳生源
+                            <Text style={[styles.text, selectedStatus === '未通過' ? styles.selectedText : null]}>
+                                未通過
                             </Text>
                         </View>
-                    </TouchableHighlight>
                 </View>
             </View>
         );
     }
 }
-export default connect()(EachBreedingSourceReport);
+function select(state) {
+  return {
+    selectedStatus: state.breedingSourceList.status
+  }
+}
+export default connect(select)(EachBreedingSourceReport);
 const styles = StyleSheet.create({
     eachList: {
         backgroundColor: '#fff',
@@ -182,10 +169,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth:1,
         borderColor:'#ddd',
-        flexDirection: 'row',
+      flexDirection: 'row',
+      flex:1,
     },
     text: {
         color: '#aaa'
     },
+    selectedText: {
+      color: '#333',
+    }
 
 });

@@ -1,10 +1,10 @@
 import DeviceInfo from 'react-native-device-info';
 import Storage from 'react-native-storage';
 export let APIDomain = DeviceInfo.getModel() === 'Simulator'
-  ? 'https://api-test.denguefever.tw/'
+  ? 'https://api-test.denguefever.tw'
   : 'https://api.denguefever.tw';
 // NOTICE ncku server shut down so use production server a while
-APIDomain = 'http://api.denguefever.tw';
+// APIDomain = 'http://api.denguefever.tw';
 export const storage = new Storage({
   size: 1000,
   defaultExpires: null,
@@ -16,10 +16,16 @@ storage.sync = {
   //方法接受的参数为一整个object，所有参数从object中解构取出
   //这里可以使用promise。或是使用普通回调函数，但需要调用resolve或reject。
   breedingSourceList(params){
-    let { id, resolve, reject, timestamp } = params;
-    id = id === '已處理' ? id + ',非孳生源': id;
-    fetch(`${APIDomain}/breeding_source/get/?database=tainan&status=${id}`)
-      .then(response => response.json())
+    let { id, resolve, reject } = params;
+    fetch(`${APIDomain}/breeding_source/?qualified_status=${id}`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+      .then(response => {
+        if (!response.ok) throw Error('breedingSourcesync');
+        return response.json()
+      })
       .then(responseData => {
         if (responseData) {
           resolve && resolve(responseData);
@@ -47,7 +53,7 @@ storage.sync = {
       position => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
-        fetch(`${APIDomain}/hospital/nearby/?database=tainan&lng=${lon}&lat=${lat}`)
+        fetch(`${APIDomain}/hospital/nearby/?lng=${lon}&lat=${lat}`)
           .then(response => response.json())
           .then(responseData => {
             if(responseData){

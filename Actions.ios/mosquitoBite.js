@@ -16,16 +16,16 @@ export function endUploadBite() {
     type: 'UPLOADED',
   }
 }
-export function requestMosquitoBite(formData) {
+export function requestMosquitoBite(data, token) {
   return dispatch =>{
     dispatch(startUploadBite());
-    return fetch(`${APIDomain}/bite/insert/`, {
+    return fetch(`${APIDomain}/bite/`, {
       method: 'POST',
       headers: {
-        'Accept': 'multipart/form-data',
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`
       },
-      body: formData
+      body: JSON.stringify(data)
     })
       .then(response => {
         dispatch(endUploadBite());

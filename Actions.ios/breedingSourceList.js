@@ -50,14 +50,15 @@ export function timeStamp(timestamp) {
 
   };
 }
-export function loadBreedingSourceList(status) {
+// status = '待處理'|'已通過'|'未通過'
+export function loadBreedingSourceList(status, token) {
   return dispatch =>{
     dispatch(selectStatus(status));
-    status = status === '已處理' ? status + ',非孳生源': status;
+    //status = status === '已處理' ? status + ',非孳生源': status;
     return storage.load({
       key: 'breedingSourceList',
       id: status,
-      autoSync: true,
+      autoSync: false,
       syncInBackground: true,
 
     })
@@ -67,15 +68,19 @@ export function loadBreedingSourceList(status) {
         dispatch(breedingSourceList(responseData))
       })
       .catch(err =>{
+        dispatch(requestBreedingSourceList(status, '', token));
         console.warn(err);
       });
   }
 }
-export function requestBreedingSourceListNumber(status) {
-  status = status === '已處理' ? status + ',非孳生源': status;
+export function requestBreedingSourceListNumber(status, token) {
   return dispatch =>
-    fetch(`${APIDomain}/breeding_source/total/?database=tainan&status=${status}`)
-      .then(response => {
+    fetch(`${APIDomain}/breeding_source/total/?qualified_status=${status}`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(response => {
         if(!response.ok) throw Error(response.statusText);
         return response.json();
       })
@@ -85,8 +90,7 @@ export function requestBreedingSourceListNumber(status) {
       .catch(error => console.warn(error));
 }
 
-export function requestBreedingSourceList(status, timestamp) {
-  status = status === '已處理' ? status + ',非孳生源': status;
+export function requestBreedingSourceList(status, timestamp, token) {
   timestamp = timestamp === '' ? '' : `&before_timestamp=${timestamp}`;
   let actionFunction;
   if (timestamp === '') {
@@ -97,8 +101,13 @@ export function requestBreedingSourceList(status, timestamp) {
     timestamp = `&before_timestamp=${timestamp}`;
   }
   return dispatch =>
-    fetch(`${APIDomain}/breeding_source/get/?database=tainan&status=${status}${timestamp}`)
-      .then(response => {
+    fetch(`${APIDomain}/breeding_source/?qualified_status=${status}${timestamp}`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(response => {
+      console.log(response);
         if(!response.ok) throw new Error("requestBreedingSourceList");
         return response.json();
       })

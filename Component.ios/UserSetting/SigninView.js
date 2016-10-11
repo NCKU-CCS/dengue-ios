@@ -23,12 +23,12 @@ class SigninView extends Component {
 
   signin() {
     const {phone, password} = this.state;
-    const {toTop, dispatch} = this.props;
+    const {toTop, dispatch, token} = this.props;
     if(phone == '' || password == '') {
       return alert('有未填資訊唷！');
     }
 
-    dispatch(requestLogin(phone, password)).then(() => toTop());
+    dispatch(requestLogin(phone, password, token)).then(() => toTop());
   }
   render() {
     return(
@@ -92,7 +92,12 @@ class SigninView extends Component {
     );
   }
 }
-export default connect()(SigninView);
+function select(state) {
+  return {
+    token: state.login.info.token
+  };
+}
+export default connect(select)(SigninView);
 const styles = StyleSheet.create({
   container: {
     backgroundColor: CONSTANTS.backgroundColor,

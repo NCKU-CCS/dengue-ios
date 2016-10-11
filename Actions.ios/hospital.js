@@ -61,9 +61,13 @@ export function loadHospitalInfo() {
         console.error(err);
       });
 }
-export function requestHospitalInfo(lat, lng) {
+export function requestHospitalInfo(lat, lng, token) {
   return dispatch =>
-    fetch(`${APIDomain}/hospital/nearby/?database=tainan&lng=${lng}&lat=${lat}`)
+    fetch(`${APIDomain}/hospital/nearby/?lng=${lng}&lat=${lat}`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
       .then(response => {
         if(!response.ok){
           throw Error(response.statusText);

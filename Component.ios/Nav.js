@@ -21,7 +21,7 @@ class Nav extends Component {
     this.toTop = this.toTop.bind(this);
   }
   render() {
-    const { status, login } = this.props;
+    const { status } = this.props;
     return (
       <View style = {styles.container}>
         <StatusBar
@@ -29,7 +29,6 @@ class Nav extends Component {
           id = {status.id}
           back = {this.back}
           toTop = {this.toTop}
-          info = {login.info}
             />
           <Navigator
             ref="nav"
@@ -37,8 +36,6 @@ class Nav extends Component {
             renderScene={
               route =>
               <ContextComponent
-                info = {login.info}
-                logined = {login.logined}
                 id = {route.id}
                 data = {route.data}
                 title = {status.title}
@@ -49,7 +46,6 @@ class Nav extends Component {
             }
           />
         <TabBar
-          info = {login.info}
           title = {status.title}
           enter = {this.enter}
           back = {this.back}
@@ -98,7 +94,6 @@ class Nav extends Component {
 function select(state) {
   return {
     status: state.status,
-    login: state.login,
 
   };
 }

@@ -6,26 +6,25 @@ login reducers
 
 
 const initLogin = {
-  logined: false,
+  quick: true,
   info: {
-    identity: '一般使用者',
+    token: '',
+    user_uuid: '',
   },
   swiper: 0,
-}
+};
 
 export function login(state = initLogin, action) {
   switch (action.type) {
     case 'LOGIN':
       return {
-        logined: true,
+        quick: action.quick,
         info: action.info,
         swiper: -1,
       }
-    case 'LOGOUT':
-      return Object.assign({}, initLogin, {swiper: -1});
     case 'QUICKLOGIN':
       return {
-        logined: true,
+        quick: true,
         info: action.info,
         swiper: -1,
       }

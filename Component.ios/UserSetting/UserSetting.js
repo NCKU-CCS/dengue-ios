@@ -4,20 +4,15 @@ import React, {
 import InfoView from './InfoView.js';
 import SignupView from './SignupView.js';
 import CONSTANTS from '../Global.js';
-
-export default class UserSetting extends Component {
+import { connect } from 'react-redux';
+class UserSetting extends Component {
     constructor(props) {
         super(props);
     }
     render() {
-        const {
-            score,
-            bites_count,
-            breeding_source_count,
-            name,
-        } = this.props.info;
-        const {enter} = this.props;
-        if(name){
+        const {enter, login} = this.props;
+      if(!login.quick){
+        return null;// if logined no this page
             return (
                 <InfoView
                     score = {score}
@@ -34,3 +29,9 @@ export default class UserSetting extends Component {
     }
 
 }
+function select(state) {
+  return {
+    login: state.login
+  }
+}
+export default connect(select)(UserSetting);

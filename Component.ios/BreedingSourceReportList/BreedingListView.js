@@ -43,29 +43,29 @@ export default class BreedingListView extends Component {
                     <View style = {styles.statusButtons}>
                         <TouchableHighlight
                             underlayColor = "#ccc"
-                            style = {[styles.statusButton, this.statusFocus('未處理')]}
-                            onPress = {() => {changeSource('未處理');}}
+                            style = {[styles.statusButton, this.statusFocus('待審核')]}
+                            onPress = {() => {changeSource('待審核');}}
                             >
                             <Text style={styles.statusText}>
-                                未處理
+                                待審核
                             </Text>
                         </TouchableHighlight>
                         <TouchableHighlight
                             underlayColor = "#ccc"
-                            style = {[styles.statusButton, styles.center, this.statusFocus('通報處理')]}
-                            onPress = {() => {changeSource('通報處理');}}
+                            style = {[styles.statusButton, styles.center, this.statusFocus('已通過')]}
+                            onPress = {() => {changeSource('已通過');}}
                             >
                             <Text style={styles.statusText}>
-                                通報處理
+                                已通過
                             </Text>
                         </TouchableHighlight>
                         <TouchableHighlight
                             underlayColor = "#ccc"
-                            style = {[styles.statusButton, this.statusFocus('已處理')]}
-                            onPress = {() => {changeSource('已處理');}}
+                            style = {[styles.statusButton, this.statusFocus('未通過')]}
+                            onPress = {() => {changeSource('未通過');}}
                             >
                             <Text style={styles.statusText}>
-                                已處理
+                                未通過
                             </Text>
                         </TouchableHighlight>
                     </View>
@@ -92,13 +92,13 @@ export default class BreedingListView extends Component {
         );
     }
     renderEachSource(source) {
-        const WaitDone = source.status === '通報處理'?
+        const WaitDone = source.qualified_status === '待審核'?
         require('../../img/check-1.png') :
         require('../../img/check-0.png');
-        const Done = source.status === '已處理'?
+        const Done = source.qualified_status === '已通過'?
         require('../../img/check-1.png') :
         require('../../img/check-0.png');
-        const Not = source.status === '非孳生源'?
+        const Not = source.qualified_status === '未通過'?
         require('../../img/cross-1.png') :
         require('../../img/cross-0.png');
         //return null;

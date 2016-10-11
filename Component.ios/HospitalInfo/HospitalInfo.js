@@ -27,12 +27,12 @@ class HospitalInfo extends Component {
       this.props.dispatch(loadHospitalInfo());
     }
     fetchData() {
-      const { dispatch } = this.props;
+      const { dispatch, token } = this.props;
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 let lat = position.coords.latitude;
                 let lng = position.coords.longitude;
-                dispatch(requestHospitalInfo(lat, lng));
+                dispatch(requestHospitalInfo(lat, lng, token));
             },
             (error) => alert(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
@@ -130,6 +130,7 @@ class HospitalInfo extends Component {
 function select(state) {
   return {
     hospital: state.hospital,
+    token: state.login.info.token,
   }
 }
 export default connect(select)(HospitalInfo);

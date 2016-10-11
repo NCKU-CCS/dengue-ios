@@ -62,14 +62,14 @@ export function requestAddress(lat, lng) {
       });
   }
 }
-export function requestUpload(formData) {
+export function requestUpload(formData, token) {
   return dispatch => {
     dispatch(startUploadImage());
-    return fetch(`${APIDomain}/breeding_source/insert/`, {
+    return fetch(`${APIDomain}/breeding_source/?qualified_status=待處理`, {
             method: 'POST',
             headers: {
-                'Accept': 'multipart/form-data',
-                'Content-Type': 'multipart/form-data',
+              'Content-Type': 'multipart/form-data',
+              Authorization: `Token ${token}`
             },
             body: formData
         })

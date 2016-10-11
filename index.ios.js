@@ -23,7 +23,7 @@ const store = createStore(
   reducer,
   applyMiddleware(
     thunkMiddleware,
-    //loggerMiddleware
+    loggerMiddleware
   )
 );
 export default class Root extends Component {

@@ -70,17 +70,15 @@ class MosquitoBiteReport extends Component {
   send() {
 
      const { lat, lng } = this.props.mosquitoBite,
-      {toTop, dispatch } = this.props;
+      {toTop, dispatch, token } = this.props;
     if(lat === '' || lat === ''){
       AlertIOS.alert("未開啟定位服務");
     }
     else{
-    let formData = new FormData();
-    formData.append('database', 'tainan');
-    formData.append('lat', lat);
-    formData.append('lng', lng);
-
-      dispatch(requestMosquitoBite(formData))
+      const data = {
+        lat, lng
+      }
+      dispatch(requestMosquitoBite(data, token))
       .then(() => dispatch(popImage()));
     }
 
@@ -89,6 +87,7 @@ class MosquitoBiteReport extends Component {
 function select(state) {
   return {
     mosquitoBite: state.mosquitoBite,
+    token: state.login.info.token,
   };
 }
 export default connect(select)(MosquitoBiteReport);

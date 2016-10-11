@@ -15,10 +15,11 @@ export function quickLogin(info) {
     info,
   };
 }
-export function login(info) {
+export function login(info, quick) {
   return {
     type: 'LOGIN',
     info,
+    quick
   };
 }
 export function logout() {
@@ -38,44 +39,45 @@ export function storageLoadLogin() {
       autoSync: false,
       syncInBackground: true
     })
-      .then(responseData => dispatch(getInfo()))
-      .catch(() => dispatch(firstOpen()));
+    .then(responseData => {
+      return dispatch(login(responseData.info, responseData.quick));
+    })
+  //  if there is no login data in storage
+    .catch(() => dispatch(firstOpen()));
 }
 
-export function requestLogin(phone, password) {
+export function requestLogin(phone, password, token) {
   return dispatch => {
-    const formData = new FormData();
-    formData.append('phone', phone);
-    formData.append('password', password);
+    const data = { phone,password };
     return fetch(`${APIDomain}/users/signin/`, {
       method: 'POST',
-      body: formData,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`
+      },
+      body: JSON.stringify(data),
     })
       .then(response => {
         if (!response.ok) throw new Error('requestLogin Error');
-        return fetch(`${APIDomain}/users/info/`);
-      })
-      .then(response => {
-        if(!response.ok) throw new Error('getInfo Error');
         return response.json();
       })
       .then(responseData => {
-        dispatch(login(responseData));
-        saveLoginState(responseData);
+        dispatch(login(responseData, false));
+        saveLoginState({info: responseData, quick: false});
       })
       .catch(err => console.error(err));
   };
 }
 export function requestQuickLogin() {
   return dispatch =>
-    fetch(`${APIDomain}/users/signup/fast/`)
-      .then(response => {
+    fetch(`${APIDomain}/users/fast/`)
+    .then(response => {
         if (!response.ok) throw new Error('requestQuickLogin Error');
         return response.json();
       })
       .then(responseData => {
-        dispatch(quickLogin(responseData));
-        saveLoginState(responseData);
+        dispatch(login(responseData, true));
+        saveLoginState({info: responseData, quick: true});
       })
       .catch(err => console.error(err));
 }
@@ -105,23 +107,26 @@ export function getInfo() {
       })
 
 }
-export function requestSignup(formData) {
+export function requestSignup(formData, token) {
   return dispatch =>
-    fetch(`${APIDomain}/users/signup/`, {
+    fetch(`${APIDomain}/users/`, {
       method: 'POST',
       headers: {
-        'Accept': 'multipart/form-data',
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
       },
-      body: formData
+      body: JSON.stringify(formData)
     })
-      .then((response) => {
+    .then((response) => {
         if(!response.ok){
           throw Error(response.status);
         }
-        return dispatch(getInfo());
+      return response.json();
+      //return dispatch(getInfo());
       })
-      .then(() => {
+    .then(responseData => {
+        dispatch(login(responseData, false));
+        saveLoginState({info: responseData, quick: false});
         alert('註冊成功！') ;
       })
       .catch((error) => {

@@ -149,7 +149,7 @@ class ShowImage extends Component {
     }
     send() {
       const { type, description, lat, lng, address, modifiedAddress } = this.props.breedingSource,
-        { dispatch, uri, back } = this.props;
+        { dispatch, uri, back, token } = this.props;
         fileName = uri.split('/').slice(-1)[0];
         const photo = {
             uri: uri,
@@ -164,8 +164,8 @@ class ShowImage extends Component {
         formData.append('modified_address', modifiedAddress);
         formData.append('source_type', type);
         formData.append('description', description);
-        formData.append('status', '未處理');
-        dispatch(requestUpload(formData))
+        formData.append('qualified_status', '待處理');
+        dispatch(requestUpload(formData, token))
           .then(() => {
             dispatch(popImage());
           });
@@ -175,7 +175,7 @@ class ShowImage extends Component {
 function select(state) {
   return {
     breedingSource: state.breedingSource,
-
+    token: state.login.info.token
   };
 }
 export default connect(select)(ShowImage);

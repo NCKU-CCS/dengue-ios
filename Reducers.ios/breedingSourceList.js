@@ -8,7 +8,7 @@ const initState = {
   timestamp: '',
   sourceNumber: 0,
   loaded: false,
-  status: '未處理',
+  status: '待審核',
   refreshing: false,
 };
 export function breedingSourceList(state = initState, action) {

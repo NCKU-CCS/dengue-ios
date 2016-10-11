@@ -13,6 +13,7 @@ import {
   loadBreedingSourceList,
   breedingrefreshStart,
   breedingrefreshDone,
+  selectStatus,
 } from '../../Actions.ios/index.js';
 import { connect } from 'react-redux';
 class BreedingSourceReportList extends Component {
@@ -25,34 +26,33 @@ class BreedingSourceReportList extends Component {
   }
   componentDidMount(){
     let { status } = this.props.breedingSourceList;
-    const { dispatch } = this.props;
-    dispatch(requestBreedingSourceListNumber(status))
-      .then(() => dispatch(loadBreedingSourceList(status)));
-
+    const { dispatch, token } = this.props;
+    dispatch(requestBreedingSourceListNumber(status, token))
+    .then(() => dispatch(loadBreedingSourceList(status, token)));
     //this.updateData(this.state.status);
   }
   onRefresh(){
-    const { dispatch } = this.props,
+    const { dispatch, token } = this.props,
       { status, timestamp } = this.props.breedingSourceList;
     dispatch(breedingrefreshStart());
 
-    dispatch(requestBreedingSourceListNumber(status))
-      .then(() =>  dispatch(requestBreedingSourceList(status, '')))
+    dispatch(requestBreedingSourceListNumber(status, token))
+      .then(() =>  dispatch(requestBreedingSourceList(status, '', token)))
       .then(() => dispatch(breedingrefreshDone()));
   }
   changeSource(status){
-    const { dispatch } = this.props;
+    const { dispatch, token } = this.props;
     if(status !== this.props.breedingSourceList.status){
-
-      dispatch(requestBreedingSourceListNumber(status))
-        .then(() => dispatch(loadBreedingSourceList(status)));
+      dispatch(selectStatus(status));
+      dispatch(requestBreedingSourceListNumber(status, token))
+        .then(() => dispatch(loadBreedingSourceList(status, token)));
     }
   }
   onEndReached() {
     let { status, timestamp } = this.props.breedingSourceList;
-    const { dispatch } = this.props;
-    dispatch(requestBreedingSourceListNumber(status))
-    .then(() => dispatch(requestBreedingSourceList(status, timestamp)));
+    const { dispatch, token } = this.props;
+    dispatch(requestBreedingSourceListNumber(status, token))
+    .then(() => dispatch(requestBreedingSourceList(status, timestamp, token)));
   }
   render() {
     if (!this.props.breedingSourceList.loaded) {
@@ -98,6 +98,7 @@ class BreedingSourceReportList extends Component {
 function select(state) {
   return {
     breedingSourceList: state.breedingSourceList,
+    token: state.login.info.token
   };
 }
 export default connect(select)(BreedingSourceReportList);

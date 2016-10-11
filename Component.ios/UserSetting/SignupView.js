@@ -26,17 +26,20 @@ class SignupView extends Component {
       password,
       name
     } = this.state;
+    const { user_uuid, token } = this.props.info;
     //TODO log redux
     // const { dispatch } = this.props;
     //dispatch(requestSignup(name, phone, password));
     if(phone == '' || password == '' || name == '') {
       return alert('有未填資訊唷！');
     }
-    let formData = new FormData();
-    formData.append('name', name);
-    formData.append('phone', phone);
-    formData.append('password', password);
-    this.props.dispatch(requestSignup(formData));
+    const data = {
+      name,
+      phone,
+      password,
+      user_uuid
+    }
+    this.props.dispatch(requestSignup(data, token));
   }
 
   render() {
@@ -131,7 +134,12 @@ class SignupView extends Component {
     );
   }
 }
-export default connect()(SignupView);
+function select(state) {
+  return {
+    info: state.login.info
+  };
+}
+export default connect(select)(SignupView);
 const styles = StyleSheet.create({
   container: {
     backgroundColor: CONSTANTS.backgroundColor,
