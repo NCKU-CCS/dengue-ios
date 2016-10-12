@@ -10,7 +10,7 @@ class UserSetting extends Component {
         super(props);
     }
     render() {
-        const {enter, login} = this.props;
+        const {enter, login, toTop} = this.props;
       if(!login.quick){
         return null;// if logined no this page
             return (
@@ -23,7 +23,8 @@ class UserSetting extends Component {
         }
         return (
             <SignupView
-                enter = {enter}
+              enter = {enter}
+              toTop={toTop}
             />
         );
     }

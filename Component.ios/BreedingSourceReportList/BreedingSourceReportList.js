@@ -16,10 +16,10 @@ import {
   selectStatus,
 } from '../../Actions.ios/index.js';
 import { connect } from 'react-redux';
+import Spinner from 'react-native-loading-spinner-overlay';
 class BreedingSourceReportList extends Component {
   constructor(props) {
     super(props);
-    this.renderListView  = this.renderListView.bind(this);
     this.changeSource = this.changeSource.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
     this.onEndReached = this.onEndReached.bind(this);
@@ -55,25 +55,6 @@ class BreedingSourceReportList extends Component {
     .then(() => dispatch(requestBreedingSourceList(status, timestamp, token)));
   }
   render() {
-    if (!this.props.breedingSourceList.loaded) {
-      return this.renderLoadingView();
-    }
-    return this.renderListView();
-
-  }
-
-  renderLoadingView() {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicatorIOS
-          animating={true}
-          style={{height: 80}}
-          size="large"
-        />
-      </View>
-    );
-  }
-  renderListView() {
     const {
       dataSource,
       status,
@@ -81,6 +62,7 @@ class BreedingSourceReportList extends Component {
       refreshing,
     } = this.props.breedingSourceList;
     return(
+      <View  style={styles.container}>
       <BreedingListView
         dataSource = {dataSource}
         sourceNumber = {sourceNumber}
@@ -89,8 +71,11 @@ class BreedingSourceReportList extends Component {
         refreshing = {refreshing}
         onRefresh = {this.onRefresh}
         onEndReached = {this.onEndReached}
-          />
+      />
+      <Spinner visible={!this.props.breedingSourceList.loaded} />
+    </View>
     );
+
   }
 
 }

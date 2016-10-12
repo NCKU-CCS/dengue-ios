@@ -127,7 +127,6 @@ export function requestSignup(formData, token) {
     .then(responseData => {
         dispatch(login(responseData, false));
         saveLoginState({info: responseData, quick: false});
-        alert('註冊成功！') ;
       })
       .catch((error) => {
         console.warn(error);

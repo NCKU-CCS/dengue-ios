@@ -3,7 +3,8 @@ import React,{
   StyleSheet,
   Component,
   Text,
-  TouchableHighlight
+  TouchableHighlight,
+  Alert
 } from 'react-native';
 import CONSTANTS from './Global.js';
 import { connect } from 'react-redux';
@@ -92,7 +93,11 @@ class StatusBar extends Component {
   }
   logout() {
     this.props.dispatch(requestQuickLogin())
-      .then(this.props.toTop);
+      .then(() => {
+        Alert.alert('已登出','即將回到首頁',
+          [{text: 'OK', onPress: this.props.toTop}]
+        );
+      });
   }
 }
 function select(state) {

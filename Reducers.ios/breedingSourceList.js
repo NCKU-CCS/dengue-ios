@@ -42,7 +42,6 @@ export function breedingSourceList(state = initState, action) {
       return {
         ...state,
         sourceNumber: action.number,
-        loaded: true,
         refreshing: false,
       };
     case 'SELECTSTATUS':

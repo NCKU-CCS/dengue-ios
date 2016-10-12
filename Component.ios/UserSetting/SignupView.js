@@ -6,7 +6,8 @@ import React, {
   TouchableHighlight,
   StyleSheet,
   Text,
-  View
+  View,
+  Alert
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import { requestSignup } from '../../Actions.ios/index.js';
@@ -39,7 +40,12 @@ class SignupView extends Component {
       password,
       user_uuid
     }
-    this.props.dispatch(requestSignup(data, token));
+    this.props.dispatch(requestSignup(data, token))
+    .then(() => {
+      Alert.alert('已成功註冊','登入並回到首頁',[{
+        text: 'OK', onPress: this.props.toTop
+      }])
+    });
   }
 
   render() {
