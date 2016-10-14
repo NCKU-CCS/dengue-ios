@@ -117,6 +117,7 @@ export default connect(select)(SigninView);
 const styles = StyleSheet.create({
   container: {
     backgroundColor: CONSTANTS.backgroundColor,
+    paddingTop: 80
   },
   image: {
     marginTop: 30,
