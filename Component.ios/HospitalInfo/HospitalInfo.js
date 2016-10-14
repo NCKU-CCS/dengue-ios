@@ -138,7 +138,7 @@ var styles = StyleSheet.create({
     container: {
         backgroundColor: CONSTANTS.backgroundColor,
         flex:1,
-        paddingTop:30,
+        paddingTop: 80,
         justifyContent:'center',
     },
     topText: {

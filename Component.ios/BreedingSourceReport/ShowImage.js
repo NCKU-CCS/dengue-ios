@@ -159,7 +159,8 @@ export default connect(select)(ShowImage);
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: CONSTANTS.backgroundColor,
+      backgroundColor: CONSTANTS.backgroundColor,
+      paddingTop: 70,
     },
 
     image: {

@@ -40,7 +40,6 @@ class MosquitoBiteReport extends Component {
   render() {
     return (
       <ScrollView style = {styles.container}>
-        <View style={styles.marginTop}></View>
         <Text style={styles.text}>
           你被蚊子叮咬嗎?
         </Text>
@@ -88,6 +87,7 @@ export default connect(select)(MosquitoBiteReport);
 var styles = StyleSheet.create({
   container: {
     backgroundColor: CONSTANTS.backgroundColor,
+    paddingTop: 80,
   },
   image: {
     height: 250,
@@ -98,9 +98,6 @@ var styles = StyleSheet.create({
     marginTop: 15,
   },
 
-  marginTop: {
-    marginTop: 40,
-  },
   text: {
     fontSize: 22,
     alignSelf: 'center',

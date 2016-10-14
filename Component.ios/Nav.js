@@ -2,8 +2,9 @@ import React, {
   Component,
   StyleSheet,
   View,
-  Navigator
-
+  Navigator,
+  Text,
+  TouchableHighlight,
 } from 'react-native';
 import CONSTANTS from './Global.js';
 import { connect } from 'react-redux';
@@ -22,16 +23,10 @@ class Nav extends Component {
     this.toTop = this.toTop.bind(this);
   }
   render() {
-    const { status, isFetching } = this.props;
+    const { status, isFetching, quickLogin } = this.props;
     return (
       <View style = {styles.container}>
-        <StatusBar
-          title = {status.title}
-          id = {status.id}
-          back = {this.back}
-          toTop = {this.toTop}
-            />
-          <Navigator
+        <Navigator
             ref="nav"
             initialRoute = {status}
             renderScene={
@@ -43,6 +38,52 @@ class Nav extends Component {
                 enter = {this.enter}
                 back = {this.back}
                 toTop = {this.toTop}
+              />
+            }
+            navigationBar={
+              <Navigator.NavigationBar
+                routeMapper={{
+                  LeftButton: (route, navigator, index, navState) =>
+                  {
+                    if (['showImage', 'eachHospitalInfo', 'signinView'].indexOf(route.id) !== -1)
+                      return <TouchableHighlight
+                        underlayColor = {CONSTANTS.mainColor}
+                        onPress={this.back}
+                      >
+                        <Text style={styles.text}>
+                          {"〈  返回"}
+                        </Text>
+                      </TouchableHighlight>;
+                    return null;
+                  },
+                  RightButton: (route, navigator, index, navState) =>
+                  {
+                    if (quickLogin !== true)
+                      return <TouchableHighlight
+                        underlayColor = {CONSTANTS.mainColor}
+                        onPress = {this.logout}
+                        >
+                          <Text style={stlyes.text}>
+                            {"登出"}
+                          </Text>
+                        </TouchableHighlight>;
+                  },
+                  Title: (route, navigator, index, navState) =>
+                  {
+                    let subTitle=null;
+                    if(route.title === '環境回報')
+                      subTitle = '請拍積水、髒亂處';
+                    return <View style = {styles.titleView}>
+                      <Text style = {[styles.text,styles.title]}>
+                        {route.title}
+                      </Text>
+                      <Text style = {[styles.text, styles.subTitle]}>
+                        {subTitle}
+                      </Text>
+                    </View>;
+                  },
+                }}
+                style={{backgroundColor: CONSTANTS.mainColor}}
               />
             }
           />
@@ -97,6 +138,7 @@ function select(state) {
   return {
     status: state.status,
     isFetching: state.login.isFetching,
+    quickLogin: state.login.quick,
   };
 }
 export default connect(select)(Nav);
@@ -114,5 +156,18 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     width: CONSTANTS.screenWidth,
     height: CONSTANTS.screenHeight,
+  },
+
+  text: {
+    color: 'white',
+  },
+  titleView: {
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 20,
+  },
+  subTitle: {
+    fontSize: 14,
   },
 });
