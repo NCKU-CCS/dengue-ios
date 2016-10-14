@@ -1,7 +1,7 @@
 import DeviceInfo from 'react-native-device-info';
 import Storage from 'react-native-storage';
 export let APIDomain = DeviceInfo.getModel() === 'Simulator'
-  ? 'https://api-test.denguefever.tw'
+  ? 'https://api.denguefever.tw'
   : 'https://api.denguefever.tw';
 // NOTICE ncku server shut down so use production server a while
 // APIDomain = 'http://api.denguefever.tw';
@@ -33,7 +33,7 @@ storage.sync = {
             key: 'breedingSourceList',
             id:id,
             rawData: responseData,
-            expires: 1000 * 3600 * 24
+            expires: 1000
           });
           // 成功则调用resolve
         }
@@ -61,7 +61,7 @@ storage.sync = {
               storage.save({
                 key: 'hospitalInfo',
                 rawData: responseData,
-                expires:  1000 * 3600,
+                expires:  1000,
               });
             }
             else{

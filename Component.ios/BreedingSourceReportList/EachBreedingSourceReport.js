@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     titleText: {
-        fontSize:30,
+        fontSize:22,
         flex:1,
         fontWeight:'bold',
     },

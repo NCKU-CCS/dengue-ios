@@ -11,6 +11,8 @@ import React, {
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import BlurView from 'react-native-blur';
+import DengueTextInput from '../Common/DengueTextInput';
+import Button from '../Common/Button';
 import {
   selectType,
   modifyAddress,
@@ -21,12 +23,12 @@ import {
 
 } from '../../Actions.ios/index.js';
 import { connect } from 'react-redux';
-
+import Spinner from 'react-native-loading-spinner-overlay';
 class ShowImage extends Component {
     constructor(props) {
         super(props);
         //this.showActionSheet = this.showActionSheet.bind(this);
-        this.renderButton = this.renderButton.bind(this);
+      this.send = this.send.bind(this);
     }
     componentDidMount() {
 
@@ -41,111 +43,81 @@ class ShowImage extends Component {
         );
     }
     render() {
-        const types = ['住家', '戶外'];
+      const types = ['室內', '戶外'];
       const { dispatch, uri }  = this.props,
             { address, modifiedAddress, type, uploading } = this.props.breedingSource;
         return (
             <ScrollView  style={styles.container} ref="scrollView">
-                <Image ref={'img'} style={styles.image} source={{uri}}></Image>
-                <View style={styles.inputs}>
-                    <View style={styles.question}>
-                        <View style={styles.title}>
-                            <Text style={styles.subTitle}>
-                                孳生源類型
+              <Image ref={'img'} style={styles.image} source={{uri}}></Image>
+              <View style={styles.inputs}>
+                  <View style={styles.question}>
+                      <View style={styles.title}>
+                          <Text style={styles.subTitle}>
+                              孳生源類型
+                          </Text>
+                      </View>
+                      <View style={styles.types}>
+                      {
+                        types.map( d =>
+                          <TouchableHighlight key={d}
+                            style={[styles.type, type == d ? styles.click : null]}
+                            underlayColor={CONSTANTS.backgroundColor}
+                            onPress={() => dispatch(selectType(d))}>
+                            <Text style={type == d ? styles.clickText : null}>
+                              {d}
                             </Text>
-                        </View>
-                        <View style={styles.types}>
-                        {
-                          types.map( d =>
-                            <TouchableHighlight key={d}
-                              style={[styles.type, type == d ? styles.click : null]}
-                              underlayColor={CONSTANTS.backgroundColor}
-                              onPress={() => dispatch(selectType(d))}>
-                             <Text style={type == d ? styles.clickText : null}>
-                                {d}
-                              </Text>
-                          </TouchableHighlight>
-                          )
-                        }
+                        </TouchableHighlight>
+                        )
+                      }
 
-                        </View>
+                      </View>
                     </View>
-                    <View style={styles.question}>
-                        <View style={styles.title}>
-                            <Text style={styles.subTitle}>
-                                住址
-                            </Text>
-                        </View>
-                        <View style={styles.answer}>
-                            <TextInput
-                                ref = 'modifiedAddress'
-                                onFocus = {() => {
-                                    this.refs.modifiedAddress.measure((x,y,width,height,px,py) => {
-
-                                        if(py > CONSTANTS.screenHeight / 2){
-                                            this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
-                                        }
-                                    });
-                                }}
-                                placeholder={address}
-                                multiline = {false}
-                                style = {styles.textInput}
-                                onChangeText = {text => dispatch(modifyAddress(text))}
-                                >
-                            </TextInput>
-                        </View>
-                    </View>
-                    <View style = {styles.question}>
-                        <View style={styles.title}>
-                            <Text style={styles.subTitle}>
-                                簡介
-                            </Text>
-                            <Text style={styles.hint}>
-                                ex地點：樓層/地下室/女廁旁
-                            </Text>
-                            <Text style={styles.hint}>
-                                ex物件：藍色水桶/盆栽
-                            </Text>
-                        </View>
-                        <View style={styles.answer}>
-                            <TextInput
-                                ref = 'textinput'
-                                onFocus = {() => {
-                                    this.refs.textinput.measure((x,y,width,height,px,py) => {
-
-                                        if(py > CONSTANTS.screenHeight / 2){
-                                            this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
-                                        }
-                                    });
-                                }}
-                                multiline = {false}
-                                style = {styles.textInput}
-                                onChangeText = {text => dispatch(changeDescription(text))}
-                                >
-                            </TextInput>
-                        </View>
-                    </View>
-                    {this.renderButton()}
+                  <View style={styles.input}>
+                  <DengueTextInput
+                    label="住址"
+                    scrollView={this.refs.scrollView}
+                    placeholder={address}
+                    keyboardType="default"
+                    defaultValue={address}
+                    onChangeText = {text => dispatch(modifyAddress(text))}
+                    onFocus = {textInput => {
+                      textInput.measure((x,y,width,height,px,py) => {
+                          if (py > CONSTANTS.screenHeight / 2)
+                            this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                      });
+                    }}
+                    onSubmitEditing={() => this.refs.descriptionTextInput.onFocus()}
+                    returnKeyType="next"
+                  />
+                  </View>
+                <View style={styles.input}>
+                  <DengueTextInput
+                    label="簡介"
+                    hint={[
+                      'ex地點：樓層/地下室/女廁旁',
+                      'ex物件：藍色水桶/盆栽'
+                    ]}
+                    ref="descriptionTextInput"
+                    scrollView={this.refs.scrollView}
+                    placeholder="ex:樓層/地下室/女廁旁/藍色水桶/盆栽"
+                    keyboardType="default"
+                    onChangeText = {text => dispatch(changeDescription(text))}
+                    onFocus = {textInput => {
+                      textInput.measure((x,y,width,height,px,py) => {
+                          if (py > CONSTANTS.screenHeight / 2)
+                            this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                      });
+                    }}
+                    onSubmitEditing={this.send}
+                    returnKeyType="send"
+                  />
                 </View>
+                <Button onPress={this.send} buttonText="環境回報"/>
+                </View>
+              <Spinner visible={this.props.breedingSource.uploading}/>
             </ScrollView>
 
         );
-    }
-    renderButton() {
-      if(this.props.breedingSource.uploading) {
-        return (
-          <View style={styles.button}>
-            <ActivityIndicatorIOS color={CONSTANTS.mainColor}></ActivityIndicatorIOS>
-          </View>
-        );
-      }
-      else {
-        return (
-          <TouchableHighlight style={styles.button} underlayColor="#eee" onPress={this.send.bind(this)}>
-            <Text style={styles.buttonText}>這裡是孳生源！</Text>
-          </TouchableHighlight>
-        );
-      }
     }
     send() {
       const { type, description, lat, lng, address, modifiedAddress } = this.props.breedingSource,
@@ -161,14 +133,19 @@ class ShowImage extends Component {
         formData.append('lat', lat);
         formData.append('lng', lng);
         formData.append('address', address);
-        formData.append('modified_address', modifiedAddress);
+        formData.append('modified_address', modifiedAddress === '' ? address : modifiedAddress);
         formData.append('source_type', type);
         formData.append('description', description);
         formData.append('qualified_status', '待處理');
+        if (lat === '' || lng === '') {
+          alert('未開啟定位服務');
+          return ;
+        } else {
         dispatch(requestUpload(formData, token))
           .then(() => {
             dispatch(popImage());
           });
+        }
     }
 
 }
@@ -196,11 +173,16 @@ const styles = StyleSheet.create({
         marginTop:20,
         marginHorizontal:30,
     },
+    input: {
+      flexDirection: 'row',
+      flex: 1,
+      height: 50,
+      marginVertical: 15,
+    },
     question: {
         flex:1,
         flexDirection: 'column',
         marginTop: 20,
-
     },
     title: {
         flex:1,

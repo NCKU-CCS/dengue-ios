@@ -9,13 +9,14 @@ import { connect } from 'react-redux';
 import CONSTANTS from '../Global.js';
 import { requestQuickLogin } from '../../Actions.ios/index.js';
 import { styles } from './Page.style.js';
+import Spinner from 'react-native-loading-spinner-overlay';
 class Page extends Component {
   constructor(props) {
     super(props);
     this.skipButton = this.skipButton.bind(this);
   }
   render() {
-    const { titleText, imgSource, description } = this.props;
+    const { titleText, imgSource, description, isFetching } = this.props;
     return(
       <View style = {styles.container}>
         <View style = {styles.title}>
@@ -31,7 +32,8 @@ class Page extends Component {
                 {description}
                 </Text>
                 {this.skipButton()}
-                </View>
+            <Spinner visible={isFetching} />
+      </View>
     )
   }
   skipButton() {
@@ -54,4 +56,10 @@ class Page extends Component {
     return null;
   }
 }
-export default connect()(Page);
+
+function select(state) {
+  return {
+    isFetching: state.login.isFetching,
+  }
+}
+export default connect(select)(Page);

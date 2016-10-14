@@ -4,7 +4,7 @@ const saveBreedingSourceList = (id, responseData) =>
     key: 'breedingSourceList',
     id,
     rawData: responseData,
-    expires: 1000 * 3600 * 24,
+    expires: 1000,
   });
 
 export function breedingSourceList(responseData) {
@@ -64,7 +64,7 @@ export function loadBreedingSourceList(status, token) {
     })
       .then(responseData => {
         const dataLength = responseData.length;
-        if(dataLength !== 0) dispatch(timeStamp(responseData[dataLength - 1].timestamp));
+        if(dataLength > 0) dispatch(timeStamp(responseData[dataLength - 1].timestamp));
         dispatch(breedingSourceList(responseData))
       })
       .catch(err =>{

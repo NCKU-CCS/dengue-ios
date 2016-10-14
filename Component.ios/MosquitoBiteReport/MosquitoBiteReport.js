@@ -16,12 +16,12 @@ import { connect } from 'react-redux';
 import { geoLocation, requestMosquitoBite,
   startUploadBite, endUploadBite, popImage } from '../../Actions.ios/index.js';
 import Button from '../Common/Button.js';
+import Spinner from 'react-native-loading-spinner-overlay';
 class MosquitoBiteReport extends Component {
 
   constructor(props) {
     super(props);
     this.send = this.send.bind(this);
-    this.renderButton = this.renderButton.bind(this);
   }
   componentDidMount() {
 
@@ -40,32 +40,26 @@ class MosquitoBiteReport extends Component {
   render() {
     return (
       <ScrollView style = {styles.container}>
+        <View style={styles.marginTop}></View>
         <Text style={styles.text}>
-          我被蚊子叮了！！
+          你被蚊子叮咬嗎?
+        </Text>
+        <Text style={styles.text}>
+          請幫忙即刻回報喔!
         </Text>
         <Image style={styles.image} source = {require('../../img/mosquito.png')}>
         </Image>
         <Button onPress={this.send}
-          buttonText="報告！這裡有蚊子"
+          buttonText="報告! 我被蚊子咬了"
         />
-
+        <Text style={styles.hint}>
+          回報資料能協助研究團隊，更精準偵測蚊子的隱性躲藏點。
+        </Text>
+        <Spinner visible={this.props.mosquitoBite.uploadingBite} />
         </ScrollView>
     );
 
 
-  }
-  renderButton() {
-    if(this.props.mosquitoBite.uploadingBite) {
-      return (
-        <ActivityIndicatorIOS color={CONSTANTS.mainColor}>
-        </ActivityIndicatorIOS>
-      );
-    }
-     else {
-      return (
-        <Text style={styles.buttonText}>報告！這裡有蚊子</Text>
-      );
-    }
   }
   send() {
 
@@ -101,15 +95,26 @@ var styles = StyleSheet.create({
     resizeMode:"contain",
     justifyContent: 'center',
     alignSelf: 'center',
-    marginTop: 50,
+    marginTop: 15,
   },
 
-
+  marginTop: {
+    marginTop: 40,
+  },
   text: {
-    fontSize: 18,
+    fontSize: 22,
     alignSelf: 'center',
-    marginTop: 50,
+    marginTop: 15,
+    marginHorizontal: 40,
   },
+  hint: {
+    fontSize: 16,
+    alignSelf: 'center',
+    marginTop: 15,
+    color: '#aaa',
+    width: 200,
+  },
+
   button: {
     marginTop: 20,
     justifyContent: 'center',

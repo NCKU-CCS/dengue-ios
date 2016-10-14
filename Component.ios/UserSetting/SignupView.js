@@ -10,7 +10,7 @@ import React, {
   Alert
 } from 'react-native';
 import CONSTANTS from '../Global.js';
-import { requestSignup } from '../../Actions.ios/index.js';
+import { requestSignup, fetchLoginFailed } from '../../Actions.ios/index.js';
 import { connect } from 'react-redux';
 import Button from '../Common/Button.js';
 import FBLink from '../Common/FBLink.js';
@@ -27,6 +27,7 @@ class SignupView extends Component {
       password,
       name
     } = this.state;
+    const { dispatch } = this.props;
     const { user_uuid, token } = this.props.info;
     //TODO log redux
     // const { dispatch } = this.props;
@@ -40,12 +41,18 @@ class SignupView extends Component {
       password,
       user_uuid
     }
-    this.props.dispatch(requestSignup(data, token))
+    dispatch(requestSignup(data, token))
     .then(() => {
       Alert.alert('已成功註冊','登入並回到首頁',[{
         text: 'OK', onPress: this.props.toTop
       }])
-    });
+    })
+      .catch((error) => {
+        dispatch(fetchLoginFailed());
+        Alert.alert('不好意思！註冊出了問題','請確認資料填寫確實，若有任何疑問也請回報給我們：）',[{
+          text: 'OK', onPress: () => {}
+        }])
+      });
   }
 
   render() {
@@ -68,6 +75,8 @@ class SignupView extends Component {
             selectTextOnFocus = {true}
             autoCorrect = {false}
             ref = 'textinput1'
+            returnKeyType = "next"
+            onSubmitEditing = {() => this.refs.textinput2.focus()}
             onFocus = {() => {
               this.refs.textinput1.measure((x,y,width,height,px,py) => {
                   if(py > CONSTANTS.screenHeight / 2){
@@ -89,6 +98,9 @@ class SignupView extends Component {
             selectTextOnFocus = {true}
             autoCorrect = {false}
             ref = 'textinput2'
+            returnKeyType = "next"
+            onSubmitEditing = {() => this.refs.textinput3.focus()}
+            maxLength = {10}
             onFocus = {() => {
               this.refs.textinput2.measure((x,y,width,height,px,py) => {
 
@@ -110,6 +122,8 @@ class SignupView extends Component {
             secureTextEntry = {true}
             autoCorrect = {false}
             ref = 'textinput3'
+            returnKeyType = "send"
+            onSubmitEditing = {this.signup}
             onFocus = {() => {
               this.refs.textinput3.measure((x,y,width,height,px,py) => {
 

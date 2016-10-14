@@ -29,7 +29,7 @@ export default class Intro extends Component {
               description = "輕鬆舉報周邊孳生源，讓防疫網更加沒有漏洞，也能舉報蚊子，供自己紀錄自身狀況。"
               skip = {true}
                 />
-              </Swiper>
+      </Swiper>
     );
   }
 }

@@ -32,6 +32,16 @@ export function firstOpen() {
     type: 'FIRSTOPEN',
   }
 }
+export function fetchLogin() {
+  return {
+    type: 'FETCHING_LOGIN'
+  }
+}
+export function fetchLoginFailed() {
+  return {
+    type: 'FETCHING_FAILED',
+  }
+}
 export function storageLoadLogin() {
   return dispatch =>
     storage.load({
@@ -40,15 +50,26 @@ export function storageLoadLogin() {
       syncInBackground: true
     })
     .then(responseData => {
+      if(responseData.info.token === undefined) throw Error('reset');
       return dispatch(login(responseData.info, responseData.quick));
     })
   //  if there is no login data in storage
-    .catch(() => dispatch(firstOpen()));
+    .catch(() => {
+      storage.clearMap();
+      storage.remove({
+        key: 'loginState'
+      });
+      storage.remove({
+        key: 'hospitalInfo'
+      });
+      dispatch(firstOpen());
+    });
 }
 
 export function requestLogin(phone, password, token) {
   return dispatch => {
     const data = { phone,password };
+    dispatch(fetchLogin());
     return fetch(`${APIDomain}/users/signin/`, {
       method: 'POST',
       headers: {
@@ -65,12 +86,12 @@ export function requestLogin(phone, password, token) {
         dispatch(login(responseData, false));
         saveLoginState({info: responseData, quick: false});
       })
-      .catch(err => console.error(err));
   };
 }
 export function requestQuickLogin() {
-  return dispatch =>
-    fetch(`${APIDomain}/users/fast/`)
+  return dispatch => {
+    dispatch(fetchLogin());
+    return fetch(`${APIDomain}/users/fast/`)
     .then(response => {
         if (!response.ok) throw new Error('requestQuickLogin Error');
         return response.json();
@@ -79,7 +100,7 @@ export function requestQuickLogin() {
         dispatch(login(responseData, true));
         saveLoginState({info: responseData, quick: true});
       })
-      .catch(err => console.error(err));
+  }
 }
 export function requestLogout() {
   return dispatch =>
@@ -90,7 +111,6 @@ export function requestLogout() {
         return dispatch(logout());
       })
       .then(() => dispatch(requestQuickLogin()))
-      .catch(err => console.error(err));
 }
 export function getInfo() {
   return dispatch =>
@@ -108,8 +128,9 @@ export function getInfo() {
 
 }
 export function requestSignup(formData, token) {
-  return dispatch =>
-    fetch(`${APIDomain}/users/`, {
+  return dispatch => {
+    dispatch(fetchLogin());
+    return fetch(`${APIDomain}/users/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -128,9 +149,6 @@ export function requestSignup(formData, token) {
         dispatch(login(responseData, false));
         saveLoginState({info: responseData, quick: false});
       })
-      .catch((error) => {
-        console.warn(error);
-        alert("不好意思！註冊出了問題：）");
-      });
+  }
 
 }

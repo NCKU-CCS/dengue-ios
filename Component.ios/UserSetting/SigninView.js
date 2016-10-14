@@ -7,11 +7,11 @@ import React, {
   StyleSheet,
   Text,
   View,
-  AlertIOS
+  Alert
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import { connect } from 'react-redux';
-import { requestLogin } from '../../Actions.ios/index.js';
+import { requestLogin, fetchLoginFailed } from '../../Actions.ios/index.js';
 import Button from '../Common/Button.js';
 
 class SigninView extends Component {
@@ -28,7 +28,18 @@ class SigninView extends Component {
       return alert('有未填資訊唷！');
     }
 
-    dispatch(requestLogin(phone, password, token)).then(() => toTop());
+    dispatch(requestLogin(phone, password, token))
+    .then(() => {
+      Alert.alert('已成功登入','即將回到首頁',[{
+        text: 'OK', onPress: toTop
+      }])
+    })
+    .catch(() => {
+      dispatch(fetchLoginFailed());
+      Alert.alert('登入失敗','請確定填寫是否正確！',[{
+        text: 'OK', onPress: () => {}
+      }])
+    });
   }
   render() {
     return(
@@ -52,6 +63,9 @@ class SigninView extends Component {
               selectionColor = {CONSTANTS.mainColor}
               autoCorrect = {false}
               ref = 'textinput1'
+              maxLength = {10}
+              returnKeyType = "next"
+              onSubmitEditing = {() => this.refs.textinput2.focus()}
               onFocus = {() => {
                 this.refs.textinput1.measure((x,y,width,height,px,py) => {
 
@@ -75,6 +89,8 @@ class SigninView extends Component {
                 selectionColor = {CONSTANTS.mainColor}
                 autoCorrect = {false}
                 ref = 'textinput2'
+                returnKeyType = "send"
+                onSubmitEditing = {this.signin}
                 onFocus = {() => {
                   this.refs.textinput2.measure((x,y,width,height,px,py) => {
                     if(py > CONSTANTS.screenHeight / 2){

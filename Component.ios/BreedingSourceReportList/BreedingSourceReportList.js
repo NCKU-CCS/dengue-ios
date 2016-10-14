@@ -28,7 +28,8 @@ class BreedingSourceReportList extends Component {
     let { status } = this.props.breedingSourceList;
     const { dispatch, token } = this.props;
     dispatch(requestBreedingSourceListNumber(status, token))
-    .then(() => dispatch(loadBreedingSourceList(status, token)));
+    .then(() => dispatch(loadBreedingSourceList(status, token)))
+    .then(() => dispatch(requestBreedingSourceList(status, '', token)));
     //this.updateData(this.state.status);
   }
   onRefresh(){

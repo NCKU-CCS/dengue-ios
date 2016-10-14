@@ -11,8 +11,9 @@ import StatusBar from './StatusBar.js';
 import ContextComponent from './Nav/ContextComponent.js';
 import TabBar from './Nav/TabBar.js';
 import PopImage from './Nav/PopImage.js';
+import PopImageBackground from './Nav/PopImageBackground.js';
 import { changeStatus } from '../Actions.ios/index.js';
-
+import Spinner from 'react-native-loading-spinner-overlay';
 class Nav extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +22,7 @@ class Nav extends Component {
     this.toTop = this.toTop.bind(this);
   }
   render() {
-    const { status } = this.props;
+    const { status, isFetching } = this.props;
     return (
       <View style = {styles.container}>
         <StatusBar
@@ -54,6 +55,7 @@ class Nav extends Component {
               id = {status.id}
               back = {this.back}
             />
+        <Spinner visible={isFetching} />
       </View>
     );
   }
@@ -94,7 +96,7 @@ class Nav extends Component {
 function select(state) {
   return {
     status: state.status,
-
+    isFetching: state.login.isFetching,
   };
 }
 export default connect(select)(Nav);
