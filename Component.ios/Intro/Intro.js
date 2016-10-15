@@ -26,7 +26,7 @@ export default class Intro extends Component {
             <Page
               titleText = "舉報問題點"
               imgSource = {require('../../img/iPhone6-Flat-23.png')}
-              description = "輕鬆舉報周邊孳生源，讓防疫網更加沒有漏洞，也能舉報蚊子，供自己紀錄自身狀況。"
+              description = "輕鬆回報周邊環境狀況，讓防疫網更加沒有漏洞，也能回報蚊子叮咬，供團隊更精確的分析隱性躲藏點。"
               skip = {true}
                 />
       </Swiper>

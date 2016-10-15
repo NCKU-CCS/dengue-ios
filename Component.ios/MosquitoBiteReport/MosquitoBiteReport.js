@@ -51,8 +51,12 @@ class MosquitoBiteReport extends Component {
         <Button onPress={this.send}
           buttonText="報告! 我被蚊子咬了"
         />
+        <Text></Text>
         <Text style={styles.hint}>
-          回報資料能協助研究團隊，更精準偵測蚊子的隱性躲藏點。
+          回報資料能協助研究團隊，
+        </Text>
+        <Text style={styles.hint}>
+          更精準偵測蚊子的隱性躲藏點。
         </Text>
         <Spinner visible={this.props.mosquitoBite.uploadingBite} />
         </ScrollView>
@@ -107,9 +111,11 @@ var styles = StyleSheet.create({
   hint: {
     fontSize: 16,
     alignSelf: 'center',
-    marginTop: 15,
+    //marginTop: 15,
     color: '#aaa',
-    width: 200,
+    lineHeight: 20,
+    //width: 200,
+    //marginHorizontal: 40,
   },
 
   button: {

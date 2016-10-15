@@ -83,7 +83,7 @@ class ShowImage extends Component {
                     onFocus = {textInput => {
                       textInput.measure((x,y,width,height,px,py) => {
                           if (py > CONSTANTS.screenHeight / 2)
-                            this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                            this.refs.scrollView.scrollTo({y:py-200});
                       });
                     }}
                     onSubmitEditing={() => this.refs.descriptionTextInput.onFocus()}
@@ -105,7 +105,7 @@ class ShowImage extends Component {
                     onFocus = {textInput => {
                       textInput.measure((x,y,width,height,px,py) => {
                           if (py > CONSTANTS.screenHeight / 2)
-                            this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                            this.refs.scrollView.scrollTo({y:py - 200});
                       });
                     }}
                     onSubmitEditing={this.send}

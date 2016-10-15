@@ -1,5 +1,5 @@
 const initState = {
-  type:'住家',
+  type:'室內',
   lat: '',
   lng: '',
   description:'',

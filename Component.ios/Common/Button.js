@@ -1,9 +1,9 @@
 import React from 'react';
-import { View,TouchableHighlight, Text, } from 'react-native';
+import { View,TouchableOpacity, Text, } from 'react-native';
 import CONSTANTS from '../Global.js';
 export default function Button({ onPress, buttonText }) {
   return(
-    <TouchableHighlight
+    <TouchableOpacity
       onPress={onPress}
       style={styles.signup}
       underlayColor={CONSTANTS.backgroundColor}
@@ -11,7 +11,7 @@ export default function Button({ onPress, buttonText }) {
       <Text style={styles.signupText}>
         {buttonText}
       </Text>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 
 }

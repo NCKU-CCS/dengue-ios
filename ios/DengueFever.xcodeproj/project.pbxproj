@@ -17,16 +17,15 @@
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		21063A711D116ABD00848574 /* mosquito.png in Resources */ = {isa = PBXBuildFile; fileRef = 21063A701D116ABD00848574 /* mosquito.png */; };
 		213638A81D2528BA0043E615 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		21421FCB1CF9503E0056BDC7 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21421FBE1CF9502C0056BDC7 /* libAirMaps.a */; };
 		21464E1F1D27E47600CA1192 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21464E1D1D27E2B400CA1192 /* libRNBlur.a */; };
 		2185D98D1CF5549B0020513B /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2185D98C1CF554870020513B /* libRCTCamera.a */; };
 		218ED76D1D4C623900941BDA /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 218ED76B1D4C621B00941BDA /* libRNDeviceInfo.a */; };
+		21C558CC1DB1500F00872304 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21C558CB1DB1500F00872304 /* Launch Screen.storyboard */; };
 		21C9572E1D06AF17003C27A6 /* libRCTImageResizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21C957261D06AEEA003C27A6 /* libRCTImageResizer.a */; };
 		21E08D201CCFC5C30078167E /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 21E08D1F1CCFC5C30078167E /* default.gpx */; };
 		21E0ABE31D5B277E00AD01BF /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21421FBE1CF9502C0056BDC7 /* libAirMaps.a */; };
@@ -192,13 +191,12 @@
 		13B07F961A680F5B00A75B9A /* 掌蚊人.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "掌蚊人.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = DengueFever/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = DengueFever/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = DengueFever/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = DengueFever/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = DengueFever/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		21063A701D116ABD00848574 /* mosquito.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mosquito.png; sourceTree = "<group>"; };
 		2185D9871CF554860020513B /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
+		21C558CB1DB1500F00872304 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		21E08D1F1CCFC5C30078167E /* default.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default.gpx; sourceTree = "<group>"; };
 		285B8BAF3C954CAAB9305407 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		497AB3FD701A4EF2B7A92A5D /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
@@ -346,9 +344,8 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				21063A701D116ABD00848574 /* mosquito.png */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
+				21C558CB1DB1500F00872304 /* Launch Screen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = DengueFever;
@@ -757,15 +754,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				21E08D201CCFC5C30078167E /* default.gpx in Resources */,
 				7AC2F5E16597425699571B1B /* Entypo.ttf in Resources */,
 				765C5A96F048418380B8DB70 /* EvilIcons.ttf in Resources */,
+				21C558CC1DB1500F00872304 /* Launch Screen.storyboard in Resources */,
 				E8BFF39799914CE38F2591FF /* FontAwesome.ttf in Resources */,
 				2CF8B6E979AC471C8A62EBAC /* Foundation.ttf in Resources */,
 				8B46FE1C0F934F0DB8914F8F /* Ionicons.ttf in Resources */,
 				6BB72935BDF84584BA6A63B2 /* MaterialIcons.ttf in Resources */,
-				21063A711D116ABD00848574 /* mosquito.png in Resources */,
 				4C2140CEE45A4AA0AB5A507E /* Octicons.ttf in Resources */,
 				49ACBFC29424490F956752C4 /* Zocial.ttf in Resources */,
 			);
@@ -817,18 +813,6 @@
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		13B07FB11A68108700A75B9A /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				13B07FB21A68108700A75B9A /* Base */,
-			);
-			name = LaunchScreen.xib;
-			path = DengueFever;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {

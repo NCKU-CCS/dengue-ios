@@ -80,7 +80,7 @@ class SignupView extends Component {
             onFocus = {() => {
               this.refs.textinput1.measure((x,y,width,height,px,py) => {
                   if(py > CONSTANTS.screenHeight / 2){
-                    this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                    this.refs.scrollView.scrollTo({y: py - 200});
                   }
                 });
               }}
@@ -105,7 +105,7 @@ class SignupView extends Component {
               this.refs.textinput2.measure((x,y,width,height,px,py) => {
 
                 if(py > CONSTANTS.screenHeight / 2){
-                  this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                  this.refs.scrollView.scrollTo({y:py - 200});
                 }
               });
             }}
@@ -128,7 +128,7 @@ class SignupView extends Component {
               this.refs.textinput3.measure((x,y,width,height,px,py) => {
 
                 if(py > CONSTANTS.screenHeight / 2){
-                  this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                  this.refs.scrollView.scrollTo({y: py - 200});
                 }
               });
             }}

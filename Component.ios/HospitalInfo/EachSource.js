@@ -1,7 +1,7 @@
 import React, {
     Component,
     View,
-    TouchableHighlight,
+    TouchableOpacity,
     Text,
     StyleSheet,
     Image
@@ -15,10 +15,9 @@ export default class EachSource extends Component {
             source
         } = this.props;
         return (
-            <TouchableHighlight
+            <TouchableOpacity
                 style={styles.eachList}
                 onPress={() => {enterCheckPage(source);}}
-                underlayColor = {CONSTANTS.backgroundColor}
                 activeOpacity = {0.5}
                 >
                 <View>
@@ -45,7 +44,7 @@ export default class EachSource extends Component {
                         〉
                     </Text>
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         );
     }
 }

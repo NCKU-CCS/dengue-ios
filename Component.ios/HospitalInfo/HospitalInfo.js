@@ -18,7 +18,8 @@ class HospitalInfo extends Component {
         this.changeType = this.changeType.bind(this);
         this.renderEachSource = this.renderEachSource.bind(this);
         this.enterCheckPage = this.enterCheckPage.bind(this);
-        this.onRefresh = this.onRefresh.bind(this);
+      this.onRefresh = this.onRefresh.bind(this);
+      this.renderPlaceText = this.renderPlaceText.bind(this);
     }
     componentDidMount(){
         this.loadData();
@@ -88,11 +89,12 @@ class HospitalInfo extends Component {
         return(
             <View style={styles.container}>
                 <Text style={styles.topText}>
-                    {`您附近有  `}
+                    {`您附近有`}
                     <Text style={styles.sourceNumber}>
                         {sourceNumber}
                     </Text>
-                    {`  間醫療診所`}
+
+                    {this.renderPlaceText()}
 
                 </Text>
                 <Buttons
@@ -114,6 +116,19 @@ class HospitalInfo extends Component {
             </View>
         );
 
+    }
+    renderPlaceText() {
+      const { type } = this.props.hospital;
+      switch(type) {
+        case '全部':
+          return '個快篩地點';
+        case '醫院':
+          return '間快篩醫院';
+        case '診所':
+          return '間快篩院所';
+        case '其他':
+          return '個其他快篩地點';
+      }
     }
     renderEachSource(source) {
         return(

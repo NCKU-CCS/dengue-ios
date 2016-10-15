@@ -2,7 +2,7 @@ import React, {
   Component,
   StyleSheet,
   View,
-  TouchableHighlight
+  TouchableOpacity
 } from 'react-native';
 import Camera from 'react-native-camera';
 import CONSTANTS from '../Global.js';
@@ -25,7 +25,7 @@ export default class Second extends Component {
         captureAudio={false}
         >
           <View style = {styles.buttomBar}>
-            <TouchableHighlight
+            <TouchableOpacity
 
               onPress={this.takePicture}
               style={styles.capture}
@@ -33,7 +33,7 @@ export default class Second extends Component {
                 <View style={styles.inside}>
 
                 </View>
-              </TouchableHighlight>
+              </TouchableOpacity>
             </View>
           </Camera>
     );
@@ -47,7 +47,7 @@ export default class Second extends Component {
         //return data.path;
       })
       .then((uri) => {
-        this.props.enter("showImage", '孳生源舉報', uri);
+        this.props.enter("showImage", '環境回報', uri);
       })
       .catch(err => console.log(err));
   }

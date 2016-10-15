@@ -70,7 +70,7 @@ class SigninView extends Component {
                 this.refs.textinput1.measure((x,y,width,height,px,py) => {
 
                   if(py > CONSTANTS.screenHeight / 2){
-                    this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                    this.refs.scrollView.scrollTo({y:py - 200});
                   }
                 });
               }}
@@ -94,7 +94,7 @@ class SigninView extends Component {
                 onFocus = {() => {
                   this.refs.textinput2.measure((x,y,width,height,px,py) => {
                     if(py > CONSTANTS.screenHeight / 2){
-                      this.refs.scrollView.scrollTo({y:py-CONSTANTS.screenHeight / 3});
+                      this.refs.scrollView.scrollTo({y:py - 200});
                     }
                   });
                 }}

@@ -19,9 +19,10 @@ class PopImage extends Component {
     };
   }
   componentWillReceiveProps(nextProps) {
-      if(nextProps.popImage){
-        this.setState({imageIndex: Math.floor(Math.random()*3)});
-      }
+    if(nextProps.popImage && !this.props.popImage){
+      console.log(123);
+      this.setState({imageIndex: Math.floor(Math.random()*3)});
+    }
   }
   componentDidUpdate() {
     const { popImage } = this.props;

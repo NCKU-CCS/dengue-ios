@@ -32,6 +32,13 @@ export function hospital(state = initState, action) {
       if(newType === '全部'){
         displaySourceData = [...state.dataSource];
       }
+      else if (newType === '其他') {
+        displaySourceData = state.dataSource.filter((d) => {
+          if(d.name.indexOf('醫院') === -1 && d.name.indexOf('診所') === -1){
+            return d;
+          }
+        });
+      }
       else{
         displaySourceData = state.dataSource.filter((d) => {
           if(d.name.indexOf(newType) !== -1){

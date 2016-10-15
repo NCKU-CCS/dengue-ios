@@ -38,11 +38,19 @@ export default class Buttons extends Component {
                     </Text>
                 </TouchableHighlight>
                 <TouchableHighlight
-                    style = {[styles.typeButton, this.typeFocus('診所')]}
+                    style = {[styles.typeButton, styles.center, this.typeFocus('診所')]}
                     onPress = {() => {changeType('診所');}}
                     >
                     <Text style={styles.typeText}>
                         診所
+                    </Text>
+                </TouchableHighlight>
+                <TouchableHighlight
+                    style = {[styles.typeButton, this.typeFocus('其他')]}
+                    onPress = {() => {changeType('其他');}}
+                    >
+                    <Text style={styles.typeText}>
+                        其他
                     </Text>
                 </TouchableHighlight>
             </View>

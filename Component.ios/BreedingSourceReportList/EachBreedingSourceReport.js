@@ -50,16 +50,10 @@ class EachBreedingSourceReport extends Component {
                 <View style={styles.source}>
                     <View style={styles.leftSide}>
                         <View style={styles.title}>
-                            <Image style = {styles.titleImage}
-                                source = {this.titleImage(source.source_type)}
-                            />
                             <Text style = {styles.titleText}>
                                 {source.modified_address}
                             </Text>
                         </View>
-                        <Text style={styles.description}>
-                            {source.address}
-                        </Text>
                         <Text style={styles.description}>
                             {source.description}
                         </Text>
@@ -72,28 +66,6 @@ class EachBreedingSourceReport extends Component {
                         source = {{uri: `data:image/png;base64,${source.photo_base64}`}}
                         >
                     </Image>
-                </View>
-                <View style={styles.buttons}>
-                        <View style={styles.button}>
-                            <Text style={[styles.text, selectedStatus === '待審核' ? styles.selectedText : null]}>
-                                待審核
-                            </Text>
-                        </View>
-                        <View
-                            style={styles.button}
-
-                        >
-                            <Image style = {styles.icon} source = {Done} />
-                            <Text style = {[styles.text, selectedStatus === '已通過' ? styles.selectedText : null]}>
-                                已通過
-                            </Text>
-                        </View>
-                        <View style={styles.button}>
-                            <Image style = {styles.icon} source = {Not} />
-                            <Text style={[styles.text, selectedStatus === '未通過' ? styles.selectedText : null]}>
-                                未通過
-                            </Text>
-                        </View>
                 </View>
             </View>
         );

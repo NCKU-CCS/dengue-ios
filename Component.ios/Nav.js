@@ -5,6 +5,7 @@ import React, {
   Navigator,
   Text,
   TouchableHighlight,
+  Alert,
 } from 'react-native';
 import CONSTANTS from './Global.js';
 import { connect } from 'react-redux';
@@ -13,7 +14,7 @@ import ContextComponent from './Nav/ContextComponent.js';
 import TabBar from './Nav/TabBar.js';
 import PopImage from './Nav/PopImage.js';
 import PopImageBackground from './Nav/PopImageBackground.js';
-import { changeStatus } from '../Actions.ios/index.js';
+import { changeStatus, requestQuickLogin } from '../Actions.ios/index.js';
 import Spinner from 'react-native-loading-spinner-overlay';
 class Nav extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class Nav extends Component {
     this.enter = this.enter.bind(this);
     this.back = this.back.bind(this);
     this.toTop = this.toTop.bind(this);
+    this.logout = this.logout.bind(this);
   }
   render() {
     const { status, isFetching, quickLogin } = this.props;
@@ -50,7 +52,7 @@ class Nav extends Component {
                         underlayColor = {CONSTANTS.mainColor}
                         onPress={this.back}
                       >
-                        <Text style={styles.text}>
+                        <Text style={[styles.text, styles.leftButton]}>
                           {"〈  返回"}
                         </Text>
                       </TouchableHighlight>;
@@ -63,7 +65,7 @@ class Nav extends Component {
                         underlayColor = {CONSTANTS.mainColor}
                         onPress = {this.logout}
                         >
-                          <Text style={stlyes.text}>
+                          <Text style={[styles.text, styles.rightButton]}>
                             {"登出"}
                           </Text>
                         </TouchableHighlight>;
@@ -132,6 +134,14 @@ class Nav extends Component {
     }
     return false;
   }
+  logout() {
+    this.props.dispatch(requestQuickLogin())
+      .then(() => {
+        Alert.alert('已登出','即將回到首頁',
+          [{text: 'OK', onPress: this.toTop}]
+        );
+      });
+  }
 
 }
 function select(state) {
@@ -160,6 +170,7 @@ var styles = StyleSheet.create({
 
   text: {
     color: 'white',
+    fontSize: 18,
   },
   titleView: {
     alignItems: 'center',
@@ -170,4 +181,10 @@ var styles = StyleSheet.create({
   subTitle: {
     fontSize: 14,
   },
+  leftButton: {
+    marginLeft: 10,
+  },
+  rightButton: {
+    marginRight: 30,
+  }
 });

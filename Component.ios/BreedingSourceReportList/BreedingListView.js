@@ -121,7 +121,7 @@ var styles = StyleSheet.create({
     },
 
     status:{
-        marginVertical: 30,
+        marginBottom: 30,
         alignItems:'center',
         flexDirection: 'column',
     },

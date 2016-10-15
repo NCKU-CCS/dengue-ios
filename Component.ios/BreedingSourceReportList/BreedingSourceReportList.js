@@ -93,5 +93,6 @@ const styles = StyleSheet.create({
     backgroundColor: CONSTANTS.backgroundColor,
     flex:1,
     justifyContent:'center',
+    paddingTop: 80,
   }
 });
