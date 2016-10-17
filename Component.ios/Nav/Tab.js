@@ -25,7 +25,7 @@ export default class Tab extends Component {
     icon(title) {
         const propsTitle = this.props.title;
         switch (title) {
-            case '熱區資訊':
+            case '即時疫情':
             return propsTitle === title ?
                 require('../../img/notification_on.png'):
                 require('../../img/notification_off.png');
@@ -45,7 +45,7 @@ export default class Tab extends Component {
             return propsTitle === title ?
                 require('../../img/setting_on.png'):
                 require('../../img/setting_off.png');
-            case '孳生源列表':
+            case '回報點列表':
             return propsTitle === title ?
             require('../../img/check_list-32.png'):
             require('../../img/check_list-31.png');

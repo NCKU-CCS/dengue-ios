@@ -22,7 +22,7 @@ class TabBar extends Component {
             "userSetting",
         ],
         title = [
-            '熱區資訊',
+            '即時疫情',
             '就醫資訊',
             '環境回報',
             '蚊子叮咬',
@@ -40,11 +40,11 @@ class TabBar extends Component {
                 //"userSetting"
             ];
             title = [
-                '熱區資訊',
+                '即時疫情',
                 '就醫資訊',
                 '環境回報',
                 '蚊子叮咬',
-                '孳生源列表',
+                '回報點列表',
                 //'個人資訊'
 
             ];

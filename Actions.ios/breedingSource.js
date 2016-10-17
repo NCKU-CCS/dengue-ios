@@ -58,7 +58,7 @@ export function requestAddress(lat, lng) {
         dispatch(address(responseData.results[0].formatted_address));
       })
       .catch(err => {
-        console.warn(err);
+        //console.warn(err);
       });
   }
 }
@@ -79,10 +79,6 @@ export function requestUpload(formData, token) {
                 throw Error(response.status);
             }
         })
-        .catch(err => {
-            console.warn(err);
-            alert('抱歉,上傳失敗了！');
-        });
-  }
+      }
 
 }

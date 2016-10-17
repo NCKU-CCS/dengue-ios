@@ -1,4 +1,5 @@
 import { APIDomain } from './global.js';
+import {Alert} from 'react-native';
 export function geoLocation(lat, lng) {
   return {
     type: 'GEOLOCATION',
@@ -32,10 +33,6 @@ export function requestMosquitoBite(data, token) {
         if(!response.ok){
           throw Error(response.status);
         }
-      })
-      .catch(err => {
-        //console.warn(err);
-        alert('回報失敗了！');
       });
   }
 

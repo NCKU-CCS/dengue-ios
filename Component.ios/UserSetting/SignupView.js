@@ -9,6 +9,7 @@ import React, {
   View,
   Alert
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import CONSTANTS from '../Global.js';
 import { requestSignup, fetchLoginFailed } from '../../Actions.ios/index.js';
 import { connect } from 'react-redux';
@@ -20,6 +21,12 @@ class SignupView extends Component {
     super(props);
     this.state = {phone: "", password: "", name: ''};
     this.signup = this.signup.bind(this);
+    this.scrollToInput = this.scrollToInput.bind(this);
+  }
+  scrollToInput(event, refName) {
+    const node = React.findNodeHandle(this.refs[refName]);
+    const extraHeight = 80; // height of your text input
+    this.refs.scrollView.scrollToFocusedInput(event, node, extraHeight);
   }
   signup() {
     const {
@@ -58,7 +65,7 @@ class SignupView extends Component {
   render() {
     const {enter} = this.props;
     return(
-      <ScrollView style = {styles.container} ref = 'scrollView'>
+      <KeyboardAwareScrollView style = {styles.container} ref = 'scrollView'>
         <Image
           source = {require('../../img/people.png')}
           style = {styles.image}
@@ -77,12 +84,8 @@ class SignupView extends Component {
             ref = 'textinput1'
             returnKeyType = "next"
             onSubmitEditing = {() => this.refs.textinput2.focus()}
-            onFocus = {() => {
-              this.refs.textinput1.measure((x,y,width,height,px,py) => {
-                  if(py > CONSTANTS.screenHeight / 2){
-                    this.refs.scrollView.scrollTo({y: py - 200});
-                  }
-                });
+            onFocus={(event) => {
+                  this.scrollToInput(event, 'textinput1');
               }}
           />
         </View>
@@ -101,14 +104,9 @@ class SignupView extends Component {
             returnKeyType = "next"
             onSubmitEditing = {() => this.refs.textinput3.focus()}
             maxLength = {10}
-            onFocus = {() => {
-              this.refs.textinput2.measure((x,y,width,height,px,py) => {
-
-                if(py > CONSTANTS.screenHeight / 2){
-                  this.refs.scrollView.scrollTo({y:py - 200});
-                }
-              });
-            }}
+            onFocus={(event) => {
+                  this.scrollToInput(event, 'textinput2');
+              }}
           />
         </View>
         <View style = {styles.textInputView}>
@@ -124,14 +122,9 @@ class SignupView extends Component {
             ref = 'textinput3'
             returnKeyType = "send"
             onSubmitEditing = {this.signup}
-            onFocus = {() => {
-              this.refs.textinput3.measure((x,y,width,height,px,py) => {
-
-                if(py > CONSTANTS.screenHeight / 2){
-                  this.refs.scrollView.scrollTo({y: py - 200});
-                }
-              });
-            }}
+            onFocus={(event) => {
+                  this.scrollToInput(event, 'textinput3');
+              }}
           />
         </View>
         <Button onPress={this.signup} buttonText="註冊"/>
@@ -150,7 +143,7 @@ class SignupView extends Component {
         <FBLink />
         <WebLink />
         <View style={styles.footer}/>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     );
   }
 }

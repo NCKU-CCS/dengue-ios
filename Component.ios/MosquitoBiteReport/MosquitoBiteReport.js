@@ -10,6 +10,7 @@ import React, {
   ScrollView,
   View,
   Animated,
+  Alert,
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import { connect } from 'react-redux';
@@ -76,7 +77,13 @@ class MosquitoBiteReport extends Component {
         lat, lng
       }
       dispatch(requestMosquitoBite(data, token))
-      .then(() => dispatch(popImage()));
+      .then(() => dispatch(popImage()))
+      .catch((error) => {
+          dispatch(endUploadBite());
+          Alert.alert('不好意思！回報出了問題','請確認網路連線狀況，若有任何疑問也請回報給我們：）',[{
+            text: 'OK', onPress: () => {}
+          }])
+      });
     }
 
   }

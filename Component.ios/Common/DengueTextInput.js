@@ -42,6 +42,8 @@ export default class DengueTextInput extends React.Component {
       placeholder, //string
       onFocus, // function
       hint, //array<strin>
+      style,
+      multiline
     } = this.props;
     const {
       text
@@ -52,7 +54,7 @@ export default class DengueTextInput extends React.Component {
           {label}
         </Text>
         <TextInput
-          style = {styles.textInput}
+          style = {[styles.textInput, style]}
           onChangeText = {this.onChangeText}
           onFocus = {() => onFocus(this.refs.textInput)}
           keyboardType = {keyboardType ? keyboardType : "default"}
@@ -65,7 +67,8 @@ export default class DengueTextInput extends React.Component {
           returnKeyType = {returnKeyType}
           onSubmitEditing = {onSubmitEditing ? onSubmitEditing : () => {}}
           ref = "textInput"
-          maxLength = {maxLength ? maxLength : 32}
+          maxLength = {maxLength ? maxLength : 64}
+          multiline = {multiline ? multiline : false}
         />
       </View>
     );
@@ -95,8 +98,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   textInput: {
-    backgroundColor: CONSTANTS.backgroundColor,
-    height: 30,
+    fontSize: 18,
+    paddingVertical: 10,
+    height: 50,
     alignSelf: 'center',
     flex: 1,
   }

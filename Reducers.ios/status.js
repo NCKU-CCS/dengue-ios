@@ -1,5 +1,5 @@
 const initState = {
-  title:'熱區資訊',
+  title:'即時疫情',
   id: 'hotZoneInfo',
 };
 export function status(state = initState, action) {

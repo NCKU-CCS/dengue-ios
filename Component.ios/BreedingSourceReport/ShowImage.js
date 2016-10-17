@@ -7,7 +7,9 @@ import React, {
     TextInput,
     TouchableHighlight,
     ScrollView,
-    ActivityIndicatorIOS,
+    Alert,
+  ActivityIndicatorIOS,
+  PixelRatio,
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import BlurView from 'react-native-blur';
@@ -20,15 +22,17 @@ import {
   changeDescription,
   requestUpload,
   popImage,
-
+  endUploadImage,
 } from '../../Actions.ios/index.js';
 import { connect } from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Spinner from 'react-native-loading-spinner-overlay';
 class ShowImage extends Component {
     constructor(props) {
         super(props);
         //this.showActionSheet = this.showActionSheet.bind(this);
       this.send = this.send.bind(this);
+      this.scrollToInput = this.scrollToInput.bind(this);
     }
     componentDidMount() {
 
@@ -42,12 +46,17 @@ class ShowImage extends Component {
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
         );
     }
+    scrollToInput(event, refName) {
+      let node = React.findNodeHandle(this.refs[refName]);
+      let extraHeight = 70; // height of your text input
+      this.refs.scrollView.scrollToFocusedInput(event, node, extraHeight);
+    }
     render() {
       const types = ['室內', '戶外'];
       const { dispatch, uri }  = this.props,
             { address, modifiedAddress, type, uploading } = this.props.breedingSource;
         return (
-            <ScrollView  style={styles.container} ref="scrollView">
+            <KeyboardAwareScrollView  style={styles.container} ref="scrollView">
               <Image ref={'img'} style={styles.image} source={{uri}}></Image>
               <View style={styles.inputs}>
                   <View style={styles.question}>
@@ -75,19 +84,19 @@ class ShowImage extends Component {
                   <View style={styles.input}>
                   <DengueTextInput
                     label="住址"
+                    ref="addressTextInput"
                     scrollView={this.refs.scrollView}
                     placeholder={address}
                     keyboardType="default"
                     defaultValue={address}
                     onChangeText = {text => dispatch(modifyAddress(text))}
-                    onFocus = {textInput => {
-                      textInput.measure((x,y,width,height,px,py) => {
-                          if (py > CONSTANTS.screenHeight / 2)
-                            this.refs.scrollView.scrollTo({y:py-200});
-                      });
+                    onFocus={(event) => {
+                      this.scrollToInput(event, 'addressTextInput');
                     }}
                     onSubmitEditing={() => this.refs.descriptionTextInput.onFocus()}
                     returnKeyType="next"
+                    multiline={true}
+                    style={{height:70}}
                   />
                   </View>
                 <View style={styles.input}>
@@ -102,11 +111,8 @@ class ShowImage extends Component {
                     placeholder="ex:樓層/地下室/女廁旁/藍色水桶/盆栽"
                     keyboardType="default"
                     onChangeText = {text => dispatch(changeDescription(text))}
-                    onFocus = {textInput => {
-                      textInput.measure((x,y,width,height,px,py) => {
-                          if (py > CONSTANTS.screenHeight / 2)
-                            this.refs.scrollView.scrollTo({y:py - 200});
-                      });
+                    onFocus={(event) => {
+                      this.scrollToInput(event, 'descriptionTextInput');
                     }}
                     onSubmitEditing={this.send}
                     returnKeyType="send"
@@ -115,7 +121,7 @@ class ShowImage extends Component {
                 <Button onPress={this.send} buttonText="環境回報"/>
                 </View>
               <Spinner visible={this.props.breedingSource.uploading}/>
-            </ScrollView>
+            </KeyboardAwareScrollView>
 
         );
     }
@@ -140,11 +146,21 @@ class ShowImage extends Component {
         if (lat === '' || lng === '') {
           alert('未開啟定位服務');
           return ;
+        } else if (address === '') {
+          alert('請確認網路連線狀況');
+          return ;
         } else {
         dispatch(requestUpload(formData, token))
           .then(() => {
             dispatch(popImage());
+          })
+          .catch((error) => {
+            dispatch(endUploadImage());
+            Alert.alert('不好意思！回報出了問題','請確認網路連線狀況，若有任何疑問也請回報給我們：）',[{
+              text: 'OK', onPress: () => {}
+            }])
           });
+
         }
     }
 
@@ -177,8 +193,7 @@ const styles = StyleSheet.create({
     input: {
       flexDirection: 'row',
       flex: 1,
-      height: 50,
-      marginVertical: 15,
+      marginVertical: 20,
     },
     question: {
         flex:1,

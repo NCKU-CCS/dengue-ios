@@ -52,7 +52,7 @@ class Nav extends Component {
                         underlayColor = {CONSTANTS.mainColor}
                         onPress={this.back}
                       >
-                        <Text style={[styles.text, styles.leftButton]}>
+                        <Text style={[styles.text, styles.leftButton, styles.lowerTitle]}>
                           {"〈  返回"}
                         </Text>
                       </TouchableHighlight>;
@@ -65,7 +65,7 @@ class Nav extends Component {
                         underlayColor = {CONSTANTS.mainColor}
                         onPress = {this.logout}
                         >
-                          <Text style={[styles.text, styles.rightButton]}>
+                          <Text style={[styles.text, styles.rightButton, styles.lowerTitle]}>
                             {"登出"}
                           </Text>
                         </TouchableHighlight>;
@@ -76,7 +76,7 @@ class Nav extends Component {
                     if(route.title === '環境回報')
                       subTitle = '請拍積水、髒亂處';
                     return <View style = {styles.titleView}>
-                      <Text style = {[styles.text,styles.title]}>
+                      <Text style = {[styles.text,styles.title, subTitle ? null : styles.lowerTitle]}>
                         {route.title}
                       </Text>
                       <Text style = {[styles.text, styles.subTitle]}>
@@ -174,6 +174,9 @@ var styles = StyleSheet.create({
   },
   titleView: {
     alignItems: 'center',
+  },
+  lowerTitle: {
+    paddingTop: 10,
   },
   title: {
     fontSize: 20,
