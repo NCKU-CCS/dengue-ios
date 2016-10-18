@@ -1,9 +1,6 @@
 const initState = {
   type:'室內',
-  lat: '',
-  lng: '',
   description:'',
-  address: '',
   modifiedAddress: '',
   uploading: false,
 };
@@ -23,19 +20,6 @@ export function breedingSource(state = initState, action) {
       return Object.assign({},
         state,
         { modifiedAddress: action.modifiedAddress}
-      );
-    case 'ADDRESS':
-      return Object.assign({},
-        state,
-        { address: action.address }
-      );
-    case 'GEOLOCATION':
-      return Object.assign({},
-        state,
-        {
-          lat: action.lat,
-          lng: action.lng,
-        }
       );
     case 'UPLOADING_IMAGE':
       return Object.assign({}, state, {

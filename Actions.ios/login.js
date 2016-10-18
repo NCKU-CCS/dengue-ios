@@ -139,7 +139,7 @@ export function requestSignup(formData, token) {
       body: JSON.stringify(formData)
     })
     .then((response) => {
-        if(!response.ok){
+      if(!response.ok){
           throw Error(response.status);
         }
       return response.json();

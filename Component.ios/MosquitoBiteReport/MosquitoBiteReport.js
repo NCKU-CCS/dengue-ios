@@ -14,7 +14,7 @@ import React, {
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import { connect } from 'react-redux';
-import { geoLocation, requestMosquitoBite,
+import { requestGps, requestMosquitoBite,
   startUploadBite, endUploadBite, popImage } from '../../Actions.ios/index.js';
 import Button from '../Common/Button.js';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -24,21 +24,8 @@ class MosquitoBiteReport extends Component {
     super(props);
     this.send = this.send.bind(this);
   }
-  componentDidMount() {
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-
-        this.props.dispatch(geoLocation(
-          position.coords.latitude,
-          position.coords.longitude,
-        ));
-      },
-      (error) => alert('找不到定位資訊'),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
-  }
-  render() {
+    render() {
     return (
       <ScrollView style = {styles.container}>
         <Text style={styles.text}>
@@ -67,8 +54,7 @@ class MosquitoBiteReport extends Component {
   }
   send() {
 
-     const { lat, lng } = this.props.mosquitoBite,
-      {toTop, dispatch, token } = this.props;
+     const { toTop, dispatch, token, lat, lng } = this.props;
     if(lat === '' || lat === ''){
       AlertIOS.alert("未開啟定位服務");
     }
@@ -77,7 +63,12 @@ class MosquitoBiteReport extends Component {
         lat, lng
       }
       dispatch(requestMosquitoBite(data, token))
-      .then(() => dispatch(popImage()))
+        .then(() => {
+          Alert.alert('回報成功！', '將提供於蚊媒熱度分析研究。', [{
+            text: 'OK', onPress: () => {}
+          }])
+          // dispatch(popImage())
+        })
       .catch((error) => {
           dispatch(endUploadBite());
           Alert.alert('不好意思！回報出了問題','請確認網路連線狀況，若有任何疑問也請回報給我們：）',[{
@@ -92,6 +83,8 @@ function select(state) {
   return {
     mosquitoBite: state.mosquitoBite,
     token: state.login.info.token,
+    lat: state.address.lat,
+    lng: state.address.lng
   };
 }
 export default connect(select)(MosquitoBiteReport);

@@ -14,10 +14,10 @@ import Buttons from './Buttons.js';
 import { loadHospitalInfo, changeType, requestHospitalInfo, refreshStart, refreshDone } from '../../Actions.ios/index.js';
 class HospitalInfo extends Component {
     constructor(props) {
-        super(props);
-        this.changeType = this.changeType.bind(this);
-        this.renderEachSource = this.renderEachSource.bind(this);
-        this.enterCheckPage = this.enterCheckPage.bind(this);
+      super(props);
+      this.changeType = this.changeType.bind(this);
+      this.renderEachSource = this.renderEachSource.bind(this);
+      this.enterCheckPage = this.enterCheckPage.bind(this);
       this.onRefresh = this.onRefresh.bind(this);
       this.renderPlaceText = this.renderPlaceText.bind(this);
     }
@@ -28,42 +28,17 @@ class HospitalInfo extends Component {
       this.props.dispatch(loadHospitalInfo());
     }
     fetchData() {
-      const { dispatch, token } = this.props;
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                let lat = position.coords.latitude;
-                let lng = position.coords.longitude;
-                dispatch(requestHospitalInfo(lat, lng, token));
-            },
-            (error) => alert(error.message),
-            {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-        );
-
+      const { dispatch, token, lat, lng } = this.props;
+      dispatch(requestHospitalInfo(lat, lng, token));
     }
     changeType(newType) {
       this.props.dispatch(changeType(newType));
     }
     onRefresh(){
-      const { dispatch } = this.props;
+      const { dispatch, lat, lng } = this.props;
       dispatch(refreshStart());
-      navigator.geolocation.getCurrentPosition(
-          position => {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-            dispatch(requestHospitalInfo(lat, lng))
-              .then(() => dispatch(refreshDone()));
-          },
-          error => {
-            //console.warn(error);
-            alert('找不到定位資訊');
-          },
-          {
-            enableHighAccuracy: true,
-            timeout: 20000,
-            maximumAge: 1000
-          }
-        );
-
+      dispatch(requestHospitalInfo(lat, lng))
+        .then(() => dispatch(refreshDone()));
     }
     render() {
         if (!this.props.hospital.loaded) {
@@ -146,6 +121,8 @@ function select(state) {
   return {
     hospital: state.hospital,
     token: state.login.info.token,
+    lat: state.address.lat,
+    lng: state.address.lng,
   }
 }
 export default connect(select)(HospitalInfo);

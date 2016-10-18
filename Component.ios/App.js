@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import Nav from './Nav.js';
 import CONSTANTS from './Global.js';
 import Intro from './Intro/Intro.js';
-import { requestQuickLogin, storageLoadLogin } from '../Actions.ios/index.js';
+import { requestQuickLogin, storageLoadLogin, requestGps } from '../Actions.ios/index.js';
 class App extends Component {
     constructor(props) {
         super(props);
@@ -19,6 +19,7 @@ class App extends Component {
 
     componentDidMount() {
       this.props.dispatch(storageLoadLogin());
+      this.props.dispatch(requestGps());
       //this.getLoginState();
     }
     render() {

@@ -23,28 +23,29 @@ import {
   requestUpload,
   popImage,
   endUploadImage,
-} from '../../Actions.ios/index.js';
+  requestGps,
+} from '../../Actions.ios';
 import { connect } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Spinner from 'react-native-loading-spinner-overlay';
 class ShowImage extends Component {
     constructor(props) {
-        super(props);
-        //this.showActionSheet = this.showActionSheet.bind(this);
+      super(props);
+      // this.showActionSheet = this.showActionSheet.bind(this);
+
       this.send = this.send.bind(this);
       this.scrollToInput = this.scrollToInput.bind(this);
     }
-    componentDidMount() {
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const {latitude, longitude} = position.coords;
-
-                this.props.dispatch(requestAddress(latitude, longitude));
-            },
-            (error) => alert('找不到定位資訊'),
-            {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-        );
+  componentDidMount() {
+    const { dispatch, lat, lng } = this.props;
+    dispatch(requestAddress(lat, lng));
+    }
+    componentWillReceiveProps(nextProps) {
+      const { lat, lng, dispatch } = this.props;
+      if(nextProps.lat !== lat && nextProps.lng !== lng) {
+        alert('here')
+        dispatch(requestAddress(nextProps.lat, nextProps.lng));
+      }
     }
     scrollToInput(event, refName) {
       let node = React.findNodeHandle(this.refs[refName]);
@@ -53,8 +54,8 @@ class ShowImage extends Component {
     }
     render() {
       const types = ['室內', '戶外'];
-      const { dispatch, uri }  = this.props,
-            { address, modifiedAddress, type, uploading } = this.props.breedingSource;
+      const { dispatch, uri, address }  = this.props,
+            { modifiedAddress, type, uploading } = this.props.breedingSource;
         return (
             <KeyboardAwareScrollView  style={styles.container} ref="scrollView">
               <Image ref={'img'} style={styles.image} source={{uri}}></Image>
@@ -89,7 +90,7 @@ class ShowImage extends Component {
                     placeholder={address}
                     keyboardType="default"
                     defaultValue={address}
-                    onChangeText = {text => dispatch(modifyAddress(text))}
+                    onEndEditing = {text => dispatch(modifyAddress(text))}
                     onFocus={(event) => {
                       this.scrollToInput(event, 'addressTextInput');
                     }}
@@ -110,7 +111,7 @@ class ShowImage extends Component {
                     scrollView={this.refs.scrollView}
                     placeholder="ex:樓層/地下室/女廁旁/藍色水桶/盆栽"
                     keyboardType="default"
-                    onChangeText = {text => dispatch(changeDescription(text))}
+                    onEndEditing = {text => dispatch(changeDescription(text))}
                     onFocus={(event) => {
                       this.scrollToInput(event, 'descriptionTextInput');
                     }}
@@ -126,8 +127,8 @@ class ShowImage extends Component {
         );
     }
     send() {
-      const { type, description, lat, lng, address, modifiedAddress } = this.props.breedingSource,
-        { dispatch, uri, back, token } = this.props;
+      const { type, description, modifiedAddress } = this.props.breedingSource,
+        { dispatch, uri, back, token, lat, lng, address } = this.props;
         fileName = uri.split('/').slice(-1)[0];
         const photo = {
             uri: uri,
@@ -168,7 +169,10 @@ class ShowImage extends Component {
 function select(state) {
   return {
     breedingSource: state.breedingSource,
-    token: state.login.info.token
+    token: state.login.info.token,
+    lat: state.address.lat,
+    lng: state.address.lng,
+    address: state.address.address,
   };
 }
 export default connect(select)(ShowImage);

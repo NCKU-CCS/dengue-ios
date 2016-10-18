@@ -12,6 +12,7 @@ import { breedingSource } from './breedingSource.js';
 import { mosquitoBite } from './mosquitoBite.js';
 import { breedingSourceList } from './breedingSourceList.js';
 import { popImage } from './popImage.js';
+import { address } from './address.js';
 const reducer = combineReducers({
   login,
   status,
@@ -20,6 +21,7 @@ const reducer = combineReducers({
   mosquitoBite,
   breedingSourceList,
   popImage,
+  address,
 })
 
 export default reducer ;

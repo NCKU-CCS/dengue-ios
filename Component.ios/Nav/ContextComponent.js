@@ -12,14 +12,24 @@ import EachHospitalInfo from '../HospitalInfo/EachHospitalInfo.js';
 import UserSetting from '../UserSetting/UserSetting.js';
 import SigninView from '../UserSetting/SigninView.js';
 import CONSTANTS from '../Global.js';
-export default class ContextComponent extends Component {
+import { requestGps } from '../../Actions.ios';
+import { connect } from 'react-redux';
+class ContextComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
 
         };
     }
-
+    componentWillReceiveProps(nextProps) {
+      if (nextProps.id !== this.props.id) {
+        this.props.dispatch(requestGps());
+      }
+    }
+    shouldComponentUpdate(nextProps, nextState) {
+      return nextProps.id !== this.props.id &&
+        nextProps.data !== this.props.data;
+    }
     render() {
         const {enter, back, toTop, data, id} = this.props;
         switch (id) {
@@ -47,4 +57,13 @@ export default class ContextComponent extends Component {
                 return (<SigninView toTop = {toTop}/>);
             }
         }
-    }
+}
+
+
+function select(state) {
+  return {
+
+  }
+}
+
+export default connect(select)(ContextComponent);

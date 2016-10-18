@@ -19,7 +19,6 @@ import WebLink from '../Common/WebLink.js';
 class SignupView extends Component {
   constructor(props) {
     super(props);
-    this.state = {phone: "", password: "", name: ''};
     this.signup = this.signup.bind(this);
     this.scrollToInput = this.scrollToInput.bind(this);
   }
@@ -33,13 +32,13 @@ class SignupView extends Component {
       phone,
       password,
       name
-    } = this.state;
+    } = this;
     const { dispatch } = this.props;
     const { user_uuid, token } = this.props.info;
     //TODO log redux
     // const { dispatch } = this.props;
     //dispatch(requestSignup(name, phone, password));
-    if(phone == '' || password == '' || name == '') {
+    if(phone === '' || password === '' || name === '') {
       return alert('有未填資訊唷！');
     }
     const data = {
@@ -76,8 +75,7 @@ class SignupView extends Component {
           </Text>
           <TextInput
             style = {styles.textInput}
-            onChangeText = {(text) => this.setState({name: text})}
-            value = {this.state.text}
+            onChangeText = {(text) => {this.name = text}}
             keyboardType = 'default'
             selectTextOnFocus = {true}
             autoCorrect = {false}
@@ -95,8 +93,7 @@ class SignupView extends Component {
           </Text>
           <TextInput
             style = {styles.textInput}
-            onChangeText = {(text) => this.setState({phone: text})}
-            value = {this.state.text}
+            onChangeText = {(text) => {this.phone = text}}
             keyboardType = 'numeric'
             selectTextOnFocus = {true}
             autoCorrect = {false}
@@ -115,8 +112,7 @@ class SignupView extends Component {
           </Text>
           <TextInput
             style = {styles.textInput}
-            onChangeText = {(text) => this.setState({password: text})}
-            value = {this.state.text}
+            onChangeText = {(text) => {this.password = text}}
             secureTextEntry = {true}
             autoCorrect = {false}
             ref = 'textinput3'

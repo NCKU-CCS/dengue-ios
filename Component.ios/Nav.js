@@ -6,6 +6,7 @@ import React, {
   Text,
   TouchableHighlight,
   Alert,
+  PanResponder,
 } from 'react-native';
 import CONSTANTS from './Global.js';
 import { connect } from 'react-redux';

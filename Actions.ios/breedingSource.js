@@ -1,18 +1,4 @@
 import { APIDomain } from './global.js';
-export function address(address) {
-  return {
-    type: 'ADDRESS',
-    address,
-
-  };
-}
-export function geoLocation(lat, lng) {
-  return {
-    type: 'GEOLOCATION',
-    lat,
-    lng,
-  };
-}
 export function selectType(newType) {
   return {
     type: 'SELECTTYPE',
@@ -42,24 +28,6 @@ export function startUploadImage() {
 export function endUploadImage() {
   return {
     type: 'UPLOADED_IMAGE',
-  }
-}
-export function requestAddress(lat, lng) {
-  return dispatch => {
-    dispatch(geoLocation(lat, lng));
-    return fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&result_type=street_address&language=zh-TW&key=AIzaSyBKewv2_WjbQe8kW46Ld525jQ299gwKnIA`)
-      .then(response => {
-        if(!response.ok){
-          throw Error('turn address failed');
-        }
-        return response.json();
-      })
-      .then(responseData => {
-        dispatch(address(responseData.results[0].formatted_address));
-      })
-      .catch(err => {
-        //console.warn(err);
-      });
   }
 }
 export function requestUpload(formData, token) {

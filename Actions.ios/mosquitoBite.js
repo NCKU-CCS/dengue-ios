@@ -1,12 +1,5 @@
 import { APIDomain } from './global.js';
 import {Alert} from 'react-native';
-export function geoLocation(lat, lng) {
-  return {
-    type: 'GEOLOCATION',
-    lat,
-    lng,
-  };
-}
 export function startUploadBite() {
   return {
     type: 'UPLOADING',

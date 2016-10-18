@@ -13,6 +13,7 @@ import CONSTANTS from '../Global.js';
 import { connect } from 'react-redux';
 import { requestLogin, fetchLoginFailed } from '../../Actions.ios/index.js';
 import Button from '../Common/Button.js';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 class SigninView extends Component {
   constructor(props) {
@@ -20,9 +21,14 @@ class SigninView extends Component {
     this.state = {phone: "", password: ""};
     this.signin = this.signin.bind(this);
   }
+  scrollToInput(event, refName) {
+    const node = React.findNodeHandle(this.refs[refName]);
+    const extraHeight = 80; // height of your text input
+    this.refs.scrollView.scrollToFocusedInput(event, node, extraHeight);
+  }
 
   signin() {
-    const {phone, password} = this.state;
+    const {phone, password} = this;
     const {toTop, dispatch, token} = this.props;
     if(phone == '' || password == '') {
       return alert('有未填資訊唷！');
@@ -43,7 +49,7 @@ class SigninView extends Component {
   }
   render() {
     return(
-      <ScrollView style = {styles.container} ref = 'scrollView'>
+      <KeyboardAwareScrollView style = {styles.container} ref = 'scrollView'>
         <Image
           source = {require('../../img/people.png')}
           style = {styles.image}
@@ -56,8 +62,7 @@ class SigninView extends Component {
             </Text>
             <TextInput
               style = {styles.textInput}
-              onChangeText = {(text) => this.setState({phone: text})}
-              value = {this.state.text}
+              onChangeText = {(text) => {this.phone = text}}
               keyboardType = 'numeric'
               selectTextOnFocus = {true}
               selectionColor = {CONSTANTS.mainColor}
@@ -66,13 +71,8 @@ class SigninView extends Component {
               maxLength = {10}
               returnKeyType = "next"
               onSubmitEditing = {() => this.refs.textinput2.focus()}
-              onFocus = {() => {
-                this.refs.textinput1.measure((x,y,width,height,px,py) => {
-
-                  if(py > CONSTANTS.screenHeight / 2){
-                    this.refs.scrollView.scrollTo({y:py - 200});
-                  }
-                });
+              onFocus={(event) => {
+                  this.scrollToInput(event, 'textinput1');
               }}
               >
               </TextInput>
@@ -83,20 +83,15 @@ class SigninView extends Component {
               </Text>
               <TextInput
                 style = {styles.textInput}
-                onChangeText = {(text) => this.setState({password: text})}
-                value = {this.state.text}
+                onChangeText = {(text) => {this.password = text}}
                 secureTextEntry = {true}
                 selectionColor = {CONSTANTS.mainColor}
                 autoCorrect = {false}
                 ref = 'textinput2'
                 returnKeyType = "send"
                 onSubmitEditing = {this.signin}
-                onFocus = {() => {
-                  this.refs.textinput2.measure((x,y,width,height,px,py) => {
-                    if(py > CONSTANTS.screenHeight / 2){
-                      this.refs.scrollView.scrollTo({y:py - 200});
-                    }
-                  });
+                onFocus={(event) => {
+                    this.scrollToInput(event, 'textinput2');
                 }}
                 >
                 </TextInput>
@@ -104,7 +99,7 @@ class SigninView extends Component {
               <Button onPress={this.signin}
                 buttonText="登入"
               />
-              </ScrollView>
+      </KeyboardAwareScrollView>
     );
   }
 }

@@ -11,25 +11,15 @@ import CONSTANTS from '../Global.js';
 export default class DengueTextInput extends React.Component {
   constructor(props) {
     super(props);
-    this.onChangeText = this.onChangeText.bind(this);
-    this.state = {
-      text: props.defaultValue ? props.defaultValue : ''
-    }
-    console.log(props.defaultValue);
+    this.onFocus = this.onFocus.bind(this);
+    this.value = props.defaultValue ? props.defaultValue : '';
   }
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      text: nextProps.defaultValue ?
-      nextProps.defaultValue :
-      ''
-    })
+    if (this.props.defaultValue !== nextProps.defaultValue)
+      this.value = nextProps.defaultValue ? nextProps.defaultValue : '';
   }
   onFocus() {
     this.refs.textInput.focus();
-  }
-  onChangeText(textInput) {
-    this.props.onChangeText(textInput);
-    this.setState({text: textInput});
   }
   render() {
     const {
@@ -43,11 +33,10 @@ export default class DengueTextInput extends React.Component {
       onFocus, // function
       hint, //array<strin>
       style,
-      multiline
+      multiline,
+      onEndEditing,
+      defaultValue,
     } = this.props;
-    const {
-      text
-    } = this.state;
     return (
       <View style = {styles.container}>
         <Text style = {styles.label}>
@@ -55,18 +44,19 @@ export default class DengueTextInput extends React.Component {
         </Text>
         <TextInput
           style = {[styles.textInput, style]}
-          onChangeText = {this.onChangeText}
+          onChangeText = {text => {this.value=text;}}
           onFocus = {() => onFocus(this.refs.textInput)}
           keyboardType = {keyboardType ? keyboardType : "default"}
           selectTextOnFocus = {false}
           secureTextEntry = {secure ? secure : false}
           autoCapitalize = "none"
-          value={text}
           autoCorrect = {false}
           placeholder = {placeholder}
           returnKeyType = {returnKeyType}
           onSubmitEditing = {onSubmitEditing ? onSubmitEditing : () => {}}
+          onEndEditing = {() => { onEndEditing(this.value) }}
           ref = "textInput"
+          defaultValue={defaultValue}
           maxLength = {maxLength ? maxLength : 64}
           multiline = {multiline ? multiline : false}
         />

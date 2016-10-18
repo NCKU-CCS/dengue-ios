@@ -8,40 +8,19 @@ import React, {
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import { connect } from 'react-redux';
+import { requestGps } from '../../Actions.ios'
 import Spinner from 'react-native-loading-spinner-overlay';
 var DEFAULT_URL = 'https://www.taiwanstat.com/realtime/dengue-vis/';
 class HotZoneInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lat: '',
-      lng: '',
       loading: false,
+
     }
   }
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.statusId === 'hotZoneInfo')
-      this.getGPS();
-  }
-  componentDidMount() {
-    this.getGPS();
-  }
-  getGPS() {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        let lat = position.coords.latitude;
-        let lng = position.coords.longitude;
-        this.setState({
-          lat,
-          lng
-        })
-      },
-      (error) => alert("無法取得定位資訊"),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
-  }
   render() {
-    const { lat, lng } = this.state;
+    const { lat, lng } = this.props;
     return(
       <View style={styles.webView}>
       <WebView
@@ -86,6 +65,8 @@ class HotZoneInfo extends Component {
 function select(state) {
   return {
     statusId: state.status.id,
+    lat: state.address.lat,
+    lng: state.address.lng,
   }
 }
 export default connect(select)(HotZoneInfo);

@@ -4,12 +4,10 @@ import { loadHospitalInfo, changeType, requestHospitalInfo, refreshStart, refres
 import {
   selectType,
   modifyAddress,
-  requestAddress,
   changeDescription,
   requestUpload,
 } from './breedingSource.js';
 import {
-  geoLocation,
   requestMosquitoBite,
   startUploadBite,
   endUploadBite,
@@ -25,6 +23,7 @@ import {
   requestUpdateStatus,
 } from './breedingSourceList.js';
 import { popImage, dropImage } from './popImage.js';
+import { requestGps, requestAddress } from './address.js';
 export {
   requestLogin,
   requestLogout,
@@ -44,11 +43,9 @@ export {
 
   selectType,
   modifyAddress,
-  requestAddress,
   changeDescription,
   requestUpload,
 
-  geoLocation,
   requestMosquitoBite,
   startUploadBite,
   endUploadBite,
@@ -63,4 +60,7 @@ export {
 
   popImage,
   dropImage,
+
+  requestGps,
+  requestAddress,
 };
