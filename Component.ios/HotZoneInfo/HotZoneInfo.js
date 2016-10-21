@@ -1,32 +1,52 @@
-import React, {
-  Component,
+import React from 'react';
+import {
   StyleSheet,
   WebView,
   View,
   Text,
+  Easing,
   ActivityIndicatorIOS,
+  TouchableHighlight,
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import { connect } from 'react-redux';
 import { requestGps } from '../../Actions.ios'
 import Spinner from 'react-native-loading-spinner-overlay';
-var DEFAULT_URL = 'https://www.taiwanstat.com/realtime/dengue-vis/';
-class HotZoneInfo extends Component {
+import FlipView from 'react-native-flip-view';
+
+const DEFAULT_URL1 = 'https://www.taiwanstat.com/realtime/dengue-vis/';
+const DEFAULT_URL2 = 'https://winone520.github.io/dengue_app/';
+class HotZoneInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: false,
-
     }
+    this.renderView = this.renderView.bind(this);
   }
   render() {
+    return (
+      <FlipView
+        style={{flex: 1}}
+        front={this.renderView(DEFAULT_URL1)}
+        back={this.renderView(DEFAULT_URL2)}
+        isFlipped={this.props.flip}
+        onFlip={(val) => {console.log('Flipped: ' + val);}}
+        flipAxis="y"
+        flipEasing={Easing.out(Easing.ease)}
+        flipDuration={700}
+        perspective={1000}
+      />
+    )
+  }
+  renderView(URL) {
     const { lat, lng } = this.props;
     return(
       <View style={styles.webView}>
       <WebView
         ref="web"
         automaticallyAdjustContentInsets={false}
-        source={{uri: `${DEFAULT_URL}?lat=${lat}&lng=${lng}`}}
+        source={{uri: `${URL}?lat=${lat}&lng=${lng}`}}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         decelerationRate="normal"
@@ -67,6 +87,7 @@ function select(state) {
     statusId: state.status.id,
     lat: state.address.lat,
     lng: state.address.lng,
+    flip: state.hotZoneInfo.flip
   }
 }
 export default connect(select)(HotZoneInfo);

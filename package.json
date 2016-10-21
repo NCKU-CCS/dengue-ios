@@ -12,6 +12,7 @@
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-device-info": "^0.9.5",
     "react-native-file-transfer": "0.0.3",
+    "react-native-flip-view": "^1.0.5",
     "react-native-image-resizer": "0.0.3",
     "react-native-keyboard-aware-scroll-view": "0.0.6",
     "react-native-loading-spinner-overlay": "^0.1.1",

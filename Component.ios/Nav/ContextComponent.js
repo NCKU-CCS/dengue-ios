@@ -16,10 +16,9 @@ import { requestGps } from '../../Actions.ios';
 import { connect } from 'react-redux';
 class ContextComponent extends Component {
     constructor(props) {
-        super(props);
-        this.state = {
-
-        };
+      super(props);
+      this.state = {
+      };
     }
     componentWillReceiveProps(nextProps) {
       if (nextProps.id !== this.props.id) {
@@ -31,7 +30,8 @@ class ContextComponent extends Component {
         nextProps.data !== this.props.data;
     }
     render() {
-        const {enter, back, toTop, data, id} = this.props;
+      const {enter, back, toTop, route} = this.props;
+      const {id, data} = route;
         switch (id) {
             case 'breedingSourceReport':
             return (<BreedingSourceReport enter={enter} back={back}  />);
@@ -42,7 +42,7 @@ class ContextComponent extends Component {
             case 'eachBreedingSourceReport':
             return (<EachBreedingSourceReport back={back} source={data}  />);
             case 'hotZoneInfo':
-            return (<HotZoneInfo back={back} />);
+            return (<HotZoneInfo back={back}/>);
             case 'hospitalInfo':
             return (<HospitalInfo enter={enter} back={back} />);
             case 'eachHospitalInfo':

@@ -7,6 +7,7 @@ import React, {
   TouchableHighlight,
   Alert,
   PanResponder,
+  Image
 } from 'react-native';
 import CONSTANTS from './Global.js';
 import { connect } from 'react-redux';
@@ -15,7 +16,7 @@ import ContextComponent from './Nav/ContextComponent.js';
 import TabBar from './Nav/TabBar.js';
 import PopImage from './Nav/PopImage.js';
 import PopImageBackground from './Nav/PopImageBackground.js';
-import { changeStatus, requestQuickLogin } from '../Actions.ios/index.js';
+import { changeStatus, requestQuickLogin, flipToggle } from '../Actions.ios/index.js';
 import Spinner from 'react-native-loading-spinner-overlay';
 class Nav extends Component {
   constructor(props) {
@@ -24,9 +25,13 @@ class Nav extends Component {
     this.back = this.back.bind(this);
     this.toTop = this.toTop.bind(this);
     this.logout = this.logout.bind(this);
+    this.flipMap = this.flipMap.bind(this);
+  }
+  flipMap() {
+    this.props.dispatch(flipToggle());
   }
   render() {
-    const { status, isFetching, quickLogin } = this.props;
+    const { status, isFetching, quickLogin, flip } = this.props;
     return (
       <View style = {styles.container}>
         <Navigator
@@ -34,13 +39,12 @@ class Nav extends Component {
             initialRoute = {status}
             renderScene={
               route =>
-              <ContextComponent
-                id = {route.id}
-                data = {route.data}
-                title = {status.title}
-                enter = {this.enter}
-                back = {this.back}
-                toTop = {this.toTop}
+                <ContextComponent
+                  route = {route}
+                  title = {status.title}
+                  enter = {this.enter}
+                  back = {this.back}
+                  toTop = {this.toTop}
               />
             }
             navigationBar={
@@ -57,6 +61,14 @@ class Nav extends Component {
                           {"〈  返回"}
                         </Text>
                       </TouchableHighlight>;
+                    else if (route.id === 'hotZoneInfo') {
+                      return <TouchableHighlight
+                        onPress={this.flipMap}
+                        underlayColor = {CONSTANTS.mainColor}
+                      >
+                        <Image source={require('../img/flipMap.png')} style={[styles.flipMap, styles.lowerTitle]}/>
+                      </TouchableHighlight>;
+                    }
                     return null;
                   },
                   RightButton: (route, navigator, index, navState) =>
@@ -76,9 +88,15 @@ class Nav extends Component {
                     let subTitle=null;
                     if(route.title === '環境回報')
                       subTitle = '請拍積水、髒亂處';
+                    let title = route.title;
+                    if (route.id === 'hotZoneInfo') {
+                      if (flip === false) {
+                        title = '疫情地圖';
+                      } else title = '熱區地圖';
+                    }
                     return <View style = {styles.titleView}>
                       <Text style = {[styles.text,styles.title, subTitle ? null : styles.lowerTitle]}>
-                        {route.title}
+                        {title}
                       </Text>
                       <Text style = {[styles.text, styles.subTitle]}>
                         {subTitle}
@@ -98,6 +116,7 @@ class Nav extends Component {
             <PopImage
               id = {status.id}
               back = {this.back}
+              toTop = {this.toTop}
             />
         <Spinner visible={isFetching} />
       </View>
@@ -143,13 +162,13 @@ class Nav extends Component {
         );
       });
   }
-
 }
 function select(state) {
   return {
     status: state.status,
     isFetching: state.login.isFetching,
     quickLogin: state.login.quick,
+    flip: state.hotZoneInfo.flip
   };
 }
 export default connect(select)(Nav);
@@ -177,7 +196,7 @@ var styles = StyleSheet.create({
     alignItems: 'center',
   },
   lowerTitle: {
-    paddingTop: 10,
+    marginTop: 10
   },
   title: {
     fontSize: 20,
@@ -187,6 +206,12 @@ var styles = StyleSheet.create({
   },
   leftButton: {
     marginLeft: 10,
+  },
+  flipMap: {
+    width: 30,
+    height:30,
+    marginLeft: 20,
+    resizeMode: 'contain',
   },
   rightButton: {
     marginRight: 30,

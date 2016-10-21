@@ -24,7 +24,10 @@ import {
 } from './breedingSourceList.js';
 import { popImage, dropImage } from './popImage.js';
 import { requestGps, requestAddress } from './address.js';
+import { flipToggle } from './hotZoneInfo.js';
 export {
+  flipToggle,
+
   requestLogin,
   requestLogout,
   storageLoadLogin,

@@ -9,7 +9,7 @@ import React, {
 
 import CONSTANTS from '../Global.js';
 import { connect } from 'react-redux';
-import { dropImage } from '../../Actions.ios/index.js';
+import { dropImage, flipToggle } from '../../Actions.ios/index.js';
 class PopImage extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +54,7 @@ class PopImage extends Component {
       require('../../img/popImage3.png'),
     ],
     { imageIndex, top } = this.state,
-    { dispatch, back, id } = this.props;
+    { dispatch, back, id, toTop, flip } = this.props;
     return (
           <Animated.View
             style = {{
@@ -66,7 +66,10 @@ class PopImage extends Component {
           <TouchableWithoutFeedback
           onPress={() => {
             dispatch(dropImage())
-            if(id === 'showImage') back();
+            if(id === 'showImage') {
+              toTop()
+              if (!flip) dispatch(flipToggle());
+            };
           }}
             style = {{
             }}
@@ -90,7 +93,8 @@ class PopImage extends Component {
 
 function select(state) {
   return {
-  popImage: state.popImage,
+    popImage: state.popImage,
+    flip: state.hotZoneInfo.flip
   }
 
 }
