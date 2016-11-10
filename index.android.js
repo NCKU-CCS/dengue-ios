@@ -19,7 +19,7 @@ var PAGE_SIZE = 25;
 var PARAMS = '?apikey=' + API_KEY + '&page_limit=' + PAGE_SIZE;
 var REQUEST_URL = API_URL + PARAMS;
 
-class proj1 extends Component {
+class DengueFever extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -115,4 +115,4 @@ var styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('proj1', () => proj1);
+AppRegistry.registerComponent('DengueFever', () => DengueFever);
