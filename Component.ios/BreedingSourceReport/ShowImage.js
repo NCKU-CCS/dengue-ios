@@ -12,7 +12,6 @@ import React, {
   PixelRatio,
 } from 'react-native';
 import CONSTANTS from '../Global.js';
-import BlurView from 'react-native-blur';
 import DengueTextInput from '../Common/DengueTextInput';
 import Button from '../Common/Button';
 import {
