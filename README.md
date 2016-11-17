@@ -16,72 +16,115 @@
 ## Structure
 
 >Actions.ios
-*這個地方放redux的actions, 對應每個component*
+```
+這個地方放redux的actions, 對應每個component
+```
 
 >Component.ios
-*app的主要介面元件都放在這*
+```
+app的主要介面元件都放在這
+```
 
 >>App.js
-*app起點,決定接下來進入app主體或是介紹頁*
+```
+app起點,決定接下來進入app主體或是介紹頁
+```
 
 >>BreedingSourceReport
-*環境髒亂回報*
+```
+環境髒亂回報
+```
 
 >>BreedingSourceReportList
-*環境髒亂回報列表*
+```
+環境髒亂回報列表
+```
 
 >>Common
-*共用的component放在這裡 例如：button, text等等*
+```
+共用的component放在這裡 例如：button, text等等
+```
 
 >>Global.js
-*存放一些常共用的變數：顏色 高度等等*
+```
+存放一些常共用的變數：顏色 高度等等
+```
 
 >>HospitalInfo
-*就醫資訊*
+```
+就醫資訊
+```
 
 >>HotZoneInfo
-*熱區*
+```
+熱區
+```
 
 >>Intro
-*第一次登入的畫面*
+```
+第一次登入的畫面
+```
 
 >>MosquitoBiteReport
-*蚊子叮咬回報*
+```
+蚊子叮咬回報
+```
 
 >>Nav
-*導覽的相關component包括tabbar*
+```
+導覽的相關component包括tabbar
+```
 
 >>Nav.js
-*導覽*
+```
+導覽
+```
 
 >>UserSetting
-*使用者設定 包括登入 註冊都在這邊*
+```
+使用者設定 包括登入 註冊都在這邊
+```
 
 >README.md
 
 >Reducers.ios
-*redux的reducer 對應每個component*
+```
+redux的reducer 對應每個component
+```
 
 >android
-*這是android原生的一些檔案, 寫code的時候不會用到*
+```
+這是android原生的一些檔案, 寫code的時候不會用到
+```
 
 >img
-*就是圖檔*
+```
+就是圖檔
+```
 
 >index.android.js
-*android的entry*
+```
+android的entry
+```
 
 >index.ios.js
-*ios的entry*
+```
+ios的entry
+```
 
 >ios
-*ios原生的檔案，寫code的時候一樣不會用到，但設定ios相關東西通常用xcode打開裡面的.xcodeproj*
+```
+ios原生的檔案，寫code的時候一樣不會用到，
+但設定ios相關東西通常用xcode打開裡面的.xcodeproj
+```
 
 >node_modules
 
 >package.json
 
 >.eslintrc.js
-*coding style config*
+```
+coding style config
+```
 
 ## LICENSE
