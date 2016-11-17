@@ -1,3 +1,5 @@
+// list中的每個item介面
+
 import React, {
   Component,
   View,

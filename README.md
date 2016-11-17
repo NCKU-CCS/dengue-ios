@@ -126,5 +126,6 @@ ios原生的檔案，寫code的時候一樣不會用到，
 ```
 coding style config
 ```
-
+#### 其他
+在components裡面很多會有一個fucntion select會return一個object 那是代表要從data tree挑選出怎樣的data給那個component 
 ## LICENSE

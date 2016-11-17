@@ -37,6 +37,7 @@ class Page extends Component {
     );
   }
   skipButton() {
+    // 如果完成介紹就快速登入
     const {dispatch, skip} = this.props;
     if(skip) {
       return (

@@ -1,3 +1,4 @@
+// 切換type的選單
 import React, {
     Component,
     View,

@@ -23,6 +23,7 @@ class BreedingSourceReportList extends Component {
     this.onEndReached = this.onEndReached.bind(this);
   }
   componentDidMount() {
+    // mount後 取得孳生源個數 ->（依照所選status） 讀取手機資料 -> 更新資料
     let {status} = this.props.breedingSourceList;
     const {dispatch, token} = this.props;
     dispatch(requestBreedingSourceListNumber(status, token))
@@ -31,6 +32,7 @@ class BreedingSourceReportList extends Component {
     // this.updateData(this.state.status);
   }
   onRefresh() {
+    // 處理下拉更新
     const {dispatch, token} = this.props;
     const {status} = this.props.breedingSourceList;
     dispatch(breedingrefreshStart());
@@ -40,6 +42,7 @@ class BreedingSourceReportList extends Component {
       .then(() => dispatch(breedingrefreshDone()));
   }
   changeSource(status) {
+    // 切換status
     const {dispatch, token} = this.props;
     if(status !== this.props.breedingSourceList.status) {
       dispatch(selectStatus(status));
@@ -48,6 +51,7 @@ class BreedingSourceReportList extends Component {
     }
   }
   onEndReached() {
+    // 滑到底的更新處理，因每次只拿5比資料
     let {status, timestamp} = this.props.breedingSourceList;
     const {dispatch, token} = this.props;
     dispatch(requestBreedingSourceListNumber(status, token))

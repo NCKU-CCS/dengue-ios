@@ -1,3 +1,4 @@
+// 處理上傳
 import React, {
   Component,
   StyleSheet,
@@ -29,10 +30,12 @@ class ShowImage extends Component {
     this.scrollToInput = this.scrollToInput.bind(this);
   }
   componentDidMount() {
+    // mount後 轉換經緯度為座標
     const {dispatch, lat, lng} = this.props;
     dispatch(requestAddress(lat, lng));
   }
   componentWillReceiveProps(nextProps) {
+    // 判斷是否需更新位置
     const {lat, lng, dispatch} = this.props;
     if(nextProps.lat !== lat && nextProps.lng !== lng) {
       alert('here');
@@ -40,6 +43,7 @@ class ShowImage extends Component {
     }
   }
   scrollToInput(event, refName) {
+    // 處理input不被鍵盤擋住
     let node = React.findNodeHandle(this.refs[refName]);
     let extraHeight = 70; // height of your text input
     this.refs.scrollView.scrollToFocusedInput(event, node, extraHeight);

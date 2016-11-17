@@ -1,3 +1,4 @@
+// 處理拍照
 import React, {
   Component,
   StyleSheet,

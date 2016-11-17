@@ -25,6 +25,7 @@ class Nav extends Component {
     this.flipMap = this.flipMap.bind(this);
   }
   flipMap() {
+    // 翻轉地圖
     this.props.dispatch(flipToggle());
   }
   render() {
@@ -115,28 +116,33 @@ class Nav extends Component {
     );
   }
   enter(id, title, data) {
+    // 進入某個新的頁面
+    // id為每個頁面特有的,
+    // title是navigatorbar上顯示的文字,
+    // data是要經由navigator給予該component的data
     // TODO change nav to redux
     const routeList = this.refs.nav.getCurrentRoutes();
     const route = this.containRoute(id, data, routeList);
     const {jumpTo, push} = this.refs.nav;
-    if(route)
-    jumpTo(route);
-    else
-    push({id: id, title: title, data: data});
+    if(route) jumpTo(route);
+    else push({id: id, title: title, data: data});
     this.props.dispatch(changeStatus(title, id));
   }
   back() {
+    // 回到上一頁
     const routeList = this.refs.nav.getCurrentRoutes();
     const currentRoute = routeList[routeList.length - 2];
     this.refs.nav.pop();
     this.props.dispatch(changeStatus(currentRoute.title, currentRoute.id, ));
   }
   toTop() {
+    // 返回第一頁 也就是地圖
     const firstRoute = this.refs.nav.getCurrentRoutes()[0];
     this.refs.nav.popToTop();
     this.props.dispatch(changeStatus(firstRoute.title, firstRoute.id));
   }
   containRoute(routeId, routeData, routeList) {
+    // 判斷navigator routes中是否含有某頁面
     for(let x in routeList) {
       if(routeId === routeList[x].id && routeData === routeList[x].data)
       return routeList[x];
@@ -144,6 +150,7 @@ class Nav extends Component {
     return false;
   }
   logout() {
+    // 登出
     this.props.dispatch(requestQuickLogin())
     .then(() => {
       Alert.alert('已登出', '即將回到首頁',

@@ -25,16 +25,15 @@ class HospitalInfo extends Component {
         this.loadData();
     }
     loadData() {
+      // 從手機抓取已存資料, 若過期會更新
       this.props.dispatch(loadHospitalInfo());
     }
-    fetchData() {
-      const {dispatch, token, lat, lng} = this.props;
-      dispatch(requestHospitalInfo(lat, lng, token));
-    }
     changeType(newType) {
+      // 切換醫院 診所 其他
       this.props.dispatch(changeType(newType));
     }
     onRefresh() {
+      // 處理下拉更新
       const {dispatch, lat, lng} = this.props;
       dispatch(refreshStart());
       dispatch(requestHospitalInfo(lat, lng))

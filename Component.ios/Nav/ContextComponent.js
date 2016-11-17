@@ -1,3 +1,6 @@
+//
+// 這個component負責從navigator傳來的id判斷要render哪個頁面
+//
 import React, {
     Component
 } from 'react-native';
@@ -20,6 +23,7 @@ class ContextComponent extends Component {
     };
   }
   componentWillReceiveProps(nextProps) {
+    // 每次切換頁面 皆重新抓取gps （為了地圖）
     if (nextProps.id !== this.props.id)
       this.props.dispatch(requestGps());
   }
