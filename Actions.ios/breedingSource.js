@@ -1,4 +1,4 @@
-import { APIDomain } from './global.js';
+import {APIDomain} from './global.js';
 export function selectType(newType) {
   return {
     type: 'SELECTTYPE',
@@ -23,12 +23,12 @@ export function modifyAddress(modifiedAddress) {
 export function startUploadImage() {
   return {
     type: 'UPLOADING_IMAGE',
-  }
+  };
 }
 export function endUploadImage() {
   return {
     type: 'UPLOADED_IMAGE',
-  }
+  };
 }
 export function requestUpload(formData, token) {
   return dispatch => {
@@ -43,10 +43,8 @@ export function requestUpload(formData, token) {
         })
         .then(response => {
             dispatch(endUploadImage());
-            if(!response.ok){
+            if(!response.ok)
                 throw Error(response.status);
-            }
-        })
-      }
-
+        });
+      };
 }

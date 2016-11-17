@@ -9,7 +9,7 @@ const initLogin = {
   quick: true,
   info: {
     token: '',
-    user_uuid: '',
+    user_uuid: '', // eslint-disable-line camelcase
   },
   swiper: 0,
   isFetching: false,
@@ -27,14 +27,14 @@ export function login(state = initLogin, action) {
         info: action.info,
         swiper: -1,
         isFetching: false,
-      }
+      };
     case 'QUICKLOGIN':
       return {
         quick: true,
         info: action.info,
         swiper: -1,
         isFetching: false,
-      }
+      };
     case 'FIRSTOPEN':
       return Object.assign({}, initLogin, {swiper: 1});
     default:

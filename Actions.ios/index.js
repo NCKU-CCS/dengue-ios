@@ -1,6 +1,6 @@
-import { requestLogout, requestLogin, storageLoadLogin, requestQuickLogin, requestSignup, fetchLoginFailed } from './login.js';
-import { changeStatus } from './status.js';
-import { loadHospitalInfo, changeType, requestHospitalInfo, refreshStart, refreshDone } from './hospital.js';
+import {requestLogout, requestLogin, storageLoadLogin, requestQuickLogin, requestSignup, fetchLoginFailed} from './login.js';
+import {changeStatus} from './status.js';
+import {loadHospitalInfo, changeType, requestHospitalInfo, refreshStart, refreshDone} from './hospital.js';
 import {
   selectType,
   modifyAddress,
@@ -22,9 +22,9 @@ import {
   breedingrefreshDone,
   requestUpdateStatus,
 } from './breedingSourceList.js';
-import { popImage, dropImage } from './popImage.js';
-import { requestGps, requestAddress } from './address.js';
-import { flipToggle } from './hotZoneInfo.js';
+import {popImage, dropImage} from './popImage.js';
+import {requestGps, requestAddress} from './address.js';
+import {flipToggle} from './hotZoneInfo.js';
 export {
   flipToggle,
 

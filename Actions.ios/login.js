@@ -1,7 +1,7 @@
-import { APIDomain, storage } from './global.js';
+import {APIDomain, storage} from './global.js';
 const saveLoginState = responseData =>
   storage.save({
-    key: 'loginState',  //注意:请不要在key中使用_下划线符号!
+    key: 'loginState',  // 注意:请不要在key中使用_下划线符号!
     rawData: responseData,
     expires: 1000 * 60
   });
@@ -30,17 +30,17 @@ export function logout() {
 export function firstOpen() {
   return {
     type: 'FIRSTOPEN',
-  }
+  };
 }
 export function fetchLogin() {
   return {
     type: 'FETCHING_LOGIN'
-  }
+  };
 }
 export function fetchLoginFailed() {
   return {
     type: 'FETCHING_FAILED',
-  }
+  };
 }
 export function storageLoadLogin() {
   return dispatch =>
@@ -68,7 +68,7 @@ export function storageLoadLogin() {
 
 export function requestLogin(phone, password, token) {
   return dispatch => {
-    const data = { phone,password };
+    const data = {phone, password};
     dispatch(fetchLogin());
     return fetch(`${APIDomain}/users/signin/`, {
       method: 'POST',
@@ -85,7 +85,7 @@ export function requestLogin(phone, password, token) {
       .then(responseData => {
         dispatch(login(responseData, false));
         saveLoginState({info: responseData, quick: false});
-      })
+      });
   };
 }
 export function requestQuickLogin() {
@@ -99,8 +99,8 @@ export function requestQuickLogin() {
       .then(responseData => {
         dispatch(login(responseData, true));
         saveLoginState({info: responseData, quick: true});
-      })
-  }
+      });
+  };
 }
 export function requestLogout() {
   return dispatch =>
@@ -110,22 +110,21 @@ export function requestLogout() {
         removeLoginState();
         return dispatch(logout());
       })
-      .then(() => dispatch(requestQuickLogin()))
+      .then(() => dispatch(requestQuickLogin()));
 }
 export function getInfo() {
   return dispatch =>
     fetch(`${APIDomain}/users/info/`)
       .then(response => {
-         if(!response.ok){
+         if(!response.ok)
           throw Error(response.status);
-        }
+
         return response.json();
       })
     .then(responseData => {
         dispatch(login(responseData));
         saveLoginState(responseData);
-      })
-
+      });
 }
 export function requestSignup(formData, token) {
   return dispatch => {
@@ -139,16 +138,15 @@ export function requestSignup(formData, token) {
       body: JSON.stringify(formData)
     })
     .then((response) => {
-      if(!response.ok){
+      if(!response.ok)
           throw Error(response.status);
-        }
+
       return response.json();
-      //return dispatch(getInfo());
+      // return dispatch(getInfo());
       })
     .then(responseData => {
         dispatch(login(responseData, false));
         saveLoginState({info: responseData, quick: false});
-      })
-  }
-
+      });
+  };
 }

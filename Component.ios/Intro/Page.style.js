@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import CONSTANTS from '../Global.js';
 export const styles = StyleSheet.create({
   container: {
@@ -22,11 +22,11 @@ export const styles = StyleSheet.create({
   description: {
     position: 'absolute',
     fontSize: 16,
-    color: "#555",
-    lineHeight:25,
+    color: '#555',
+    lineHeight: 25,
     bottom: 100,
     paddingHorizontal: 32,
-    marginLeft:8,
+    marginLeft: 8,
 
   },
   img: {

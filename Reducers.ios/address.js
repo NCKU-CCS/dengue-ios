@@ -34,7 +34,7 @@ export function address(state = initState, action) {
     case 'ADDRESS':
       return Object.assign({},
         state,
-        { address: action.address }
+        {address: action.address}
       );
     default:
       return state;

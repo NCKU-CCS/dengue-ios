@@ -5,10 +5,10 @@ import React, {
   TouchableHighlight,
   Image
 } from 'react-native';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import CONSTANTS from '../Global.js';
-import { requestQuickLogin } from '../../Actions.ios/index.js';
-import { styles } from './Page.style.js';
+import {requestQuickLogin} from '../../Actions.ios/index.js';
+import {styles} from './Page.style.js';
 import Spinner from 'react-native-loading-spinner-overlay';
 class Page extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class Page extends Component {
     this.skipButton = this.skipButton.bind(this);
   }
   render() {
-    const { titleText, imgSource, description, isFetching } = this.props;
+    const {titleText, imgSource, description, isFetching} = this.props;
     return(
       <View style = {styles.container}>
         <View style = {styles.title}>
@@ -34,10 +34,10 @@ class Page extends Component {
                 {this.skipButton()}
             <Spinner visible={isFetching} />
       </View>
-    )
+    );
   }
   skipButton() {
-    const { dispatch, skip } = this.props;
+    const {dispatch, skip} = this.props;
     if(skip) {
       return (
         <TouchableHighlight
@@ -60,6 +60,6 @@ class Page extends Component {
 function select(state) {
   return {
     isFetching: state.login.isFetching,
-  }
+  };
 }
 export default connect(select)(Page);

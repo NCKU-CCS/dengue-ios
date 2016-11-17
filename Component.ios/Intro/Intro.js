@@ -6,7 +6,6 @@ import Page from './Page.js';
 export default class Intro extends Component {
   constructor(props) {
     super(props);
-
   }
   render() {
     return(

@@ -4,16 +4,16 @@ reducers
 
 */
 
-import { combineReducers } from 'redux';
-import { login } from './login.js';
-import { status } from './status.js';
-import { hospital } from './hospital.js';
-import { breedingSource } from './breedingSource.js';
-import { mosquitoBite } from './mosquitoBite.js';
-import { breedingSourceList } from './breedingSourceList.js';
-import { popImage } from './popImage.js';
-import { address } from './address.js';
-import { hotZoneInfo } from './hotZoneInfo.js';
+import {combineReducers} from 'redux';
+import {login} from './login.js';
+import {status} from './status.js';
+import {hospital} from './hospital.js';
+import {breedingSource} from './breedingSource.js';
+import {mosquitoBite} from './mosquitoBite.js';
+import {breedingSourceList} from './breedingSourceList.js';
+import {popImage} from './popImage.js';
+import {address} from './address.js';
+import {hotZoneInfo} from './hotZoneInfo.js';
 
 const reducer = combineReducers({
   login,
@@ -25,6 +25,6 @@ const reducer = combineReducers({
   popImage,
   address,
   hotZoneInfo,
-})
+});
 
 export default reducer ;

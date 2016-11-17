@@ -2,11 +2,10 @@ import React, {
   Component,
   Animated,
   View,
-  Text,
 } from 'react-native';
 
 import CONSTANTS from '../Global.js';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 class PopImageBackground extends Component {
   constructor(props) {
     super(props);
@@ -17,26 +16,25 @@ class PopImageBackground extends Component {
     };
   }
   componentDidUpdate() {
-    const { popImage } = this.props;
+    const {popImage} = this.props;
     if(popImage) {
-       this.state.top.setValue(500);
-          Animated.timing(
-            this.state.top,
-            {
-              toValue: 0,
-              duration: 300,
-            }
-          ).start(() => {
-            Animated.timing(this.state.opacity, {
-              toValue: 0.5,
-              duration: 300,
-            }).start()
-          });
-    }
-    else {
+      this.state.top.setValue(500);
+        Animated.timing(
+          this.state.top,
+          {
+            toValue: 0,
+            duration: 300,
+          }
+        ).start(() => {
+          Animated.timing(this.state.opacity, {
+            toValue: 0.5,
+            duration: 300,
+          }).start();
+        });
+    } else {
       Animated.timing(this.state.opacity, {
         toValue: 0,
-        duration:300
+        duration: 300
       });
     Animated.timing(
       this.state.top,
@@ -45,12 +43,10 @@ class PopImageBackground extends Component {
         duration: 300,
       }
     ).start();
-
     }
   }
   render() {
-    const { imageIndex, top, opacity } = this.state,
-    { popImage } = this.props;
+    const {top, opacity} = this.state;
     return (
       <Animated.View
         style = {{
@@ -68,18 +64,16 @@ class PopImageBackground extends Component {
             height: CONSTANTS.screenHeihgt,
           }}
         >
-
         </View>
       </Animated.View>
-    )
+    );
   }
 }
 
 function select(state) {
   return {
   popImage: state.popImage,
-  }
-
+  };
 }
 
 export default connect(select)(PopImageBackground);

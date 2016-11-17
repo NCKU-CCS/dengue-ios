@@ -1,4 +1,4 @@
-import { APIDomain, storage } from './global.js';
+import {APIDomain, storage} from './global.js';
 const saveHospitalInfo = responseData =>
   storage.save({
     key: 'hospitalInfo',
@@ -39,7 +39,7 @@ export function loadHospitalInfo() {
 
     })
       .then(responseData => {
-        dispatch(hospitalInfo(responseData))
+        dispatch(hospitalInfo(responseData));
       })
       .catch(err =>{
         navigator.geolocation.getCurrentPosition(
@@ -49,7 +49,7 @@ export function loadHospitalInfo() {
             dispatch(requestHospitalInfo(lat, lng));
           },
           error => {
-            //console.warn(error)
+            // console.warn(error)
             alert('找不到定位資訊');
           },
           {
@@ -69,9 +69,9 @@ export function requestHospitalInfo(lat, lng, token) {
       }
     })
       .then(response => {
-        if(!response.ok){
+        if(!response.ok)
           throw Error(response.statusText);
-        }
+
         return response.json();
       })
       .then(responseData => {
@@ -79,8 +79,7 @@ export function requestHospitalInfo(lat, lng, token) {
         saveHospitalInfo(responseData);
       })
       .catch(error => {
-        //console.error(error);
+        // console.error(error);
         alert('找不到定位資訊');
       });
-
 }

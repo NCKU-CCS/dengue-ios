@@ -2,8 +2,6 @@ import React, {
   View,
   Component,
   StyleSheet,
-  ListView,
-  ActivityIndicatorIOS
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import BreedingListView from './BreedingListView.js';
@@ -15,7 +13,7 @@ import {
   breedingrefreshDone,
   selectStatus,
 } from '../../Actions.ios/index.js';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
 class BreedingSourceReportList extends Component {
   constructor(props) {
@@ -24,34 +22,34 @@ class BreedingSourceReportList extends Component {
     this.onRefresh = this.onRefresh.bind(this);
     this.onEndReached = this.onEndReached.bind(this);
   }
-  componentDidMount(){
-    let { status } = this.props.breedingSourceList;
-    const { dispatch, token } = this.props;
+  componentDidMount() {
+    let {status} = this.props.breedingSourceList;
+    const {dispatch, token} = this.props;
     dispatch(requestBreedingSourceListNumber(status, token))
     .then(() => dispatch(loadBreedingSourceList(status, token)))
     .then(() => dispatch(requestBreedingSourceList(status, '', token)));
-    //this.updateData(this.state.status);
+    // this.updateData(this.state.status);
   }
-  onRefresh(){
-    const { dispatch, token } = this.props,
-      { status, timestamp } = this.props.breedingSourceList;
+  onRefresh() {
+    const {dispatch, token} = this.props;
+    const {status} = this.props.breedingSourceList;
     dispatch(breedingrefreshStart());
 
     dispatch(requestBreedingSourceListNumber(status, token))
-      .then(() =>  dispatch(requestBreedingSourceList(status, '', token)))
+      .then(() => dispatch(requestBreedingSourceList(status, '', token)))
       .then(() => dispatch(breedingrefreshDone()));
   }
-  changeSource(status){
-    const { dispatch, token } = this.props;
-    if(status !== this.props.breedingSourceList.status){
+  changeSource(status) {
+    const {dispatch, token} = this.props;
+    if(status !== this.props.breedingSourceList.status) {
       dispatch(selectStatus(status));
       dispatch(requestBreedingSourceListNumber(status, token))
         .then(() => dispatch(loadBreedingSourceList(status, token)));
     }
   }
   onEndReached() {
-    let { status, timestamp } = this.props.breedingSourceList;
-    const { dispatch, token } = this.props;
+    let {status, timestamp} = this.props.breedingSourceList;
+    const {dispatch, token} = this.props;
     dispatch(requestBreedingSourceListNumber(status, token))
     .then(() => dispatch(requestBreedingSourceList(status, timestamp, token)));
   }
@@ -63,7 +61,7 @@ class BreedingSourceReportList extends Component {
       refreshing,
     } = this.props.breedingSourceList;
     return(
-      <View  style={styles.container}>
+      <View style={styles.container}>
       <BreedingListView
         dataSource = {dataSource}
         sourceNumber = {sourceNumber}
@@ -76,7 +74,6 @@ class BreedingSourceReportList extends Component {
       <Spinner visible={!this.props.breedingSourceList.loaded} />
     </View>
     );
-
   }
 
 }
@@ -89,10 +86,10 @@ function select(state) {
 }
 export default connect(select)(BreedingSourceReportList);
 const styles = StyleSheet.create({
-  container:{
+  container: {
     backgroundColor: CONSTANTS.backgroundColor,
-    flex:1,
-    justifyContent:'center',
+    flex: 1,
+    justifyContent: 'center',
     paddingTop: 80,
   }
 });

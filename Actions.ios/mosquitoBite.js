@@ -1,14 +1,13 @@
-import { APIDomain } from './global.js';
-import {Alert} from 'react-native';
+import {APIDomain} from './global.js';
 export function startUploadBite() {
   return {
     type: 'UPLOADING',
-  }
+  };
 }
 export function endUploadBite() {
   return {
     type: 'UPLOADED',
-  }
+  };
 }
 export function requestMosquitoBite(data, token) {
   return dispatch =>{
@@ -23,10 +22,8 @@ export function requestMosquitoBite(data, token) {
     })
       .then(response => {
         dispatch(endUploadBite());
-        if(!response.ok){
+        if(!response.ok)
           throw Error(response.status);
-        }
       });
-  }
-
+  };
 }

@@ -8,11 +8,11 @@ import React, {
     Component
 } from 'react-native';
 
-import { connect, Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
 
-import thunkMiddleware from 'redux-thunk';
-import createLogger from 'redux-logger';
+import thunkMiddleware from 'redux-thunk'; // for 非同步action
+import createLogger from 'redux-logger'; // for log action
 import reducer from './Reducers.ios/index.js';
 
 
@@ -35,8 +35,4 @@ export default class Root extends Component {
     );
   }
 }
-
-
-
-
 AppRegistry.registerComponent('DengueFever', () => Root);

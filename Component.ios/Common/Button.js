@@ -1,7 +1,7 @@
 import React from 'react';
-import { View,TouchableOpacity, Text, } from 'react-native';
+import {TouchableOpacity, Text} from 'react-native';
 import CONSTANTS from '../Global.js';
-export default function Button({ onPress, buttonText }) {
+export default function Button({onPress, buttonText}) {
   return(
     <TouchableOpacity
       onPress={onPress}
@@ -13,20 +13,19 @@ export default function Button({ onPress, buttonText }) {
       </Text>
     </TouchableOpacity>
   );
-
 }
 
 const styles = {
   signup: {
-    //height: 40,
-    width:200,
+    // height: 40,
+    width: 200,
     marginTop: 15,
     paddingVertical: 8,
-    //paddingHorizontal: 25,
+    // paddingHorizontal: 25,
     backgroundColor: CONSTANTS.mainColor,
-    borderRadius :5,
+    borderRadius: 5,
     borderColor: CONSTANTS.mainColor,
-    borderWidth:1,
+    borderWidth: 1,
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
@@ -36,4 +35,4 @@ const styles = {
     fontSize: 20,
     color: '#fff',
   },
-}
+};

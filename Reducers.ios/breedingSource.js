@@ -1,6 +1,6 @@
 const initState = {
-  type:'室內',
-  description:'',
+  type: '室內',
+  description: '',
   modifiedAddress: '',
   uploading: false,
 };
@@ -9,17 +9,17 @@ export function breedingSource(state = initState, action) {
     case 'SELECTTYPE':
       return Object.assign({},
         state,
-        { type: action.newType }
+        {type: action.newType}
       );
     case 'CHANGEDESCRIPTION':
       return Object.assign({},
         state,
-        { description: action.description }
+        {description: action.description}
       );
     case 'MODIFYADDRESS':
       return Object.assign({},
         state,
-        { modifiedAddress: action.modifiedAddress}
+        {modifiedAddress: action.modifiedAddress}
       );
     case 'UPLOADING_IMAGE':
       return Object.assign({}, state, {

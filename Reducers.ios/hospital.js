@@ -1,7 +1,7 @@
-import { ListView } from 'react-native';
+import {ListView} from 'react-native';
 
 const initState = {
-  dataSource :null,
+  dataSource: null,
   displaySource: new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
   }),
@@ -13,11 +13,11 @@ const initState = {
 export function hospital(state = initState, action) {
   switch(action.type) {
     case 'HOSPITALINFO':
-      const { responseData } = action,
-        displaySource = new ListView.DataSource({
+      const {responseData} = action;
+      const displaySource = new ListView.DataSource({
           rowHasChanged: (row1, row2) => row1 !== row2,
-        }).cloneWithRows(responseData),
-        sourceNumber = responseData.length;
+        }).cloneWithRows(responseData);
+      const sourceNumber = responseData.length;
       return {
         dataSource: responseData,
         displaySource,
@@ -27,23 +27,19 @@ export function hospital(state = initState, action) {
         refreshing: false,
       };
     case 'CHANGETYPE':
-      const { newType } = action;
+      const {newType} = action;
       let displaySourceData= [];
-      if(newType === '全部'){
+      if(newType === '全部') {
         displaySourceData = [...state.dataSource];
-      }
-      else if (newType === '其他') {
+      } else if (newType === '其他') {
         displaySourceData = state.dataSource.filter((d) => {
-          if(d.name.indexOf('醫院') === -1 && d.name.indexOf('診所') === -1){
+          if(d.name.indexOf('醫院') === -1 && d.name.indexOf('診所') === -1)
             return d;
-          }
         });
-      }
-      else{
+      } else{
         displaySourceData = state.dataSource.filter((d) => {
-          if(d.name.indexOf(newType) !== -1){
+          if(d.name.indexOf(newType) !== -1)
             return d;
-          }
         });
       }
       return {
@@ -63,7 +59,7 @@ export function hospital(state = initState, action) {
         sourceNumber: state.sourceNumber,
         loaded: true,
         refreshing: true,
-      }
+      };
     case 'REFRESHSTART':
       return {
         dataSource: [...state.dataSource],
@@ -72,7 +68,7 @@ export function hospital(state = initState, action) {
         sourceNumber: state.sourceNumber,
         loaded: true,
         refreshing: false,
-      }
+      };
 
     default :
       return state;

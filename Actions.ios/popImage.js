@@ -4,8 +4,8 @@ export function popImage() {
   };
 }
 
-export function dropImage(){
+export function dropImage() {
   return {
     type: 'DROPIMAGE',
-  }
+  };
 }

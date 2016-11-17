@@ -7,11 +7,11 @@ import React, {
     ActivityIndicatorIOS,
     RefreshControl
 } from 'react-native';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import CONSTANTS from '../Global.js';
 import EachSource from './EachSource.js';
 import Buttons from './Buttons.js';
-import { loadHospitalInfo, changeType, requestHospitalInfo, refreshStart, refreshDone } from '../../Actions.ios/index.js';
+import {loadHospitalInfo, changeType, requestHospitalInfo, refreshStart, refreshDone} from '../../Actions.ios/index.js';
 class HospitalInfo extends Component {
     constructor(props) {
       super(props);
@@ -21,31 +21,30 @@ class HospitalInfo extends Component {
       this.onRefresh = this.onRefresh.bind(this);
       this.renderPlaceText = this.renderPlaceText.bind(this);
     }
-    componentDidMount(){
+    componentDidMount() {
         this.loadData();
     }
     loadData() {
       this.props.dispatch(loadHospitalInfo());
     }
     fetchData() {
-      const { dispatch, token, lat, lng } = this.props;
+      const {dispatch, token, lat, lng} = this.props;
       dispatch(requestHospitalInfo(lat, lng, token));
     }
     changeType(newType) {
       this.props.dispatch(changeType(newType));
     }
-    onRefresh(){
-      const { dispatch, lat, lng } = this.props;
+    onRefresh() {
+      const {dispatch, lat, lng} = this.props;
       dispatch(refreshStart());
       dispatch(requestHospitalInfo(lat, lng))
         .then(() => dispatch(refreshDone()));
     }
     render() {
-        if (!this.props.hospital.loaded) {
+        if (!this.props.hospital.loaded)
             return this.renderLoadingView();
-        }
-        return this.renderListView();
 
+        return this.renderListView();
     }
 
     renderLoadingView() {
@@ -60,7 +59,7 @@ class HospitalInfo extends Component {
         );
     }
     renderListView() {
-      const { sourceNumber, displaySource, type, refreshing } = this.props.hospital;
+      const {sourceNumber, displaySource, type, refreshing} = this.props.hospital;
         return(
             <View style={styles.container}>
                 <Text style={styles.topText}>
@@ -90,10 +89,9 @@ class HospitalInfo extends Component {
                     />
             </View>
         );
-
     }
     renderPlaceText() {
-      const { type } = this.props.hospital;
+      const {type} = this.props.hospital;
       switch(type) {
         case '全部':
           return '個快篩地點';
@@ -113,8 +111,8 @@ class HospitalInfo extends Component {
                 />
         );
     }
-    enterCheckPage(source){
-        this.props.enter("eachHospitalInfo",'就醫資訊',source);
+    enterCheckPage(source) {
+        this.props.enter('eachHospitalInfo', '就醫資訊', source);
     }
 }
 function select(state) {
@@ -123,18 +121,18 @@ function select(state) {
     token: state.login.info.token,
     lat: state.address.lat,
     lng: state.address.lng,
-  }
+  };
 }
 export default connect(select)(HospitalInfo);
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
     container: {
         backgroundColor: CONSTANTS.backgroundColor,
-        flex:1,
+        flex: 1,
         paddingTop: 80,
-        justifyContent:'center',
+        justifyContent: 'center',
     },
     topText: {
-        alignSelf:'center',
+        alignSelf: 'center',
         fontSize: 20,
         fontWeight: 'bold',
     },

@@ -1,4 +1,4 @@
-import { APIDomain, storage } from './global.js';
+import {APIDomain, storage} from './global.js';
 const saveBreedingSourceList = (id, responseData) =>
   storage.save({
     key: 'breedingSourceList',
@@ -18,7 +18,7 @@ export function addBreedingSourceList(responseData) {
   return {
     type: 'ADDBREEDINGSOURCELIST',
     responseData,
-  }
+  };
 }
 export function sourceNumber(number) {
   return {
@@ -54,7 +54,7 @@ export function timeStamp(timestamp) {
 export function loadBreedingSourceList(status, token) {
   return dispatch =>{
     dispatch(selectStatus(status));
-    //status = status === '已處理' ? status + ',非孳生源': status;
+    // status = status === '已處理' ? status + ',非孳生源': status;
     return storage.load({
       key: 'breedingSourceList',
       id: status,
@@ -65,13 +65,13 @@ export function loadBreedingSourceList(status, token) {
       .then(responseData => {
         const dataLength = responseData.length;
         if(dataLength > 0) dispatch(timeStamp(responseData[dataLength - 1].timestamp));
-        dispatch(breedingSourceList(responseData))
+        dispatch(breedingSourceList(responseData));
       })
       .catch(err =>{
         dispatch(requestBreedingSourceList(status, '', token));
         console.warn(err);
       });
-  }
+  };
 }
 export function requestBreedingSourceListNumber(status, token) {
   return dispatch =>
@@ -95,8 +95,7 @@ export function requestBreedingSourceList(status, timestamp, token) {
   let actionFunction;
   if (timestamp === '') {
     actionFunction = breedingSourceList;
-  }
-  else {
+  } else {
     actionFunction = addBreedingSourceList;
     timestamp = `&before_timestamp=${timestamp}`;
   }
@@ -108,23 +107,21 @@ export function requestBreedingSourceList(status, timestamp, token) {
     })
     .then(response => {
       console.log(response);
-        if(!response.ok) throw new Error("requestBreedingSourceList");
+        if(!response.ok) throw new Error('requestBreedingSourceList');
         return response.json();
       })
       .then(responseData => {
         const dataLength = responseData.length;
-        if(dataLength !== 0) {
+        if(dataLength !== 0)
           dispatch(timeStamp(responseData[dataLength - 1].timestamp));
-        }
+
         dispatch(actionFunction(responseData));
-        if(timestamp === '') {
+        if(timestamp === '')
           saveBreedingSourceList(status, responseData);
-        }
       })
       .catch(err => {
         console.error(err);
       });
-
 }
 export function requestUpdateStatus(status, formData) {
   return dispatch =>
@@ -140,7 +137,7 @@ export function requestUpdateStatus(status, formData) {
             if(!response.ok) throw Error(response);
             return dispatch(requestBreedingSourceListNumber(status));
         })
-        .then(() =>  dispatch(requestBreedingSourceList(status, '')))
+        .then(() => dispatch(requestBreedingSourceList(status, '')))
         .then(() => {
             alert('更新完成！');
         })
@@ -148,5 +145,4 @@ export function requestUpdateStatus(status, formData) {
             alert('更新失敗！');
             console.warn(err);
         });
-
 }

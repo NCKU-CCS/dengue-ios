@@ -27,7 +27,12 @@
   },
   "description": "a react-native app",
   "main": "index.ios.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^7.1.0",
+    "eslint": "^3.10.1",
+    "eslint-config-google": "^0.7.0",
+    "eslint-plugin-react": "^6.7.1"
+  },
   "repository": {
     "type": "git",
     "url": "http://ec2-54-175-108-116.compute-1.amazonaws.com/denguefever/dengue-ios.git"

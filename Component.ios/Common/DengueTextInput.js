@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import {
   View,
@@ -7,7 +5,6 @@ import {
   TextInput,
   StyleSheet
 } from 'react-native';
-import CONSTANTS from '../Global.js';
 export default class DengueTextInput extends React.Component {
   constructor(props) {
     super(props);
@@ -23,15 +20,14 @@ export default class DengueTextInput extends React.Component {
   }
   render() {
     const {
-      label, //string
+      label, // string
       keyboardType, // string
       maxLength, // number
       secure, // boolean
       returnKeyType, // string
       onSubmitEditing, // function
-      placeholder, //string
+      placeholder, // string
       onFocus, // function
-      hint, //array<strin>
       style,
       multiline,
       onEndEditing,
@@ -44,9 +40,11 @@ export default class DengueTextInput extends React.Component {
         </Text>
         <TextInput
           style = {[styles.textInput, style]}
-          onChangeText = {text => {this.value=text;}}
+          onChangeText = {text => {
+this.value=text;
+}}
           onFocus = {() => onFocus(this.refs.textInput)}
-          keyboardType = {keyboardType ? keyboardType : "default"}
+          keyboardType = {keyboardType ? keyboardType : 'default'}
           selectTextOnFocus = {false}
           secureTextEntry = {secure ? secure : false}
           autoCapitalize = "none"
@@ -54,7 +52,9 @@ export default class DengueTextInput extends React.Component {
           placeholder = {placeholder}
           returnKeyType = {returnKeyType}
           onSubmitEditing = {onSubmitEditing ? onSubmitEditing : () => {}}
-          onEndEditing = {() => { onEndEditing(this.value) }}
+          onEndEditing = {() => {
+ onEndEditing(this.value);
+}}
           ref = "textInput"
           defaultValue={defaultValue}
           maxLength = {maxLength ? maxLength : 64}
@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    borderBottomColor:'#ccc',
-    borderBottomWidth:1,
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
     alignSelf: 'center',
   },
   label: {
@@ -94,4 +94,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flex: 1,
   }
-})
+});

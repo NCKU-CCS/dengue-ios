@@ -1,8 +1,7 @@
 import React from 'react';
-import { View,TouchableHighlight, Text,
+import {TouchableHighlight, Text,
   Linking,
 } from 'react-native';
-import CONSTANTS from '../Global.js';
 export default function FBLink() {
   return(
     <TouchableHighlight
@@ -15,20 +14,19 @@ export default function FBLink() {
       </Text>
     </TouchableHighlight>
   );
-
 }
 
 const styles = {
   button: {
-    //height: 40,
-    width:200,
+    // height: 40,
+    width: 200,
     marginTop: 15,
     paddingVertical: 8,
-    //paddingHorizontal: 25,
-    backgroundColor: "#3B5998",
-    borderColor: "#3B5998",
-    borderRadius :5,
-    borderWidth:1,
+    // paddingHorizontal: 25,
+    backgroundColor: '#3B5998',
+    borderColor: '#3B5998',
+    borderRadius: 5,
+    borderWidth: 1,
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
@@ -38,4 +36,4 @@ const styles = {
     fontSize: 20,
     color: 'white',
   },
-}
+};

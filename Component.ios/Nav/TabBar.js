@@ -5,38 +5,36 @@ import React, {
 } from 'react-native';
 import CONSTANTS from '../Global.js';
 import Tab from './Tab.js';
-//import Icon from 'react-native-vector-icons/Ionicons';
-import { connect } from 'react-redux';
+// import Icon from 'react-native-vector-icons/Ionicons';
+import {connect} from 'react-redux';
 class TabBar extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-
   }
 
-  render(){
+  render() {
     let menu = [
-      "hotZoneInfo",
-      "hospitalInfo",
-      "breedingSourceReport",
-      "mosquitoBiteReport",
-      "userSetting",
-    ],
-      title = [
+      'hotZoneInfo',
+      'hospitalInfo',
+      'breedingSourceReport',
+      'mosquitoBiteReport',
+      'userSetting',
+    ];
+    let title = [
         '即時疫情',
         '就醫資訊',
         '環境回報',
         '蚊子叮咬',
         '個人資訊'
-
-      ];
+    ];
     // use is logined
     if(this.props.login.quick === false) {
       menu = [
-        "hotZoneInfo",
-        "hospitalInfo",
-        "breedingSourceReport",
-        "mosquitoBiteReport",
-        "breedingSourceReportList",
+        'hotZoneInfo',
+        'hospitalInfo',
+        'breedingSourceReport',
+        'mosquitoBiteReport',
+        'breedingSourceReportList',
         //"userSetting"
       ];
       title = [
@@ -56,7 +54,7 @@ class TabBar extends Component {
       >
       {
         menu.map(
-          (id,i) =>
+          (id, i) =>
             <Tab
               enter = {this.props.enter}
               key = {id}
@@ -64,7 +62,6 @@ class TabBar extends Component {
               tabTitle = {title[i]}
               id = {id}
             />
-
         )
       }
       </View>
@@ -78,15 +75,14 @@ function select(state) {
   };
 }
 export default connect(select)(TabBar);
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
   tabbar: {
-    height:60,
+    height: 60,
     backgroundColor: CONSTANTS.backgroundColor,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems:'center',
-    borderTopWidth:1,
+    alignItems: 'center',
+    borderTopWidth: 1,
     borderColor: '#ccc'
   },
-
 });
