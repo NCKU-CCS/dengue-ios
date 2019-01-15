@@ -61,7 +61,6 @@ react-native run-android
 在components裡面很多會有一個fucntion select會return一個object 那是代表要從data tree挑選出怎樣的data給那個component 
 
 ## LICENSE
-License
 Copyright (c) NCKU The Mosquito Man Project. All rights reserved.
 
 Licensed under the MIT License.
