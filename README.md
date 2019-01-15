@@ -5,7 +5,7 @@
 
 ## Usage
 
-## iOS
+### iOS
 
 ```sh
 npm install
@@ -61,4 +61,7 @@ react-native run-android
 在components裡面很多會有一個fucntion select會return一個object 那是代表要從data tree挑選出怎樣的data給那個component 
 
 ## LICENSE
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+License
+Copyright (c) NCKU The Mosquito Man Project. All rights reserved.
+
+Licensed under the MIT License.
