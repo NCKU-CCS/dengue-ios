@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2019 - NCKU The Mosiquito Man Project
+Copyright (c) NCKU The Mosiquito Man Project
 
 All rights reserved.
 
