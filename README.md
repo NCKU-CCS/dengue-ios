@@ -1,5 +1,13 @@
 # Dengue App - iOS
 
+## Table of content
+* [Getting Started](#sec-1)
+* [Usage](#sec-2)
+* [Develop](#sec-3)
+* [Reference](#sec-4)
+* [License](#sec-5)
+
+<a name='sec-1'></a>
 ## Getting Started
 
 ### Environment
@@ -58,25 +66,12 @@ After running this command, Xcode should be started.
 * Click `Product` > `Clean Build Folder`
 * Click `Product` > `Run`
 
+<a name='sec-2'></a>
+## Usage
+* Please check [The Mosquito Man App Instruction](./doc/掌蚊人APP.pdf)
 
 
-### JS Linter 
-
-* Install linter dependency
-
-```sh
-npm install --save-dev
-```
-
-* Run Linter to check coding style
-
-```sh
-eslint <File>
-```
-
-* The configure file for linter is `.eslintrc.js`
-
-
+<a name='sec-3'></a>
 ## Develop
 
 ### Structure
@@ -110,10 +105,29 @@ eslint <File>
 在 components 裡面很多會有一個 fucntion select 會 return 一個 object  那是代表要從 data tree 挑選出怎樣的 data 給那個 component
 
 
+### JS Linter 
+
+* Install linter dependency
+
+```sh
+npm install --save-dev
+```
+
+* Run Linter to check coding style
+
+```sh
+eslint <File>
+```
+
+* The configure file for linter is `.eslintrc.js`
+
+
+<a name='sec-4'></a>
 ## Reference
 * [React-native - Getting Started](https://facebook.github.io/react-native/docs/getting-started.html)
 
-## LICENSE
+<a name='sec-5'></a>
+## License
 Copyright (c) NCKU The Mosquito Man Project. All rights reserved.
 
 Licensed under the MIT License.
