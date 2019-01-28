@@ -28,8 +28,8 @@ brew install watchman
 ```
 
 ### Setup Dengue App Backend Server
-Before build the iOS App, [the backend server for dengue app](https://github.com/the-mosquito-man/dengue-app-backend-server) should be started.  
-After started, you set the `APIDomain` (line 5 and 6) in `Actions.ios/global.js` to your server host.
+Before building the iOS App, [the backend server for dengue app](https://github.com/the-mosquito-man/dengue-app-backend-server) should be started.  
+After the app starts, you should set the `APIDomain` (line 5 and 6) in `Actions.ios/global.js` to your server host.
 
 e.g. Changing the APIDomain to `http://127.0.0.1:8000`
 
